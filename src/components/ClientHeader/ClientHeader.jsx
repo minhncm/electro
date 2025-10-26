@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Container from "../Container/Container";
-import ElectroLogo from "../ElectroLogo/ElectroLogo";
-import TextInput from "../ui/TextInput";
+import Container from "~/components/Container/Container";
+import ElectroLogo from "~/components/ElectroLogo/ElectroLogo";
+import TextInput from "~/components/common/TextInput";
 import {
   Alarm,
   Award,
@@ -19,16 +19,16 @@ import {
   User,
   UserCircle,
 } from "tabler-icons-react";
-import Button from "../ui/Button";
-import Tooltip from "../ui/Tooltip";
-import Badge from "../ui/Bagde";
+import Button from "../common/Button";
+import Tooltip from "../common/Tooltip";
+import Badge from "../common/Bagde";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "../ui/DropdownMenu";
-import Popover from "../ui/Popover";
+} from "../common/DropdownMenu";
+import Popover from "../common/Popover";
 import CategoryHeader from "./CategoryHeader";
 
 const categories = {

@@ -11,8 +11,8 @@ import {
   Moon,
   Sun,
 } from "tabler-icons-react";
-import Container from "../Container/Container";
-import ElectroLogo from "../ElectroLogo/ElectroLogo";
+import Container from "~/components/Container/Container";
+import ElectroLogo from "~/components/ElectroLogo/ElectroLogo";
 import { Link } from "react-router-dom";
 
 function ClientFooter() {
@@ -22,7 +22,7 @@ function ClientFooter() {
         <div className="grid grid-cols-2 m-[-8px]">
           <div className="p-2">
             <div className="flex flex-col items-stretch gap-[35px]">
-              <ElectroLogo />
+              <ElectroLogo width={135} />
               <div className="flex flex-wrap items-center justify-start gap-4">
                 <Headset size={52} stroke="#228be6" strokeWidth={1.25} />
                 <div className="flex flex-col items-stretch gap-[2.5px] flex-grow-0 text-start">

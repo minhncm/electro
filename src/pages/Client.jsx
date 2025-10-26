@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import ClientFooter from "../components/ClientFooter/ClientFooter";
-import ClientHeader from "../components/ClientHeader/ClientHeader";
+import ClientFooter from "~/components/ClientFooter/ClientFooter";
+import ClientHeader from "~/components/ClientHeader/ClientHeader";
 import { Messages } from "tabler-icons-react";
 
 function Client() {
