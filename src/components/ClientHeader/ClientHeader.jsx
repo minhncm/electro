@@ -80,7 +80,7 @@ const categories = {
 function ClientHeader() {
   const user = true;
   return (
-    <header className="bg-white mb-8 border border-solid border-[#e9ecef] shadow-[0px_3px_8px_-7px]">
+    <header className="bg-header mb-8 shadow-[0px_3px_8px_-7px]">
       <Container>
         <div className="flex flex-col">
           <div className="flex items-center justify-between py-4 g-4">
@@ -96,8 +96,8 @@ function ClientHeader() {
                   <Tooltip content="Giỏ hàng">
                     <Link to={"/cart"}>
                       <div
-                        className="flex flex-row items-center justify-start gap-[10px] 
-                                bg-[#f8f9fa] rounded-lg px-3 py-[10px] hover:bg-[#e9ecef]"
+                        className="flex flex-row items-center justify-start gap-[10px] text-c-black 
+                                bg-alt rounded-lg px-3 py-[10px] hover:bg-alt-hover"
                       >
                         <ShoppingCart strokeWidth={1} />
                         <span className="font-medium text-sm">0</span>
@@ -108,8 +108,8 @@ function ClientHeader() {
                   <Tooltip content="Đơn hàng">
                     <Link to={"/order"}>
                       <div
-                        className="flex flex-row items-center justify-start gap-[10px] 
-                                  bg-[#f8f9fa] rounded-lg px-3 py-[10px] hover:bg-[#e9ecef]"
+                        className="flex flex-row items-center justify-start gap-[10px] text-c-black 
+                                  bg-alt rounded-lg px-3 py-[10px] hover:bg-alt-hover"
                       >
                         <FileBarcode strokeWidth={1} />
                       </div>
@@ -121,8 +121,8 @@ function ClientHeader() {
               <Tooltip content="Thông báo">
                 <Link to={"/user/notification"}>
                   <div
-                    className="flex flex-row items-center justify-start gap-[10px] 
-                                  bg-[#f8f9fa] rounded-lg px-3 py-[10px] hover:bg-[#e9ecef]"
+                    className="flex flex-row items-center justify-start gap-[10px] text-c-black 
+                                  bg-alt rounded-lg px-3 py-[10px] hover:bg-alt-hover"
                   >
                     <Bell strokeWidth={1} />
                   </div>
@@ -133,8 +133,8 @@ function ClientHeader() {
                 <DropdownMenuTrigger>
                   <Tooltip content="Tài khoản">
                     <div
-                      className="flex flex-row items-center justify-start gap-[10px] 
-                                bg-[#f8f9fa] rounded-lg px-3 py-[10px] hover:bg-[#e9ecef]"
+                      className="flex flex-row items-center justify-start gap-[10px] text-c-black 
+                                bg-alt rounded-lg px-3 py-[10px] hover:bg-alt-hover"
                     >
                       <UserCircle strokeWidth={1} />
                     </div>
@@ -248,7 +248,7 @@ function ClientHeader() {
               <Button
                 variant="text"
                 size="sm"
-                className="text-[#40c057] hover:bg-[#ebfbee]"
+                className="text-c-green hover:bg-c-green-hover"
               >
                 Sản phẩm xu hướng
               </Button>
@@ -256,7 +256,7 @@ function ClientHeader() {
               <Button
                 variant="text"
                 size="sm"
-                className="text-[#e64980] hover:bg-[#fff0f6]"
+                className="text-c-pink hover:bg-c-pink-hover"
               >
                 Khuyến mãi
               </Button>

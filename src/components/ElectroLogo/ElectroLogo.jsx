@@ -17,7 +17,7 @@ function ElectroLogo({ width = 120 }) {
         ry="5.367"
       />
       <path
-        fill="black"
+        fill="var(--color-logo)"
         fillRule="evenodd"
         clipRule="evenodd"
         d="M30.514,0.71c-0.034,0.003-0.066,0.008-0.056,0.056

@@ -9,8 +9,8 @@ function TextInput() {
         <Search width={16} />
       </div>
       <input
-        className="w-full pl-[42px] py-[1px] pr-[14px] bg-[#f1f3f5] rounded-lg 
-                    border-solid border-[0.8px] leading-[40px] text-left outline-[#339af0]"
+        className="w-full pl-[42px] py-[1px] pr-[14px] bg-surface rounded-lg 
+                     leading-[40px] text-left outline-[#339af0]"
         placeholder="Bạn tìm gì..."
       />
     </div>

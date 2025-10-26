@@ -4,9 +4,9 @@ const button = tv({
   base: "inline-flex items-center justify-center font-semibold rounded-lg transition-colors duration-200 whitespace-normal overflow-hidden",
   variants: {
     variant: {
-      text: "bg-transparent text-[#228be6] hover:bg-[#e7f5ff]",
-      container: "bg-[#228be6] text-white hover:bg-[#1c7ed6]",
-      outline: "border border-[#228be6] text-[#228be6] hover:bg-[#e7f5ff]",
+      text: "bg-transparent text-c-blue hover:bg-soft",
+      container: "bg-primary text-white hover:bg-[#1c7ed6]",
+      outline: "border border-primary text-c-blue hover:bg-soft",
     },
     size: {
       default: "w-auto h-[42px] px-[22px]",
