@@ -1,4 +1,5 @@
 import { tv } from "tailwind-variants";
+import { Link } from "react-router-dom";
 
 const button = tv({
   base: "inline-flex items-center justify-center font-semibold rounded-lg transition-colors duration-200 whitespace-normal overflow-hidden",
@@ -20,13 +21,32 @@ const button = tv({
   },
 });
 
-function Button({ variant, size, children, className, ...props }) {
+function Button({
+  icon,
+  to,
+  variant,
+  size,
+  children,
+  className,
+  ...passProps
+}) {
+  const props = {
+    ...passProps,
+  };
+  let Comp = "button";
+  if (to) {
+    props.to = to;
+    Comp = Link;
+  }
   return (
-    <button {...props} className={button({ variant, size, className })}>
-      <span className="flex items-center h-full whitespace-normal overflow-hidden">
-        {children}
-      </span>
-    </button>
+    <Comp {...props} className={button({ variant, size, className })}>
+      <div className="flex justify-center items-center h-full">
+        {icon && <span className="flex items-center mr-2.5">{icon}</span>}
+        <span className="flex items-center h-full whitespace-normal overflow-hidden">
+          {children}
+        </span>
+      </div>
+    </Comp>
   );
 }
 

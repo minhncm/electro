@@ -13,6 +13,7 @@ import {
   Login,
   Logout,
   MessageCircle,
+  Search,
   Settings,
   ShoppingCart,
   Star,
@@ -88,7 +89,10 @@ function ClientHeader() {
               <ElectroLogo />
             </Link>
 
-            <TextInput />
+            <TextInput
+              icon={<Search size={16} />}
+              placeholder="Bạn tìm gì..."
+            />
 
             <div className="flex flex-wrap items-center justify-start gap-[10px]">
               {user && (
