@@ -93,7 +93,7 @@ function ClientHeader() {
               icon={<Search size={16} />}
               placeholder="Bạn tìm gì..."
               width={600}
-              className="bg-surface outline-primary"
+              className="bg-surface focus:border-primary"
             />
 
             <div className="flex flex-wrap items-center justify-start gap-[10px]">

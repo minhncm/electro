@@ -10,6 +10,7 @@ const button = tv({
       outline: "border border-primary text-c-blue hover:bg-soft",
     },
     size: {
+      xs: "w-auto h-[22px] px-[7px] text-xs rounded",
       default: "w-auto h-[42px] px-[22px]",
       sm: "w-auto h-9 px-[18px] text-sm",
       lg: "w-auto h-[50px] px-[26px] text-lg",

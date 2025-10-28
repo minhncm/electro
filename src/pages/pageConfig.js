@@ -1,6 +1,8 @@
 import {
   Box,
+  BrandPaypal,
   Briefcase,
+  Cash,
   Cpu,
   DeviceGamepad2,
   DeviceLaptop,
@@ -34,3 +36,8 @@ export const categorySlugIconMap = new Proxy(
     },
   }
 );
+
+export const paymentMethodIconMap = {
+  cash: Cash,
+  paypal: BrandPaypal,
+};

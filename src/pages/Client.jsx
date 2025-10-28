@@ -1,15 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import ClientFooter from "~/components/ClientFooter/ClientFooter";
 import ClientHeader from "~/components/ClientHeader/ClientHeader";
 import { Messages } from "tabler-icons-react";
 import Tooltip from "~/components/common/Tooltip";
-import ClientHome from "./Client-home/ClientHome";
 
 function Client() {
   return (
     <>
       <ClientHeader />
-      <ClientHome />
+      <Outlet />
       <ClientFooter />
       <ChatButton />
     </>

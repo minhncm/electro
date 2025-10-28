@@ -14,7 +14,8 @@ function TextInput({ icon, placeholder, width, className, ...props }) {
       <input
         {...props}
         className={clsx(
-          "w-full pl-[42px] py-[1px] pr-[14px] rounded-lg leading-[40px] text-left",
+          "w-full pl-[42px] py-[1px] pr-[14px] border border-solid border-transparent",
+          "rounded-lg leading-[40px] text-left outline-none",
           className
         )}
         placeholder={placeholder}
