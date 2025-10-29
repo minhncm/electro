@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { Trash } from "tabler-icons-react";
+import onModalDelete from "~/utils/ModalsUtil";
 
 function ClientCartItem({ cartItem }) {
+  const handleDeleteCartItem = () => {
+    const onConfirm = () => alert("confirm");
+    onModalDelete("Bạn có muốn xóa mặt hàng này", onConfirm);
+  };
+
   return (
     <tr>
       <td className="px-5 py-4 border-t border-[#dee2e6] text-sm">
@@ -19,16 +25,11 @@ function ClientCartItem({ cartItem }) {
               {cartItem.cartItemVariant.variantProduct.productName}
             </Link>
             <div className="flex flex-col items-stretch gap-[1.5px]">
-              {cartItem.cartItemVariant.variantProperties.content.map(
-                (item) => (
-                  <div
-                    key={item.code}
-                    className="text-c-muted leading-[1.55] text-xs"
-                  >
-                    {`${item.name}: ${item.value}`}
-                  </div>
-                )
-              )}
+              {cartItem.cartItemVariant.variantProperties.content.map((item) => (
+                <div key={item.code} className="text-c-muted leading-[1.55] text-xs">
+                  {`${item.name}: ${item.value}`}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -73,6 +74,7 @@ function ClientCartItem({ cartItem }) {
         <div
           className="text-[#fa5252] border border-solid border-[#fa5252] m-auto
                     w-6 h-6 rounded flex items-center justify-center cursor-pointer"
+          onClick={handleDeleteCartItem}
         >
           <Trash size={16} />
         </div>

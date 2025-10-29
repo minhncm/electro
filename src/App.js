@@ -6,21 +6,24 @@ import ClientOrder from "./pages/Client-order/ClientOrder";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import ClientOrderDetail from "./pages/Client-order-detail/ClientOrderDetail";
+import { ModalsProvider } from "@mantine/modals";
 
 function App() {
   return (
     <BrowserRouter>
       <MantineProvider withGlobalStyles withNormalizeCSS>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Client />}>
-              <Route index element={<ClientHome />} />
-              <Route path="/cart" element={<ClientCart />} />
-              <Route path="/order" element={<ClientOrder />} />
-              <Route path="/order/detail" element={<ClientOrderDetail />} />
-            </Route>
-          </Routes>
-        </div>
+        <ModalsProvider>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Client />}>
+                <Route index element={<ClientHome />} />
+                <Route path="/cart" element={<ClientCart />} />
+                <Route path="/order" element={<ClientOrder />} />
+                <Route path="/order/detail" element={<ClientOrderDetail />} />
+              </Route>
+            </Routes>
+          </div>
+        </ModalsProvider>
       </MantineProvider>
     </BrowserRouter>
   );
