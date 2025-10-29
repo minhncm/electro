@@ -1,5 +1,5 @@
 import { List } from "tabler-icons-react";
-import ClientProductCart from "~/components/ClientProductCart/ClientProductCart";
+import ClientProductCart from "~/components/ClientProductCard/ClientProductCard";
 import Button from "~/components/common/Button";
 
 function ClientHomeLatestProducts() {
