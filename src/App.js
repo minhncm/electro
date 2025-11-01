@@ -7,6 +7,7 @@ import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import ClientOrderDetail from "./pages/Client-order-detail/ClientOrderDetail";
 import { ModalsProvider } from "@mantine/modals";
+import ClientUser from "~/pages/Client-user/ClientUser";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
                 <Route path="/cart" element={<ClientCart />} />
                 <Route path="/order" element={<ClientOrder />} />
                 <Route path="/order/detail" element={<ClientOrderDetail />} />
+                <Route path="/user/" element={<ClientUser />} />
+                <Route path="/user/setting/" element={<ClientOrderDetail />} />
+                <Route path="/user/setting" element={<ClientOrderDetail />} />
               </Route>
             </Routes>
           </div>
