@@ -8,6 +8,11 @@ import "@mantine/core/styles.css";
 import ClientOrderDetail from "./pages/Client-order-detail/ClientOrderDetail";
 import { ModalsProvider } from "@mantine/modals";
 import ClientUser from "~/pages/Client-user/ClientUser";
+import ClientSetting from "./pages/Client-setting/ClientSetting";
+import ClientSettingPersonal from "./pages/Client-setting-personal/ClientSettingPersonal";
+import ClientSettingPhone from "./pages/Client-setting-phone";
+import ClientSettingEmail from "./pages/Client-setting-email";
+import ClientSettingPassword from "./pages/Client-setting-password";
 
 function App() {
   return (
@@ -22,8 +27,11 @@ function App() {
                 <Route path="/order" element={<ClientOrder />} />
                 <Route path="/order/detail" element={<ClientOrderDetail />} />
                 <Route path="/user/" element={<ClientUser />} />
-                <Route path="/user/setting/" element={<ClientOrderDetail />} />
-                <Route path="/user/setting" element={<ClientOrderDetail />} />
+                <Route path="/user/setting" element={<ClientSetting />} />
+                <Route path="/user/setting/personal" element={<ClientSettingPersonal />} />
+                <Route path="/user/setting/phone" element={<ClientSettingPhone />} />
+                <Route path="/user/setting/email" element={<ClientSettingEmail />} />
+                <Route path="/user/setting/password" element={<ClientSettingPassword />} />
               </Route>
             </Routes>
           </div>

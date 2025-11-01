@@ -86,55 +86,55 @@ function ClientUser() {
                       <Text size="lg" c="dimmed" fw={500}>
                         Số điện thoại và Email
                       </Text>
+
+                      <Group justify="space-between">
+                        <Group gap="sm">
+                          <ThemeIcon radius="xl" size="lg" variant="light">
+                            <Phone size={20} strokeWidth={1.5} />
+                          </ThemeIcon>
+                          <Stack gap={0}>
+                            <Text fw={500}>Số điện thoại</Text>
+                            <Text>{user.phone}</Text>
+                          </Stack>
+                        </Group>
+                        <Button component={Link} to="/user/setting/phone" variant="outline" radius="md">
+                          Cập nhật
+                        </Button>
+                      </Group>
+
+                      <Group justify="space-between">
+                        <Group gap="sm">
+                          <ThemeIcon radius="xl" size="lg" variant="light">
+                            <Mail size={20} strokeWidth={1.5} />
+                          </ThemeIcon>
+                          <Stack gap={0}>
+                            <Text fw={500}>Email</Text>
+                            <Text>{user.email}</Text>
+                          </Stack>
+                        </Group>
+                        <Button component={Link} to="/user/setting/email" variant="outline" radius="md">
+                          Cập nhật
+                        </Button>
+                      </Group>
+
+                      <Text size="lg" c="dimmed" fw={500}>
+                        Bảo mật
+                      </Text>
+
+                      <Group justify="space-between">
+                        <Group gap="sm">
+                          <ThemeIcon radius="xl" size="lg" variant="light">
+                            <Lock size={20} strokeWidth={1.5} />
+                          </ThemeIcon>
+                          <Stack gap={0}>
+                            <Text fw={500}>Đổi mật khẩu</Text>
+                          </Stack>
+                        </Group>
+                        <Button component={Link} to="/user/setting/password" variant="outline" radius="md">
+                          Cập nhật
+                        </Button>
+                      </Group>
                     </Stack>
-
-                    <Group justify="space-between">
-                      <Group gap="sm">
-                        <ThemeIcon radius="xl" size="lg" variant="light">
-                          <Phone size={20} strokeWidth={1.5} />
-                        </ThemeIcon>
-                        <Stack gap={0}>
-                          <Text fw={500}>Số điện thoại</Text>
-                          <Text>{user.phone}</Text>
-                        </Stack>
-                      </Group>
-                      <Button component={Link} to="/user/setting/phone" variant="outline" radius="md">
-                        Cập nhật
-                      </Button>
-                    </Group>
-
-                    <Group justify="space-between">
-                      <Group gap="sm">
-                        <ThemeIcon radius="xl" size="lg" variant="light">
-                          <Mail size={20} strokeWidth={1.5} />
-                        </ThemeIcon>
-                        <Stack gap={0}>
-                          <Text fw={500}>Email</Text>
-                          <Text>{user.email}</Text>
-                        </Stack>
-                      </Group>
-                      <Button component={Link} to="/user/setting/email" variant="outline" radius="md">
-                        Cập nhật
-                      </Button>
-                    </Group>
-
-                    <Text size="lg" c="dimmed" fw={500}>
-                      Bảo mật
-                    </Text>
-
-                    <Group justify="space-between">
-                      <Group gap="sm">
-                        <ThemeIcon radius="xl" size="lg" variant="light">
-                          <Lock size={20} strokeWidth={1.5} />
-                        </ThemeIcon>
-                        <Stack gap={0}>
-                          <Text fw={500}>Đổi mật khẩu</Text>
-                        </Stack>
-                      </Group>
-                      <Button component={Link} to="/user/setting/password" variant="outline" radius="md">
-                        Cập nhật
-                      </Button>
-                    </Group>
                   </Grid.Col>
                 </Grid>
               </Stack>
