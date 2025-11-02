@@ -13,6 +13,7 @@ import ClientSettingPersonal from "./pages/Client-setting-personal/ClientSetting
 import ClientSettingPhone from "./pages/Client-setting-phone";
 import ClientSettingEmail from "./pages/Client-setting-email";
 import ClientSettingPassword from "./pages/Client-setting-password";
+import ClientNotification from "./pages/Client-notification";
 
 function App() {
   return (
@@ -25,13 +26,14 @@ function App() {
                 <Route index element={<ClientHome />} />
                 <Route path="/cart" element={<ClientCart />} />
                 <Route path="/order" element={<ClientOrder />} />
-                <Route path="/order/detail" element={<ClientOrderDetail />} />
+                <Route path="/order/detail/:code" element={<ClientOrderDetail />} />
                 <Route path="/user/" element={<ClientUser />} />
                 <Route path="/user/setting" element={<ClientSetting />} />
                 <Route path="/user/setting/personal" element={<ClientSettingPersonal />} />
                 <Route path="/user/setting/phone" element={<ClientSettingPhone />} />
                 <Route path="/user/setting/email" element={<ClientSettingEmail />} />
                 <Route path="/user/setting/password" element={<ClientSettingPassword />} />
+                <Route path="/user/notification" element={<ClientNotification />} />
               </Route>
             </Routes>
           </div>

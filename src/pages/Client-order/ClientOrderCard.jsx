@@ -63,7 +63,7 @@ function ClientOrderCard() {
 
         <Divider />
         <Group justify="space-between">
-          <Button radius="md" variant="outline" component={Link} to={"/order/detail"}>
+          <Button radius="md" variant="outline" component={Link} to={`/order/detail/${"1R9LFP7EEFMJ"}`}>
             Xem chi tiết
           </Button>
 

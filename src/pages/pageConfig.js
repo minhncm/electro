@@ -1,4 +1,8 @@
 import {
+  Alarm,
+  AlertCircle,
+  AlertTriangle,
+  Bell,
   Box,
   BrandPaypal,
   Briefcase,
@@ -10,7 +14,9 @@ import {
   DeviceSpeaker,
   DeviceTablet,
   DeviceWatch,
+  FileBarcode,
   Keyboard,
+  Message,
   Mouse,
 } from "tabler-icons-react";
 
@@ -30,9 +36,7 @@ export const categorySlugIconMap = new Proxy(
   {
     get: function (target, name) {
       // kiểm tra xem object target có thuộc tính name hay không
-      return Object.prototype.hasOwnProperty.call(target, name)
-        ? target[name]
-        : Box;
+      return Object.prototype.hasOwnProperty.call(target, name) ? target[name] : Box;
     },
   }
 );
@@ -40,4 +44,50 @@ export const categorySlugIconMap = new Proxy(
 export const paymentMethodIconMap = {
   cash: Cash,
   paypal: BrandPaypal,
+};
+
+const notificationType = {
+  general: "GENERAL",
+  error: "ERROR",
+  warning: "WARNING",
+  preorder: "PREORDER",
+  review: "REVIEW",
+  order: "ORDER",
+  checkout_paypal_success: "CHECKOUT_PAYPAL_SUCCESS",
+  checkout_paypal_cancel: "CHECKOUT_PAYPAL_CANCEL",
+};
+
+export const notificationIconMap = {
+  [notificationType.general]: {
+    icon: Bell,
+    color: "blue",
+  },
+  [notificationType.error]: {
+    icon: AlertCircle,
+    color: "red",
+  },
+  [notificationType.warning]: {
+    icon: AlertTriangle,
+    color: "yellow",
+  },
+  [notificationType.preorder]: {
+    icon: Alarm,
+    color: "teal",
+  },
+  [notificationType.review]: {
+    icon: Message,
+    color: "violet",
+  },
+  [notificationType.order]: {
+    icon: FileBarcode,
+    color: "indigo",
+  },
+  [notificationType.checkout_paypal_success]: {
+    icon: BrandPaypal,
+    color: "cyan",
+  },
+  [notificationType.checkout_paypal_cancel]: {
+    icon: BrandPaypal,
+    color: "pink",
+  },
 };
