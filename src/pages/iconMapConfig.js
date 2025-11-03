@@ -18,6 +18,7 @@ import {
   Keyboard,
   Message,
   Mouse,
+  Star,
 } from "tabler-icons-react";
 
 export const categorySlugIconMap = new Proxy(
@@ -89,5 +90,21 @@ export const notificationIconMap = {
   [notificationType.checkout_paypal_cancel]: {
     icon: BrandPaypal,
     color: "pink",
+  },
+};
+
+const rewardType = {
+  success_order: "SUCCESS_ORDER",
+  add_review: "ADD_REVIEW",
+};
+
+export const RewardLogInfoMap = {
+  [rewardType.success_order]: {
+    icon: FileBarcode,
+    color: "blue",
+  },
+  [rewardType.add_review]: {
+    icon: Star,
+    color: "yellow",
   },
 };

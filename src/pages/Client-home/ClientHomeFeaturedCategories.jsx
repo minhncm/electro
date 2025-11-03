@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { List } from "tabler-icons-react";
 import Button from "~/components/common/Button";
-import { categorySlugIconMap } from "~/pages/pageConfig";
+import { categorySlugIconMap } from "~/pages/iconMapConfig";
 
 const categories = {
   content: [
@@ -53,15 +53,8 @@ function ClientHomeFeaturedCategories() {
   return (
     <div className="flex flex-col items-stretch gap-4">
       <div className="flex flex-wrap items-center justify-between">
-        <h2 className="text-[26px] text-[#f76707] leading-[1.35] font-bold">
-          Danh mục nổi bật
-        </h2>
-        <Button
-          size="sm"
-          icon={<List size={16} />}
-          to={"/user"}
-          className="bg-soft text-primary hover:bg-[#d0ebffa6]"
-        >
+        <h2 className="text-[26px] text-[#f76707] leading-[1.35] font-bold">Danh mục nổi bật</h2>
+        <Button size="sm" icon={<List size={16} />} to={"/user"} className="bg-soft text-primary hover:bg-[#d0ebffa6]">
           Xem tất cả
         </Button>
       </div>
@@ -78,9 +71,7 @@ function ClientHomeFeaturedCategories() {
               >
                 <div className="flex flex-wrap items-center justify-start gap-4">
                   <CategoryIcon size={50} strokeWidth={1} />
-                  <span className="leading-[1.55]">
-                    {category.categoryName}
-                  </span>
+                  <span className="leading-[1.55]">{category.categoryName}</span>
                 </div>
               </Link>
             </div>

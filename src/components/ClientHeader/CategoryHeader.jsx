@@ -1,6 +1,6 @@
 import { Tabs } from "radix-ui";
 import { Link } from "react-router-dom";
-import { categorySlugIconMap } from "~/pages/pageConfig";
+import { categorySlugIconMap } from "~/pages/iconMapConfig";
 
 function CategoryHeader({ categories }) {
   return (
@@ -30,9 +30,7 @@ function CategoryHeader({ categories }) {
                 <div className="inline-flex items-center justify-center w-[42px] h-[42px] rounded-[4px] text-[#228be6] bg-[#e7f5ff]">
                   <CategoryIcon size={24} />
                 </div>
-                <Link className="text-[28px] text-[#228be6] font-medium hover:underline">
-                  {category.categoryName}
-                </Link>
+                <Link className="text-[28px] text-[#228be6] font-medium hover:underline">{category.categoryName}</Link>
               </div>
             </div>
           </Tabs.Content>

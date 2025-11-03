@@ -15,7 +15,8 @@ import ClientSettingEmail from "~/pages/Client-setting-email";
 import ClientSettingPassword from "~/pages/Client-setting-password";
 import ClientNotification from "~/pages/Client-notification";
 import ClientReview from "~/pages/Client-review";
-import ClientWishlist from "./pages/Client-wishlist";
+import ClientWishlist from "~/pages/Client-wishlist";
+import ClientReward from "~/pages/Client-reward";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/user/setting/password" element={<ClientSettingPassword />} />
                 <Route path="/user/notification" element={<ClientNotification />} />
                 <Route path="/user/review" element={<ClientReview />} />
+                <Route path="/user/reward" element={<ClientReward />} />
                 <Route path="/user/wishlist" element={<ClientWishlist />} />
               </Route>
             </Routes>
