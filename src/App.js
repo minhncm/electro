@@ -17,6 +17,7 @@ import ClientNotification from "~/pages/Client-notification";
 import ClientReview from "~/pages/Client-review";
 import ClientWishlist from "~/pages/Client-wishlist";
 import ClientReward from "~/pages/Client-reward";
+import ClientPreorder from "./pages/Client-preorder";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/user/review" element={<ClientReview />} />
                 <Route path="/user/reward" element={<ClientReward />} />
                 <Route path="/user/wishlist" element={<ClientWishlist />} />
+                <Route path="/user/preorder" element={<ClientPreorder />} />
               </Route>
             </Routes>
           </div>
