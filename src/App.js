@@ -18,6 +18,7 @@ import ClientReview from "~/pages/Client-review";
 import ClientWishlist from "~/pages/Client-wishlist";
 import ClientReward from "~/pages/Client-reward";
 import ClientPreorder from "./pages/Client-preorder";
+import ClientChat from "./pages/Client-chat";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/user/reward" element={<ClientReward />} />
                 <Route path="/user/wishlist" element={<ClientWishlist />} />
                 <Route path="/user/preorder" element={<ClientPreorder />} />
+                <Route path="/user/chat" element={<ClientChat />} />
               </Route>
             </Routes>
           </div>
