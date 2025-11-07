@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { HeartPlus, ShoppingCart } from "tabler-icons-react";
 
-function ClientProductCart() {
+function ClientProductCart({ product }) {
   return (
     <Link
-      to={`/product/`}
+      to={`/product`}
       className="group block text-c-black rounded-lg bg-white p-5 
                 shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_10px_15px_-5px_rgba(0,0,0,0.05),_0_7px_7px_-5px_rgba(0,0,0,0.04)]"
     >
@@ -40,10 +40,10 @@ function ClientProductCart() {
 
         <div className="flex flex-col item gap-[5px]">
           <div className="flex flex-wrap items-center justify-start gap-2.5">
-            <span className="font-medium leading-[1.55]">Dell XPS 13 9315</span>
+            <span className="font-medium leading-[1.55]">{product.productName}</span>
           </div>
           <div className="text-c-pink font-medium">5.500.000–12.500.000 ₫</div>
-          <div className="text-c-muted text-sm">3 phiên bản</div>
+          <div className="text-c-muted text-sm">{product.productVariants.length} Phiên bản</div>
         </div>
       </div>
     </Link>

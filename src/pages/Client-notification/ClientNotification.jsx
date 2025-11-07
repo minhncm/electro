@@ -55,12 +55,14 @@ function ClientNotification() {
         </Stack>
 
         <Group justify="space-between" mt="lg">
-          <Pagination value={1} total={notifications.totalPages}>
+          <Pagination value={1} total={notifications.totalPages} />
+
+          <Text>
             <Text component="span" fw={500}>
               Trang 1
             </Text>
             <span> / {notifications.totalPages}</span>
-          </Pagination>
+          </Text>
         </Group>
       </>
     );

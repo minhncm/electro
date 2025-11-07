@@ -1,7 +1,8 @@
 import { Anchor, Blockquote, Button, Card, Group, Image, rgba, Stack, Text, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
-import { Star, Trash } from "tabler-icons-react";
+import { Trash } from "tabler-icons-react";
 import ReviewBadge from "~/components/ReviewBadge/ReviewBadge";
+import ReviewStar from "~/components/ReviewStar";
 import onModalDelete from "~/utils/ModalsUtil";
 
 function ClientReviewCard({ review }) {
@@ -42,19 +43,7 @@ function ClientReviewCard({ review }) {
               {review.reviewCreatedAt}
             </Text>
 
-            {/* tạo Star rating */}
-            <Group gap={5}>
-              {Array(5)
-                .fill(0)
-                .map((_, index) => (
-                  <Star
-                    key={index}
-                    color={index < review.reviewRatingScore ? theme.colors.yellow[5] : theme.colors.gray[5]}
-                    fill={index < review.reviewRatingScore ? theme.colors.yellow[5] : theme.colors.gray[5]}
-                    size={14}
-                  />
-                ))}
-            </Group>
+            <ReviewStar score={review.reviewRatingScore} />
 
             <ReviewBadge status={review.reviewStatus} />
           </Group>
