@@ -2,6 +2,7 @@ import { Anchor, Box, Button, Card, Group, rgba, Stack, Text, ThemeIcon, useMant
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { notificationIconMap } from "~/pages/iconMapConfig";
+import DateUtils from "~/utils/DateUtils";
 
 function ClientNotificationCard({ notification }) {
   const theme = useMantineTheme();
@@ -44,7 +45,7 @@ function ClientNotificationCard({ notification }) {
                 />
               )}
               <Text size="xs" c="dimmed">
-                {notification.createdAt}
+                {DateUtils.formatterDate(notification.createdAt)}
               </Text>
             </Group>
             <Text size="sm">

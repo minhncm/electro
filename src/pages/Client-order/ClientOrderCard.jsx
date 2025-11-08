@@ -2,8 +2,11 @@ import { Anchor, Button, Card, Divider, Group, Image, Stack, Text, useMantineThe
 import { Link } from "react-router-dom";
 import OrderBadge from "~/components/OrderBadge/OrderBadge";
 import PaymentBadge from "~/components/PaymentBadge/PaymentBadge";
+import DateUtils from "~/utils/DateUtils";
+import DefaultImage from "~/images/image_default.png";
+import MiscUtils from "~/utils/MiscUtils";
 
-function ClientOrderCard() {
+function ClientOrderCard({ order }) {
   const theme = useMantineTheme();
 
   return (
@@ -17,60 +20,68 @@ function ClientOrderCard() {
       <Stack>
         <Group justify="space-between">
           <Group>
-            <Text fw={500}>Mã đơn hàng: 1R9LFP7EEFMJ</Text>
-            <Text c="dimmed">Ngày tạo: 29/10/2025</Text>
+            <Text fw={500}>Mã đơn hàng: {order.orderCode}</Text>
+            <Text c="dimmed">Ngày tạo: {DateUtils.formatterDate(order.orderCreatedAt, "DD/MM/YYYY")}</Text>
           </Group>
           <Group gap="xs">
-            <OrderBadge status={1} />
-            <PaymentBadge status={1} />
+            <OrderBadge status={order.orderStatus} />
+            <PaymentBadge status={order.orderPaymentStatus} />
           </Group>
         </Group>
         <Divider />
 
         {/* content */}
-        <Group justify="space-between">
-          <Group>
-            <Image
-              radius="md"
-              w={55}
-              h={55}
-              src="https://media-api-beta.thinkpro.vn/media/core/products/2022/12/18/beosound-2-thinkpro-01.jpeg?w=700&h=700"
-              alt=""
-            />
-            <Stack gap={3.5}>
-              <Anchor component={Link} to="/product/" fw={500} size="sm">
-                Loa di động B&O BeoSound
-              </Anchor>
-
-              <Stack gap={1.5}>
-                <Text size="xs" c="dimmed">
-                  Kích cỡ: L
-                </Text>
-                <Text size="xs" c="dimmed">
-                  Màu sắc: Đỏ
-                </Text>
+        {order.orderItems.map((orderItem) => (
+          <Group key={orderItem.orderItemVariant.variantId} justify="space-between">
+            <Group>
+              <Image
+                radius="md"
+                w={55}
+                h={55}
+                src={orderItem.orderItemVariant.variantProduct.productThumbnail || undefined}
+                alt={orderItem.orderItemVariant.variantProduct.productName}
+                fallbackSrc={DefaultImage}
+              />
+              <Stack gap={3.5}>
+                <Anchor
+                  component={Link}
+                  to={`/product/${orderItem.orderItemVariant.variantProduct.productSlug}`}
+                  fw={500}
+                  size="sm"
+                >
+                  {orderItem.orderItemVariant.variantProduct.productName}
+                </Anchor>
+                {orderItem.orderItemVariant.variantProperties && (
+                  <Stack gap={1.5}>
+                    {orderItem.orderItemVariant.variantProperties.content.map((variantProperty) => (
+                      <Text key={variantProperty.id} size="xs" c="dimmed">
+                        {variantProperty.name}: {variantProperty.value}
+                      </Text>
+                    ))}
+                  </Stack>
+                )}
               </Stack>
-            </Stack>
-          </Group>
+            </Group>
 
-          <Group gap="xs">
-            <Text>12.000.000 ₫</Text>
-            <Text c="blue" size="lg">
-              x1
-            </Text>
+            <Group gap="xs">
+              <Text>{MiscUtils.toVND(orderItem.orderItemPrice)}</Text>
+              <Text c="blue" size="lg">
+                ×{orderItem.orderItemQuantity}
+              </Text>
+            </Group>
           </Group>
-        </Group>
+        ))}
 
         <Divider />
         <Group justify="space-between">
-          <Button radius="md" variant="outline" component={Link} to={`/order/detail/${"1R9LFP7EEFMJ"}`}>
+          <Button radius="md" variant="outline" component={Link} to={`/order/detail/${order.orderCode}`}>
             Xem chi tiết
           </Button>
 
           <Group gap={5}>
             <Text>Tổng tiền: </Text>
             <Text size="lg" fw={500}>
-              69.300.000 ₫
+              {MiscUtils.toVND(order.orderTotalPay)}
             </Text>
           </Group>
         </Group>

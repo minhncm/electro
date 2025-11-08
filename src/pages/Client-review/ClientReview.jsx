@@ -82,12 +82,13 @@ function ClientReview() {
         </Stack>
 
         <Group justify="space-between" mt="lg">
-          <Pagination value={1} total={reviews.totalPages}>
+          <Pagination value={1} total={reviews.totalPages} />
+          <Text>
             <Text component="span" fw={500}>
               Trang 1
             </Text>
             <span> / {reviews.totalPages}</span>
-          </Pagination>
+          </Text>
         </Group>
       </>
     );
