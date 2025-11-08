@@ -54,7 +54,7 @@ function ClientHomeFeaturedCategories() {
     <div className="flex flex-col items-stretch gap-4">
       <div className="flex flex-wrap items-center justify-between">
         <h2 className="text-[26px] text-[#f76707] leading-[1.35] font-bold">Danh mục nổi bật</h2>
-        <Button size="sm" icon={<List size={16} />} to={"/user"} className="bg-soft text-primary hover:bg-[#d0ebffa6]">
+        <Button size="sm" icon={<List size={16} />} to={"/all-categories"} className="bg-soft text-primary hover:bg-[#d0ebffa6]">
           Xem tất cả
         </Button>
       </div>
