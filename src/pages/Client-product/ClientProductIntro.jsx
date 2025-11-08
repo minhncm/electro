@@ -124,13 +124,19 @@ function ClientProductIntro({ product }) {
                 }}
               >
                 <Group>
-                  {/* TODO: cập nhật price theo từng variant */}
                   <Text style={{ fontSize: 24 }} fw={700} c="pink">
-                    5.500.000 ₫
+                    {MiscUtils.toVND(
+                      MiscUtils.calculateDiscountedPrice(
+                        product.productVariants[selectedVariantIndex]?.variantPrice,
+                        product.productPromotion ? product.productPromotion.promotionPercent : 0
+                      )
+                    )}
                   </Text>
                   {product.productPromotion && (
                     <>
-                      <Text style={{ textDecoration: "line-through" }}>5.500.000 ₫</Text>
+                      <Text style={{ textDecoration: "line-through" }}>
+                        {MiscUtils.toVND(product.productVariants[selectedVariantIndex]?.variantPrice)}
+                      </Text>
                       <Badge color="pink" size="lg" variant="filled">
                         -{product.productPromotion.promotionPercent}%
                       </Badge>
@@ -185,7 +191,13 @@ function ClientProductIntro({ product }) {
                               Tồn kho: {variant.variantInventory}
                             </Text>
                             <Text size="xs" c="dimmed">
-                              Gía: 5.500.500 ₫
+                              Gía:{" "}
+                              {MiscUtils.toVND(
+                                MiscUtils.calculateDiscountedPrice(
+                                  variant.variantPrice,
+                                  product.productPromotion ? product.productPromotion.promotionPercent : 0
+                                )
+                              )}
                             </Text>
                           </Stack>
                         </UnstyledButton>

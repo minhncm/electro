@@ -71,7 +71,7 @@ function ClientProductCart({ product }) {
             {product.productPriceRange
               .map((price) => {
                 const p = product.productPromotion
-                  ? MiscUtils.calculateDiscoutedPrice(price, product.productPromotion.promotionPercent)
+                  ? MiscUtils.calculateDiscountedPrice(price, product.productPromotion.promotionPercent)
                   : price;
                 return MiscUtils.toVND(p);
               })

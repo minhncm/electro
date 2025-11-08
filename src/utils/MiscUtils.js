@@ -18,12 +18,12 @@ const toVND = (value) => {
   return formatted;
 };
 
-const calculateDiscoutedPrice = (price, discount) => (price * (100 - discount)) / 100;
+const calculateDiscountedPrice = (price, discount) => (price * (100 - discount)) / 100;
 
 const MiscUtils = {
   makeCaterogyBreadcrumbs,
   toVND,
-  calculateDiscoutedPrice,
+  calculateDiscountedPrice,
 };
 
 export default MiscUtils;

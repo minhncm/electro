@@ -45,7 +45,7 @@ function App() {
                 <Route path="/user/wishlist" element={<ClientWishlist />} />
                 <Route path="/user/preorder" element={<ClientPreorder />} />
                 <Route path="/user/chat" element={<ClientChat />} />
-                <Route path="/product" element={<ClientProduct />} />
+                <Route path="/product/:slug" element={<ClientProduct />} />
               </Route>
             </Routes>
           </div>
