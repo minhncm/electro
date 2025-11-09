@@ -5,7 +5,7 @@ import { BellPlus, HeartPlus, ShoppingCart } from "tabler-icons-react";
 import DefaultImage from "~/images/image_default.png";
 import MiscUtils from "~/utils/MiscUtils";
 
-function ClientProductCart({ product }) {
+function ClientProductCart({ product, search }) {
   const theme = useMantineTheme();
 
   const [opened, handler] = useDisclosure(false);
@@ -59,7 +59,7 @@ function ClientProductCart({ product }) {
           <Group gap="xs">
             <Text fw={500}>
               {/* update hightlight */}
-              <Highlight>{product.productName}</Highlight>
+              <Highlight highlight={search || ""}>{product.productName}</Highlight>
               {!product.productSaleable && (
                 <Badge size="xs" color="red" variant="filled">
                   Hết hàng

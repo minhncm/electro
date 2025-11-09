@@ -20,7 +20,8 @@ import ClientReward from "~/pages/Client-reward";
 import ClientPreorder from "~/pages/Client-preorder";
 import ClientChat from "~/pages/Client-chat";
 import ClientProduct from "~/pages/Client-product";
-import ClientAllCategories from "./pages/Client-all-category";
+import ClientAllCategories from "~/pages/Client-all-category";
+import ClientSearch from "~/pages/Client-search";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/user/chat" element={<ClientChat />} />
                 <Route path="/product/:slug" element={<ClientProduct />} />
                 <Route path="/all-categories" element={<ClientAllCategories />} />
+                <Route path="/search" element={<ClientSearch />} />
               </Route>
             </Routes>
           </div>
