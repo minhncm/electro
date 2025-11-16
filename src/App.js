@@ -23,6 +23,7 @@ import ClientProduct from "~/pages/Client-product";
 import ClientAllCategories from "~/pages/Client-all-category";
 import ClientSearch from "~/pages/Client-search";
 import ClientCategory from "~/pages/Client-category";
+import ClientSignin from "~/pages/Client-signin";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
                 <Route path="/all-categories" element={<ClientAllCategories />} />
                 <Route path="/category/:slug" element={<ClientCategory />} />
                 <Route path="/search" element={<ClientSearch />} />
+                <Route path="/signin" element={<ClientSignin />} />
               </Route>
             </Routes>
           </div>
