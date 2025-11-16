@@ -178,7 +178,7 @@ function ClientWishlist() {
           <Grid.Col span={9}>
             <Card radius="md" shadow="sm" p="lg">
               <Stack>
-                <Title order={2}>Đánh giá sản phẩm</Title>
+                <Title order={2}>Sản phẩm yêu thích</Title>
 
                 {wishlistContentFragment}
               </Stack>

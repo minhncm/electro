@@ -22,6 +22,7 @@ import ClientChat from "~/pages/Client-chat";
 import ClientProduct from "~/pages/Client-product";
 import ClientAllCategories from "~/pages/Client-all-category";
 import ClientSearch from "~/pages/Client-search";
+import ClientCategory from "~/pages/Client-category";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/user/chat" element={<ClientChat />} />
                 <Route path="/product/:slug" element={<ClientProduct />} />
                 <Route path="/all-categories" element={<ClientAllCategories />} />
+                <Route path="/category/:slug" element={<ClientCategory />} />
                 <Route path="/search" element={<ClientSearch />} />
               </Route>
             </Routes>

@@ -162,7 +162,7 @@ function ClientHeader() {
                       <DropdownMenuItem component={Link} to={"/user/preorder"} icon={<Alarm size={14} />}>
                         Đặt trước sản phẩm
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"/user"} icon={<MessageCircle size={14} />}>
+                      <DropdownMenuItem component={Link} to={"/user/chat"} icon={<MessageCircle size={14} />}>
                         Yêu cầu tư vấn
                       </DropdownMenuItem>
                       <DropdownMenuItem component={Link} to={"/user"} icon={<Logout size={14} />}>
