@@ -13,7 +13,7 @@ function ClientSignup() {
 
   const [active, setActive] = useState(currentStep);
 
-  const nextStep = () => setActive((current) => (current < 1 ? current + 1 : current === 1 ? 3 : current));
+  const nextStep = () => setActive((current) => (current < 1 ? current + 1 : current === 1 ? 3 : current)); // bỏ bước 3 đến ui completed
 
   return (
     <main>

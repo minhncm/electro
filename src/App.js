@@ -25,6 +25,8 @@ import ClientSearch from "~/pages/Client-search";
 import ClientCategory from "~/pages/Client-category";
 import ClientSignin from "~/pages/Client-signin";
 import ClientSignup from "~/pages/Client-signup";
+import Admin from "~/pages/Admin";
+import AdminAddress from "~/pages/Admin-address";
 
 function App() {
   return (
@@ -56,6 +58,9 @@ function App() {
                 <Route path="/search" element={<ClientSearch />} />
                 <Route path="/signin" element={<ClientSignin />} />
                 <Route path="/signup" element={<ClientSignup />} />
+              </Route>
+              <Route path="/admin" element={<Admin />}>
+                <Route path="/admin/address" element={<AdminAddress />} />
               </Route>
             </Routes>
           </div>
