@@ -247,18 +247,23 @@ function AdminNavbar() {
               label={navbarLink.label}
               leftSection={<navbarLink.icon size={24} />}
               rightSection={navbarLink.childLinks?.length > 0 && <ChevronRight size={12} />}
+              fw={500}
               variant="light"
               active={navbarLink.label === active}
-              onClick={() => setActive(navbarLink.label)}
+              opened={navbarLink.label === active}
               childrenOffset={0}
+              onClick={() => setActive(navbarLink.label)}
             >
               {navbarLink.label === active &&
                 (navbarLink.childLinks || []).map((childLink) => (
                   <NavLink
+                    c={theme.colors.blue[6]}
+                    color={theme.colors.blue[3]}
                     component={Link}
                     to={childLink.link}
                     label={childLink.label}
                     leftSection={<Point />}
+                    fw={500}
                     variant="light"
                     active
                   />
