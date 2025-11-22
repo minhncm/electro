@@ -5,7 +5,7 @@ import AdminNavbar from "~/components/AdminNavbar";
 
 function Admin() {
   return (
-    <AppShell pos="fixed" header={{ height: 56 }} navbar={{ breakpoint: "sm" }}>
+    <AppShell padding="md" header={{ height: 56 }} navbar={{ width: 250, breakpoint: "sm" }}>
       <AdminHeader />
       <Outlet />
       <AdminNavbar />

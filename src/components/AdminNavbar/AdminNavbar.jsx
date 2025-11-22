@@ -257,6 +257,7 @@ function AdminNavbar() {
               {navbarLink.label === active &&
                 (navbarLink.childLinks || []).map((childLink) => (
                   <NavLink
+                    key={childLink.label}
                     c={theme.colors.blue[6]}
                     color={theme.colors.blue[3]}
                     component={Link}

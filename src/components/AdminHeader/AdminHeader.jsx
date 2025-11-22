@@ -1,8 +1,7 @@
-import { ActionIcon, AppShell, Box, Burger, Group, useMantineTheme } from "@mantine/core";
+import { ActionIcon, AppShell, Box, Burger, Button, Group, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
 import ElectroLogo from "../ElectroLogo/ElectroLogo";
 import { Bell, Browser, Logout, Messages, MoonStars, Search, Sun, User } from "tabler-icons-react";
-import clsx from "clsx";
 
 function AdminHeader() {
   const theme = useMantineTheme();
@@ -86,10 +85,12 @@ function AdminHeader() {
         <Group>
           <Group ml={50} gap={5} style={classes.links}>
             {headerLinks.map((headerLink) => (
-              <Link key={headerLink.label} to={headerLink.link} target={headerLink.target} style={classes.link}>
-                <headerLink.icon size={16} style={{ marginRight: 7.5 }} />
-                {headerLink.label}
-              </Link>
+              <Button size="xs" variant="subtle" px={0} color={theme.colors.gray[5]} fw={500}>
+                <Link key={headerLink.label} to={headerLink.link} target={headerLink.target} style={classes.link}>
+                  <headerLink.icon size={16} style={{ marginRight: 7.5 }} />
+                  {headerLink.label}
+                </Link>
+              </Button>
             ))}
           </Group>
 
