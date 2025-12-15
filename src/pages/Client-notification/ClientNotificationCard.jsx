@@ -1,7 +1,7 @@
 import { Anchor, Box, Button, Card, Group, rgba, Stack, Text, ThemeIcon, useMantineTheme } from "@mantine/core";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { notificationIconMap } from "~/pages/iconMapConfig";
+import { notificationIconMap } from "~/pages/PageConfig";
 import DateUtils from "~/utils/DateUtils";
 
 function ClientNotificationCard({ notification }) {

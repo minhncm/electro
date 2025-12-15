@@ -1,7 +1,7 @@
 import { Anchor, Breadcrumbs, Card, Grid, Group, Stack, Text, ThemeIcon, Title, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
 import Container from "~/components/Container/Container";
-import { categorySlugIconMap } from "~/pages/iconMapConfig";
+import { categorySlugIconMap } from "~/pages/PageConfig";
 
 const categories = {
   content: [

@@ -1,6 +1,6 @@
 import { Tabs } from "radix-ui";
 import { Link } from "react-router-dom";
-import { categorySlugIconMap } from "~/pages/iconMapConfig";
+import { categorySlugIconMap } from "~/pages/PageConfig";
 
 function CategoryHeader({ categories }) {
   return (

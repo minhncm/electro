@@ -234,7 +234,6 @@ const navbarLinks = [
 function AdminNavbar() {
   const theme = useMantineTheme();
   const [active, setActive] = useState("Trang chủ");
-  console.log(active);
 
   return (
     <AppShell.Navbar p="md" w={250}>

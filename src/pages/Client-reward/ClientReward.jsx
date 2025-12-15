@@ -2,7 +2,7 @@ import { Badge, Card, Grid, Group, Stack, Text, ThemeIcon, Title, useMantineThem
 import { Award, Marquee } from "tabler-icons-react";
 import ClientUserNavbar from "~/components/ClientUserNavbar/ClientUserNavbar";
 import Container from "~/components/Container/Container";
-import { RewardLogInfoMap } from "~/pages/iconMapConfig";
+import { RewardLogInfoMap } from "~/pages/PageConfig";
 
 const reward = {
   rewardTotalScore: 50,
