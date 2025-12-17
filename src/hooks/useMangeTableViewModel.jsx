@@ -3,13 +3,7 @@ import { useModals } from "@mantine/modals";
 import { useState } from "react";
 import EntityDetailTable from "~/components/EntityDetailTable";
 
-function useManageTableViewModel({
-  listResponse,
-  properties,
-  resourceUrl,
-  resourceKey,
-  entityDetailTableRowsFragment,
-}) {
+function useManageTableViewModel({ listResponse, properties, entityDetailTableRowsFragment }) {
   const modals = useModals();
 
   const [selection, setSelection] = useState([]);
@@ -25,18 +19,11 @@ function useManageTableViewModel({
   const handleToggleRowsCheckBox = (entityId) =>
     setSelection((prev) => (prev.includes(entityId) ? prev.filter((item) => item !== entityId) : [...prev, entityId]));
 
-  const handleViewEntityButton = (entityId) => {
+  const handleViewEntityButton = (entity) => {
     modals.openModal({
       size: "lg",
       title: <strong>Thông tin chi tiết</strong>,
-      children: (
-        <EntityDetailTable
-          entityId={entityId}
-          resourceUrl={resourceUrl}
-          resourceKey={resourceKey}
-          entityDetailTableRowsFragment={entityDetailTableRowsFragment}
-        />
-      ),
+      children: <EntityDetailTable entity={entity} entityDetailTableRowsFragment={entityDetailTableRowsFragment} />,
     });
   };
 

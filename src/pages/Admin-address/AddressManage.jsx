@@ -148,7 +148,7 @@ const listResponse = {
 };
 
 function AdminAddress() {
-  const ShowedPropertiesFragment = ({ entity }) => (
+  const showedPropertiesFragment = (entity) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
@@ -171,7 +171,7 @@ function AdminAddress() {
     </>
   );
 
-  const EntityDetailTableRowsFragment = ({ entity }) => (
+  const entityDetailTableRowsFragment = (entity) => (
     <>
       <Table.Tr>
         <Table.Td>{AddressConfigs.properties.id.label}</Table.Td>
@@ -190,7 +190,7 @@ function AdminAddress() {
         <Table.Td>{entity.line}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{AddressConfigs.properties.provinceName.label}</Table.Td>
+        <Table.Td>{AddressConfigs.properties["province.name"].label}</Table.Td>
         <Table.Td>{entity.province?.name}</Table.Td>
       </Table.Tr>
       <Table.Tr>
@@ -198,7 +198,7 @@ function AdminAddress() {
         <Table.Td>{entity.province?.code}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{AddressConfigs.properties.districtName.label}</Table.Td>
+        <Table.Td>{AddressConfigs.properties["district.name"].label}</Table.Td>
         <Table.Td>{entity.district?.name}</Table.Td>
       </Table.Tr>
       <Table.Tr>
@@ -218,10 +218,8 @@ function AdminAddress() {
         <ManageTable
           listResponse={listResponse}
           properties={AddressConfigs.properties}
-          resourceUrl={AddressConfigs.resourceUrl}
-          resourceKey={AddressConfigs.resourceKey}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={showedPropertiesFragment}
+          entityDetailTableRowsFragment={entityDetailTableRowsFragment}
         />
       </ManageMain>
 

@@ -3,14 +3,7 @@ import { Link } from "react-router-dom";
 import { Edit, Eye, Trash } from "tabler-icons-react";
 import useManageTableViewModel from "~/hooks/useMangeTableViewModel";
 
-function ManageTable({
-  listResponse,
-  properties,
-  resourceUrl,
-  resourceKey,
-  showedPropertiesFragment,
-  entityDetailTableRowsFragment,
-}) {
+function ManageTable({ listResponse, properties, showedPropertiesFragment, entityDetailTableRowsFragment }) {
   const theme = useMantineTheme();
 
   const {
@@ -23,8 +16,6 @@ function ManageTable({
   } = useManageTableViewModel({
     listResponse,
     properties,
-    resourceUrl,
-    resourceKey,
     entityDetailTableRowsFragment,
   });
 
@@ -57,7 +48,7 @@ function ManageTable({
             variant="outline"
             size={24}
             title="Xem"
-            onClick={() => handleViewEntityButton(entity.id)}
+            onClick={() => handleViewEntityButton(entity)}
           >
             <Eye size={16} />
           </ActionIcon>

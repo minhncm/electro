@@ -26,9 +26,12 @@ import ClientCategory from "~/pages/Client-category";
 import ClientSignin from "~/pages/Client-signin";
 import ClientSignup from "~/pages/Client-signup";
 import Admin from "~/pages/Admin";
-import AdminAddress from "~/pages/Admin-address";
-import AddressCreate from "./pages/Admin-address/AddressCreate";
-import AddressUpdate from "./pages/Admin-address/AddressUpdate";
+import AddressManage from "~/pages/Admin-address";
+import AddressCreate from "~/pages/Admin-address/AddressCreate";
+import AddressUpdate from "~/pages/Admin-address/AddressUpdate";
+import ProvinceManage from "~/pages/Admin-province";
+import ProvinceCreate from "~/pages/Admin-province/ProvinceCreate";
+import ProvinceUpdate from "~/pages/Admin-province/ProvinceUpdate";
 
 function App() {
   return (
@@ -62,9 +65,12 @@ function App() {
                 <Route path="/signup" element={<ClientSignup />} />
               </Route>
               <Route path="/admin" element={<Admin />}>
-                <Route path="/admin/address" element={<AdminAddress />} />
+                <Route path="/admin/address" element={<AddressManage />} />
                 <Route path="/admin/address/create" element={<AddressCreate />} />
                 <Route path="/admin/address/update/:id" element={<AddressUpdate />} />
+                <Route path="/admin/address/province" element={<ProvinceManage />} />
+                <Route path="/admin/address/province/create" element={<ProvinceCreate />} />
+                <Route path="/admin/address/province/update/:id" element={<ProvinceUpdate />} />
               </Route>
             </Routes>
           </div>

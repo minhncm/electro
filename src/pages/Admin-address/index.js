@@ -1,2 +1,2 @@
-import AdminAddress from "./AdminAddess";
-export default AdminAddress;
+import AddressManage from "./AddressManage";
+export default AddressManage;

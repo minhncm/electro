@@ -23,7 +23,7 @@ class AddressConfigs extends Configs {
       label: "Địa chỉ",
       isShowInTable: true,
     },
-    provinceName: {
+    "province.name": {
       label: "Tên tỉnh thành",
       isShowInTable: true,
     },
@@ -31,16 +31,16 @@ class AddressConfigs extends Configs {
       label: "Mã tỉnh thành",
       isShowInTable: false,
     },
-    provinceId: {
-      label: "Tỉnh thành",
-      isShowInTable: false,
-    },
-    districtName: {
+    "district.name": {
       label: "Tên quận huyện",
       isShowInTable: true,
     },
     "district.code": {
-      label: "Mã tỉnh thành",
+      label: "Mã quận huyện",
+      isShowInTable: false,
+    },
+    provinceId: {
+      label: "Tỉnh thành",
       isShowInTable: false,
     },
     districtId: {
