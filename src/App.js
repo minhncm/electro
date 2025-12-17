@@ -27,6 +27,8 @@ import ClientSignin from "~/pages/Client-signin";
 import ClientSignup from "~/pages/Client-signup";
 import Admin from "~/pages/Admin";
 import AdminAddress from "~/pages/Admin-address";
+import AddressCreate from "./pages/Admin-address/AddressCreate";
+import AddressUpdate from "./pages/Admin-address/AddressUpdate";
 
 function App() {
   return (
@@ -61,6 +63,8 @@ function App() {
               </Route>
               <Route path="/admin" element={<Admin />}>
                 <Route path="/admin/address" element={<AdminAddress />} />
+                <Route path="/admin/address/create" element={<AddressCreate />} />
+                <Route path="/admin/address/update/:id" element={<AddressUpdate />} />
               </Route>
             </Routes>
           </div>

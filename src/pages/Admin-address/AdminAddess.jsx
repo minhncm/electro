@@ -1,4 +1,4 @@
-import { AppShell, Highlight, Stack, Table } from "@mantine/core";
+import { Highlight, Stack, Table } from "@mantine/core";
 import FilterPanel from "~/components/FilterPanel";
 import ManageHeader from "~/components/ManageHeader";
 import ManageMain from "~/components/ManageMain/ManageMain";
@@ -209,26 +209,24 @@ function AdminAddress() {
   );
 
   return (
-    <AppShell.Main bg="gray.0">
-      <Stack>
-        <ManageHeader title={"Quản lý địa chỉ"} />
-        <SearchPanel />
-        {/* <FilterPanel /> */}
+    <Stack>
+      <ManageHeader title={"Quản lý địa chỉ"} />
+      <SearchPanel />
+      {/* <FilterPanel /> */}
 
-        <ManageMain listResponse={listResponse} isLoading={false}>
-          <ManageTable
-            listResponse={listResponse}
-            properties={AddressConfigs.properties}
-            resourceUrl={AddressConfigs.resourceUrl}
-            resourceKey={AddressConfigs.resourceKey}
-            showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-            entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
-          />
-        </ManageMain>
+      <ManageMain listResponse={listResponse} isLoading={false}>
+        <ManageTable
+          listResponse={listResponse}
+          properties={AddressConfigs.properties}
+          resourceUrl={AddressConfigs.resourceUrl}
+          resourceKey={AddressConfigs.resourceKey}
+          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
+          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+        />
+      </ManageMain>
 
-        <ManagePagination />
-      </Stack>
-    </AppShell.Main>
+      <ManagePagination />
+    </Stack>
   );
 }
 

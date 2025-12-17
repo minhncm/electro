@@ -1,14 +1,22 @@
-import SetStateAction from "react";
-import create, { StateCreate } from "zustand";
+import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { CreateTrackedSelector } from "react-tracked";
+import createManagePageSlice from "~/stores/create-manage-page-slice";
 
 export const extractValue = (state, value, key) => ({
   [key]: typeof value === "function" ? value(state[key]) : value,
 });
 
 const useAppStore = create(
-    devtools(
-        
-    )
+  devtools(
+    (...methods) => ({
+      ...createManagePageSlice(...methods),
+    }),
+    {
+      name: "AppStore",
+      anonymousActionType: "AppStore",
+    }
+  )
 );
+
+export default CreateTrackedSelector(useAppStore);

@@ -7,7 +7,9 @@ function Admin() {
   return (
     <AppShell padding="md" header={{ height: 56 }} navbar={{ width: 250, breakpoint: "sm" }}>
       <AdminHeader />
-      <Outlet />
+      <AppShell.Main bg="gray.0">
+        <Outlet />
+      </AppShell.Main>
       <AdminNavbar />
     </AppShell>
   );
