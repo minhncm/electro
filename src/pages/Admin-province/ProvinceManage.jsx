@@ -54,7 +54,7 @@ const listResponse = {
 };
 
 function ProvinceManage() {
-  const showedPropertiesFragment = (entity) => (
+  const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
@@ -68,7 +68,7 @@ function ProvinceManage() {
     </>
   );
 
-  const entityDetailTableRowsFragment = (entity) => (
+  const EntityDetailTableRowsFragment = ({ entity }) => (
     <>
       <Table.Tr>
         <Table.Td>{ProvinceConfigs.properties.id.label}</Table.Td>
@@ -103,8 +103,8 @@ function ProvinceManage() {
         <ManageTable
           listResponse={listResponse}
           properties={ProvinceConfigs.properties}
-          showedPropertiesFragment={showedPropertiesFragment}
-          entityDetailTableRowsFragment={entityDetailTableRowsFragment}
+          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
+          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
         ></ManageTable>
       </ManageMain>
 

@@ -148,30 +148,24 @@ const listResponse = {
 };
 
 function AdminAddress() {
-  const showedPropertiesFragment = (entity) => (
+  const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.line || ""}
-        </Highlight>
+        <Highlight size="sm">{entity.line || ""}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.province?.name || ""}
-        </Highlight>
+        <Highlight size="sm">{entity.province?.name || ""}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.district?.name || ""}
-        </Highlight>
+        <Highlight size="sm">{entity.district?.name || ""}</Highlight>
       </Table.Td>
     </>
   );
 
-  const entityDetailTableRowsFragment = (entity) => (
+  const EntityDetailTableRowsFragment = ({ entity }) => (
     <>
       <Table.Tr>
         <Table.Td>{AddressConfigs.properties.id.label}</Table.Td>
@@ -218,8 +212,8 @@ function AdminAddress() {
         <ManageTable
           listResponse={listResponse}
           properties={AddressConfigs.properties}
-          showedPropertiesFragment={showedPropertiesFragment}
-          entityDetailTableRowsFragment={entityDetailTableRowsFragment}
+          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
+          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
         />
       </ManageMain>
 

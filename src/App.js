@@ -32,6 +32,9 @@ import AddressUpdate from "~/pages/Admin-address/AddressUpdate";
 import ProvinceManage from "~/pages/Admin-province";
 import ProvinceCreate from "~/pages/Admin-province/ProvinceCreate";
 import ProvinceUpdate from "~/pages/Admin-province/ProvinceUpdate";
+import DistrictManage from "~/pages/Admin-district";
+import DistrictCreate from "~/pages/Admin-district/DistrictCreate";
+import DistrictUpdate from "~/pages/Admin-district/DistrictUpdate";
 
 function App() {
   return (
@@ -71,6 +74,9 @@ function App() {
                 <Route path="/admin/address/province" element={<ProvinceManage />} />
                 <Route path="/admin/address/province/create" element={<ProvinceCreate />} />
                 <Route path="/admin/address/province/update/:id" element={<ProvinceUpdate />} />
+                <Route path="/admin/address/district" element={<DistrictManage />} />
+                <Route path="/admin/address/district/create" element={<DistrictCreate />} />
+                <Route path="/admin/address/district/update/:id" element={<DistrictUpdate />} />
               </Route>
             </Routes>
           </div>

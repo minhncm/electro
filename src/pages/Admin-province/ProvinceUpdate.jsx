@@ -7,7 +7,7 @@ import Button from "~/components/common/Button";
 function ProvinceUpdate() {
   return (
     <Stack maw={800}>
-      <CreateUpdateTitle managerPath={ProvinceConfigs.managerPath} title={ProvinceConfigs.createTitle} />
+      <CreateUpdateTitle managerPath={ProvinceConfigs.managerPath} title={ProvinceConfigs.updateTitle} />
 
       <DefaultPropertyPanel />
 
@@ -16,10 +16,10 @@ function ProvinceUpdate() {
           <Stack gap={0}>
             <Grid p="sm">
               <Grid.Col span={6}>
-                <Select label={ProvinceConfigs.properties.name.label} placeholder="--" clearable searchable />
+                <Select required label={ProvinceConfigs.properties.name.label} placeholder="--" clearable searchable />
               </Grid.Col>
               <Grid.Col span={6}>
-                <Select label={ProvinceConfigs.properties.code.label} placeholder="--" clearable searchable />
+                <Select required label={ProvinceConfigs.properties.code.label} placeholder="--" clearable searchable />
               </Grid.Col>
             </Grid>
 

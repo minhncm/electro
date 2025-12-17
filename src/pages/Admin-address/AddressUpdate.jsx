@@ -15,13 +15,25 @@ function AddressUpdate() {
           <Stack gap={0}>
             <Grid p="sm">
               <Grid.Col>
-                <TextInput label={AddressConfigs.properties.line.label} />
+                <TextInput required label={AddressConfigs.properties.line.label} />
               </Grid.Col>
               <Grid.Col span={6}>
-                <Select label={AddressConfigs.properties.provinceId.label} placeholder="--" clearable searchable />
+                <Select
+                  required
+                  label={AddressConfigs.properties.provinceId.label}
+                  placeholder="--"
+                  clearable
+                  searchable
+                />
               </Grid.Col>
               <Grid.Col span={6}>
-                <Select label={AddressConfigs.properties.districtId.label} placeholder="--" clearable searchable />
+                <Select
+                  required
+                  label={AddressConfigs.properties.districtId.label}
+                  placeholder="--"
+                  clearable
+                  searchable
+                />
               </Grid.Col>
             </Grid>
 
