@@ -4,6 +4,8 @@ const ResourceUrl = {
   ADDRESS: ApplicationPath.API_PATH + "/addresses",
   PROVINCE: ApplicationPath.API_PATH + "/provinces",
   DISTRICT: ApplicationPath.API_PATH + "/districts",
+
+  USER: ApplicationPath.API_PATH + "/users",
 };
 
 export default ResourceUrl;

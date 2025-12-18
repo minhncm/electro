@@ -35,6 +35,10 @@ import ProvinceUpdate from "~/pages/Admin-province/ProvinceUpdate";
 import DistrictManage from "~/pages/Admin-district";
 import DistrictCreate from "~/pages/Admin-district/DistrictCreate";
 import DistrictUpdate from "~/pages/Admin-district/DistrictUpdate";
+import UserManager from "~/pages/Admin-user";
+import UserCreate from "~/pages/Admin-user/UserCreate";
+import UserUpdate from "~/pages/Admin-user/UserUpdate";
+import ManagerPath from "~/constants/ManagerPath";
 
 function App() {
   return (
@@ -68,15 +72,18 @@ function App() {
                 <Route path="/signup" element={<ClientSignup />} />
               </Route>
               <Route path="/admin" element={<Admin />}>
-                <Route path="/admin/address" element={<AddressManage />} />
-                <Route path="/admin/address/create" element={<AddressCreate />} />
-                <Route path="/admin/address/update/:id" element={<AddressUpdate />} />
-                <Route path="/admin/address/province" element={<ProvinceManage />} />
-                <Route path="/admin/address/province/create" element={<ProvinceCreate />} />
-                <Route path="/admin/address/province/update/:id" element={<ProvinceUpdate />} />
-                <Route path="/admin/address/district" element={<DistrictManage />} />
-                <Route path="/admin/address/district/create" element={<DistrictCreate />} />
-                <Route path="/admin/address/district/update/:id" element={<DistrictUpdate />} />
+                <Route path={ManagerPath.ADDRESS} element={<AddressManage />} />
+                <Route path={ManagerPath.ADDRESS + "/create"} element={<AddressCreate />} />
+                <Route path={ManagerPath.ADDRESS + "/update/:id"} element={<AddressUpdate />} />
+                <Route path={ManagerPath.PROVINCE} element={<ProvinceManage />} />
+                <Route path={ManagerPath.PROVINCE + "/create"} element={<ProvinceCreate />} />
+                <Route path={ManagerPath.PROVINCE + "/update/:id"} element={<ProvinceUpdate />} />
+                <Route path={ManagerPath.DISTRICT} element={<DistrictManage />} />
+                <Route path={ManagerPath.DISTRICT + "/create"} element={<DistrictCreate />} />
+                <Route path={ManagerPath.DISTRICT + "/update/:id"} element={<DistrictUpdate />} />
+                <Route path={ManagerPath.USER} element={<UserManager />} />
+                <Route path={ManagerPath.USER + "/create"} element={<UserCreate />} />
+                <Route path={ManagerPath.USER + "/update/:id"} element={<UserUpdate />} />
               </Route>
             </Routes>
           </div>
