@@ -6,6 +6,7 @@ const ResourceUrl = {
   DISTRICT: ApplicationPath.API_PATH + "/districts",
 
   USER: ApplicationPath.API_PATH + "/users",
+  ROLE: ApplicationPath.API_PATH + "/roles",
 };
 
 export default ResourceUrl;

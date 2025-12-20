@@ -378,7 +378,7 @@ function UserManager() {
   );
   return (
     <Stack>
-      <ManageHeader title="Quản lý người dùng" />
+      <ManageHeader title={UserConfigs.manageTitle} />
 
       <SearchPanel />
       <FilterPanel />

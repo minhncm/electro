@@ -39,6 +39,9 @@ import UserManager from "~/pages/Admin-user";
 import UserCreate from "~/pages/Admin-user/UserCreate";
 import UserUpdate from "~/pages/Admin-user/UserUpdate";
 import ManagerPath from "~/constants/ManagerPath";
+import RoleManage from "~/pages/Admin-role";
+import RoleCreate from "~/pages/Admin-role/RoleCreate";
+import RoleUpdate from "~/pages/Admin-role/RoleUpdate";
 
 function App() {
   return (
@@ -84,6 +87,9 @@ function App() {
                 <Route path={ManagerPath.USER} element={<UserManager />} />
                 <Route path={ManagerPath.USER + "/create"} element={<UserCreate />} />
                 <Route path={ManagerPath.USER + "/update/:id"} element={<UserUpdate />} />
+                <Route path={ManagerPath.ROLE} element={<RoleManage />} />
+                <Route path={ManagerPath.ROLE + "/create"} element={<RoleCreate />} />
+                <Route path={ManagerPath.ROLE + "/update/:id"} element={<RoleUpdate />} />
               </Route>
             </Routes>
           </div>
