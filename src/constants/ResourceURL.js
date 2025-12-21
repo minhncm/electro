@@ -7,6 +7,8 @@ const ResourceUrl = {
 
   USER: ApplicationPath.API_PATH + "/users",
   ROLE: ApplicationPath.API_PATH + "/roles",
+
+  EMPLOYEE: ApplicationPath.API_PATH + "/employees",
 };
 
 export default ResourceUrl;

@@ -6,6 +6,8 @@ const ManagerPath = {
 
   USER: "/admin/user",
   ROLE: "/admin/user/role",
+
+  EMPLOYEE: "/admin/employee",
 };
 
 export default ManagerPath;
