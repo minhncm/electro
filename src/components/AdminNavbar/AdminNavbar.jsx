@@ -1,6 +1,6 @@
 import { AppShell, NavLink, ScrollArea, Stack, useMantineTheme } from "@mantine/core";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AddressBook,
   Award,
@@ -233,7 +233,8 @@ const navbarLinks = [
 
 function AdminNavbar() {
   const theme = useMantineTheme();
-  const [active, setActive] = useState("Trang chủ");
+  const location = useLocation();
+  const [active, setActive] = useState(location.pathname);
 
   return (
     <AppShell.Navbar p="md" w={250}>
@@ -241,34 +242,33 @@ function AdminNavbar() {
         {navbarLinks.map((navbarLink) => (
           <Stack key={navbarLink.label} gap={0} bdrs={theme.radius.sm} style={{ overflow: "hidden" }}>
             <NavLink
+              pt="sm"
               component={Link}
               to={navbarLink.link}
               label={navbarLink.label}
               leftSection={<navbarLink.icon size={24} />}
-              rightSection={navbarLink.childLinks?.length > 0 && <ChevronRight size={12} />}
               fw={500}
               variant="light"
-              active={navbarLink.label === active}
-              opened={navbarLink.label === active}
+              active={active === navbarLink.link}
+              opened={active === navbarLink.link}
               childrenOffset={0}
-              onClick={() => setActive(navbarLink.label)}
-            >
-              {navbarLink.label === active &&
-                (navbarLink.childLinks || []).map((childLink) => (
-                  <NavLink
-                    key={childLink.label}
-                    c={theme.colors.blue[6]}
-                    color={theme.colors.blue[3]}
-                    component={Link}
-                    to={childLink.link}
-                    label={childLink.label}
-                    leftSection={<Point />}
-                    fw={500}
-                    variant="light"
-                    active
-                  />
-                ))}
-            </NavLink>
+              onClick={() => setActive(navbarLink.link)}
+            />
+            {active === navbarLink.link &&
+              navbarLink.childLinks?.map((childLink) => (
+                <NavLink
+                  key={childLink.label}
+                  c={theme.colors.blue[6]}
+                  color={theme.colors.blue[3]}
+                  component={Link}
+                  to={childLink.link}
+                  label={childLink.label}
+                  leftSection={<Point />}
+                  fw={500}
+                  variant="light"
+                  active
+                />
+              ))}
           </Stack>
         ))}
       </AppShell.Section>
