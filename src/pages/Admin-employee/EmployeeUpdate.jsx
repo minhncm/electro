@@ -17,13 +17,13 @@ import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
 function EmployeeUpdate() {
   return (
     <Stack maw={800}>
-      <CreateUpdateTitle managerPath={EmployeeConfigs.managerPath} title={EmployeeConfigs.createTitle} />
+      <CreateUpdateTitle managerPath={EmployeeConfigs.managerPath} title={EmployeeConfigs.updateTitle} />
 
       <DefaultPropertyPanel />
 
       <form>
         <Paper shadow="xs">
-          <Stack spacing={0}>
+          <Stack gap={0}>
             <Grid p="sm">
               <Grid.Col span={6}>
                 <TextInput required label={EmployeeConfigs.properties["user.username"].label} />
@@ -95,7 +95,7 @@ function EmployeeUpdate() {
 
             <Divider mt="xs" />
 
-            <Group position="apart" p="sm">
+            <Group justify="space-between" p="sm">
               <Button variant="default">Mặc định</Button>
               <Button type="submit">Thêm</Button>
             </Group>
