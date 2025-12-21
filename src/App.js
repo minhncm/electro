@@ -45,6 +45,9 @@ import RoleUpdate from "~/pages/Admin-role/RoleUpdate";
 import EmployeeManage from "~/pages/Admin-employee/EmployeeManage";
 import EmployeeCreate from "~/pages/Admin-employee/EmployeeCreate";
 import EmployeeUpdate from "~/pages/Admin-employee/EmployeeUpdate";
+import OfficeManage from "~/pages/Admin-office";
+import OfficeCreate from "./pages/Admin-office/OfficeCreate";
+import OfficeUpdate from "./pages/Admin-office/OfficeUpdate";
 
 function App() {
   return (
@@ -96,6 +99,9 @@ function App() {
                 <Route path={ManagerPath.EMPLOYEE} element={<EmployeeManage />} />
                 <Route path={ManagerPath.EMPLOYEE + "/create"} element={<EmployeeCreate />} />
                 <Route path={ManagerPath.EMPLOYEE + "/update/:id"} element={<EmployeeUpdate />} />
+                <Route path={ManagerPath.OFFICE} element={<OfficeManage />} />
+                <Route path={ManagerPath.OFFICE + "/create"} element={<OfficeCreate />} />
+                <Route path={ManagerPath.OFFICE + "/update/:id"} element={<OfficeUpdate />} />
               </Route>
             </Routes>
           </div>

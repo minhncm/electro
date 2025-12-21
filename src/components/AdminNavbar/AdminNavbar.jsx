@@ -8,7 +8,6 @@ import {
   Building,
   BuildingWarehouse,
   Car,
-  ChevronRight,
   CurrencyDollar,
   FileBarcode,
   Fingerprint,

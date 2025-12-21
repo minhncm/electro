@@ -1,7 +1,7 @@
 import { ActionIcon, Checkbox, Group, Table, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { Edit, Eye, Trash } from "tabler-icons-react";
-import useManageTableViewModel from "~/hooks/useMangeTableViewModel";
+import useManageTableViewModel from "~/components/ManageTable/useMangeTableViewModel";
 
 function ManageTable({ listResponse, properties, showedPropertiesFragment, entityDetailTableRowsFragment }) {
   const theme = useMantineTheme();

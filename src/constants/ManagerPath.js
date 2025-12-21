@@ -8,6 +8,11 @@ const ManagerPath = {
   ROLE: "/admin/user/role",
 
   EMPLOYEE: "/admin/employee",
+  OFFICE: "/admin/employee/office",
+  DEPARTMENT: "/admin/employee/department",
+  JOB_TYPE: "/admin/employee/job-type",
+  JOB_LEVEL: "/admin/employee/job-level",
+  JOB_TITLE: "/admin/employee/job-title",
 };
 
 export default ManagerPath;
