@@ -51,6 +51,9 @@ import OfficeUpdate from "~/pages/Admin-office/OfficeUpdate";
 import DepartmentManage from "~/pages/Admin-department";
 import DepartmentCreate from "~/pages/Admin-department/DepartmentCreate";
 import DepartmentUpdate from "~/pages/Admin-department/DepartmentUpdate";
+import JobTypeManage from "~/pages/Admin-jobType";
+import JobTypeCreate from "~/pages/Admin-jobType/JobTypeCreate";
+import JobTypeUpdate from "~/pages/Admin-jobType/JobTypeUpdate";
 
 function App() {
   return (
@@ -108,6 +111,9 @@ function App() {
                 <Route path={ManagerPath.DEPARTMENT} element={<DepartmentManage />} />
                 <Route path={ManagerPath.DEPARTMENT + "/create"} element={<DepartmentCreate />} />
                 <Route path={ManagerPath.DEPARTMENT + "/update/:id"} element={<DepartmentUpdate />} />
+                <Route path={ManagerPath.JOB_TYPE} element={<JobTypeManage />} />
+                <Route path={ManagerPath.JOB_TYPE + "/create"} element={<JobTypeCreate />} />
+                <Route path={ManagerPath.JOB_TYPE + "/update/:id"} element={<JobTypeUpdate />} />
               </Route>
             </Routes>
           </div>
