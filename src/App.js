@@ -54,6 +54,9 @@ import DepartmentUpdate from "~/pages/Admin-department/DepartmentUpdate";
 import JobTypeManage from "~/pages/Admin-jobType";
 import JobTypeCreate from "~/pages/Admin-jobType/JobTypeCreate";
 import JobTypeUpdate from "~/pages/Admin-jobType/JobTypeUpdate";
+import JobLevelManage from "~/pages/Admin-jobLevel";
+import JobLevelCreate from "~/pages/Admin-jobLevel/JobLevelCreate";
+import JobLevelUpdate from "~/pages/Admin-jobLevel/JobLevelUpdate";
 
 function App() {
   return (
@@ -114,6 +117,9 @@ function App() {
                 <Route path={ManagerPath.JOB_TYPE} element={<JobTypeManage />} />
                 <Route path={ManagerPath.JOB_TYPE + "/create"} element={<JobTypeCreate />} />
                 <Route path={ManagerPath.JOB_TYPE + "/update/:id"} element={<JobTypeUpdate />} />
+                <Route path={ManagerPath.JOB_LEVEL} element={<JobLevelManage />} />
+                <Route path={ManagerPath.JOB_LEVEL + "/create"} element={<JobLevelCreate />} />
+                <Route path={ManagerPath.JOB_LEVEL + "/update/:id"} element={<JobLevelUpdate />} />
               </Route>
             </Routes>
           </div>

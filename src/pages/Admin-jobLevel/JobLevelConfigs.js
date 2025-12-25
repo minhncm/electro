@@ -4,24 +4,24 @@ import EmployeeConfigs from "~/pages/Admin-employee/EmployeeConfigs";
 import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 
-class JobTypeConfigs extends Configs {
-  static managerPath = ManagerPath.JOB_TYPE;
-  static resourceUrl = ResourceUrl.JOB_TYPE;
-  static resourceKey = "job-types";
-  static createTitle = "Thêm loại hình công việc";
-  static updateTitle = "Cập nhật loại hình công việc";
-  static manageTitle = "Quản lý loại hình công việc";
+class JobLevelConfigs extends Configs {
+  static managerPath = ManagerPath.JOB_LEVEL;
+  static resourceUrl = ResourceUrl.JOB_LEVEL;
+  static resourceKey = "job-levels";
+  static createTitle = "Thêm cấp bậc công việc";
+  static updateTitle = "Cập nhật cấp bậc công việc";
+  static manageTitle = "Quản lý cấp bậc công việc";
 
   static manageTitleLinks = EmployeeConfigs.manageTitleLinks;
 
   static _rawProperties = {
     ...PageConfigs.getProperties(true, true, true),
     name: {
-      label: "Tên loại hình công việc",
+      label: "Tên cấp bậc công việc",
       isShowInTable: true,
     },
     status: {
-      label: "Trạng thái loại hình công việc",
+      label: "Trạng thái cấp bậc công việc",
       isShowInTable: true,
     },
   };
@@ -31,4 +31,4 @@ class JobTypeConfigs extends Configs {
   static createUpdateFormSchema = {};
 }
 
-export default JobTypeConfigs;
+export default JobLevelConfigs;

@@ -1,25 +1,24 @@
 import { Button, Divider, Grid, Group, Paper, Select, Stack, TextInput } from "@mantine/core";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
+import JobLevelConfigs from "~/pages/Admin-jobLevel/JobLevelConfigs";
 
-import JobTypeConfigs from "~/pages/Admin-jobType/JobTypeConfigs";
-
-function JobTypeUpdate() {
+function JobLevelCreate() {
   return (
     <Stack maw={800}>
-      <CreateUpdateTitle managerPath={JobTypeConfigs.managerPath} title={JobTypeConfigs.updateTitle} />
+      <CreateUpdateTitle managerPath={JobLevelConfigs.managerPath} title={JobLevelConfigs.createTitle} />
 
       <DefaultPropertyPanel />
 
       <form>
         <Paper shadow="xs">
-          <Stack gap={0}>
+          <Stack gao={0}>
             <Grid p="sm">
               <Grid.Col span={6}>
-                <TextInput required label={JobTypeConfigs.properties.name.label} />
+                <TextInput required label={JobLevelConfigs.properties.name.label} />
               </Grid.Col>
               <Grid.Col span={6}>
-                <Select required label={JobTypeConfigs.properties.status.label} placeholder="--" />
+                <Select required label={JobLevelConfigs.properties.status.label} placeholder="--" />
               </Grid.Col>
             </Grid>
 
@@ -36,4 +35,4 @@ function JobTypeUpdate() {
   );
 }
 
-export default JobTypeUpdate;
+export default JobLevelCreate;
