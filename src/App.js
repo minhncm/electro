@@ -35,7 +35,7 @@ import ProvinceUpdate from "~/pages/Admin-province/ProvinceUpdate";
 import DistrictManage from "~/pages/Admin-district";
 import DistrictCreate from "~/pages/Admin-district/DistrictCreate";
 import DistrictUpdate from "~/pages/Admin-district/DistrictUpdate";
-import UserManager from "~/pages/Admin-user";
+import UserManage from "~/pages/Admin-user";
 import UserCreate from "~/pages/Admin-user/UserCreate";
 import UserUpdate from "~/pages/Admin-user/UserUpdate";
 import ManagerPath from "~/constants/ManagerPath";
@@ -60,6 +60,9 @@ import JobLevelUpdate from "~/pages/Admin-jobLevel/JobLevelUpdate";
 import JobTitleManage from "~/pages/Admin-jobTitle";
 import JobTitleCreate from "~/pages/Admin-jobTitle/JobTitleCreate";
 import JobTitleUpdate from "~/pages/Admin-jobTitle/JobTitleUpdate";
+import CustomerManage from "~/pages/Admin-customer";
+import CustomerCreate from "~/pages/Admin-customer/CustomerCreate";
+import CustomerUpdate from "~/pages/Admin-customer/CustomerUpdate";
 
 function App() {
   return (
@@ -102,7 +105,7 @@ function App() {
                 <Route path={ManagerPath.DISTRICT} element={<DistrictManage />} />
                 <Route path={ManagerPath.DISTRICT + "/create"} element={<DistrictCreate />} />
                 <Route path={ManagerPath.DISTRICT + "/update/:id"} element={<DistrictUpdate />} />
-                <Route path={ManagerPath.USER} element={<UserManager />} />
+                <Route path={ManagerPath.USER} element={<UserManage />} />
                 <Route path={ManagerPath.USER + "/create"} element={<UserCreate />} />
                 <Route path={ManagerPath.USER + "/update/:id"} element={<UserUpdate />} />
                 <Route path={ManagerPath.ROLE} element={<RoleManage />} />
@@ -126,6 +129,9 @@ function App() {
                 <Route path={ManagerPath.JOB_TITLE} element={<JobTitleManage />} />
                 <Route path={ManagerPath.JOB_TITLE + "/create"} element={<JobTitleCreate />} />
                 <Route path={ManagerPath.JOB_TITLE + "/update/:id"} element={<JobTitleUpdate />} />
+                <Route path={ManagerPath.CUSTOMER} element={<CustomerManage />} />
+                <Route path={ManagerPath.CUSTOMER + "/create"} element={<CustomerCreate />} />
+                <Route path={ManagerPath.CUSTOMER + "/update/:id"} element={<CustomerUpdate />} />
               </Route>
             </Routes>
           </div>

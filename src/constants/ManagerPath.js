@@ -13,6 +13,11 @@ const ManagerPath = {
   JOB_TYPE: "/admin/employee/job-type",
   JOB_LEVEL: "/admin/employee/job-level",
   JOB_TITLE: "/admin/employee/job-title",
+
+  CUSTOMER: "/admin/customer",
+  CUSTOMER_GROUP: "/admin/customer/group",
+  CUSTOMER_STATUS: "/admin/customer/status",
+  CUSTOMER_RESOURCE: "/admin/customer/resource",
 };
 
 export default ManagerPath;

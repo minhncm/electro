@@ -1,2 +1,2 @@
-import UserManager from "~/pages/Admin-user/UserManage";
-export default UserManager;
+import UserManage from "~/pages/Admin-user/UserManage";
+export default UserManage;

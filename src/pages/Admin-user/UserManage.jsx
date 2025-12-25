@@ -264,7 +264,7 @@ const listResponse = {
   last: false,
 };
 
-function UserManager() {
+function UserManage() {
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -397,4 +397,4 @@ function UserManager() {
   );
 }
 
-export default UserManager;
+export default UserManage;
