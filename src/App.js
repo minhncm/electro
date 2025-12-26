@@ -63,6 +63,9 @@ import JobTitleUpdate from "~/pages/Admin-jobTitle/JobTitleUpdate";
 import CustomerManage from "~/pages/Admin-customer";
 import CustomerCreate from "~/pages/Admin-customer/CustomerCreate";
 import CustomerUpdate from "~/pages/Admin-customer/CustomerUpdate";
+import CustomerGroupManage from "~/pages/Admin-customer-group";
+import CustomerGroupCreate from "~/pages/Admin-customer-group/CustomerGroupCreate";
+import CustomerGroupUpdate from "~/pages/Admin-customer-group/CustomerGroupUpdate";
 
 function App() {
   return (
@@ -132,6 +135,9 @@ function App() {
                 <Route path={ManagerPath.CUSTOMER} element={<CustomerManage />} />
                 <Route path={ManagerPath.CUSTOMER + "/create"} element={<CustomerCreate />} />
                 <Route path={ManagerPath.CUSTOMER + "/update/:id"} element={<CustomerUpdate />} />
+                <Route path={ManagerPath.CUSTOMER_GROUP} element={<CustomerGroupManage />} />
+                <Route path={ManagerPath.CUSTOMER_GROUP + "/create"} element={<CustomerGroupCreate />} />
+                <Route path={ManagerPath.CUSTOMER_GROUP + "/update/:id"} element={<CustomerGroupUpdate />} />
               </Route>
             </Routes>
           </div>
