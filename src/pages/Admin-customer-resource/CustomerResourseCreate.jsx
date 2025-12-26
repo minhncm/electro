@@ -1,12 +1,15 @@
 import { Button, ColorInput, Divider, Grid, Group, Paper, Select, Stack, TextInput } from "@mantine/core";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
-import CustomerGroupConfigs from "~/pages/Admin-customer-group/CustomerGroupConfigs";
+import CustomerResourseConfigs from "~/pages/Admin-customer-resource/CustomerResourseConfigs";
 
-function CustomerGroupUpdate() {
+function CustomerResourseCreate() {
   return (
     <Stack maw={800}>
-      <CreateUpdateTitle managerPath={CustomerGroupConfigs.managerPath} title={CustomerGroupConfigs.updateTitle} />
+      <CreateUpdateTitle
+        managerPath={CustomerResourseConfigs.managerPath}
+        title={CustomerResourseConfigs.createTitle}
+      />
 
       <DefaultPropertyPanel />
 
@@ -15,19 +18,19 @@ function CustomerGroupUpdate() {
           <Stack gap={0}>
             <Grid p="sm">
               <Grid.Col span={6}>
-                <TextInput required label={CustomerGroupConfigs.properties.code.label} />
+                <TextInput required label={CustomerResourseConfigs.properties.code.label} />
               </Grid.Col>
               <Grid.Col span={6}>
-                <TextInput required label={CustomerGroupConfigs.properties.name.label} />
+                <TextInput required label={CustomerResourseConfigs.properties.name.label} />
               </Grid.Col>
               <Grid.Col>
-                <TextInput required label={CustomerGroupConfigs.properties.description.label} />
+                <TextInput required label={CustomerResourseConfigs.properties.description.label} />
               </Grid.Col>
               <Grid.Col span={6}>
-                <ColorInput required label={CustomerGroupConfigs.properties.color.label} placeholder="Chọn màu" />
+                <ColorInput required label={CustomerResourseConfigs.properties.color.label} placeholder="Chọn màu" />
               </Grid.Col>
               <Grid.Col span={6}>
-                <Select required label={CustomerGroupConfigs.properties.status.label} placeholder="--" />
+                <Select required label={CustomerResourseConfigs.properties.status.label} placeholder="--" />
               </Grid.Col>
             </Grid>
 
@@ -44,4 +47,4 @@ function CustomerGroupUpdate() {
   );
 }
 
-export default CustomerGroupUpdate;
+export default CustomerResourseCreate;

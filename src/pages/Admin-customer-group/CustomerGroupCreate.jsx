@@ -14,19 +14,19 @@ function CustomerGroupCreate() {
         <Paper shadow="xs">
           <Stack gap={0}>
             <Grid p="sm">
-              <Grid.Col xs={6}>
+              <Grid.Col span={6}>
                 <TextInput required label={CustomerGroupConfigs.properties.code.label} />
               </Grid.Col>
-              <Grid.Col xs={6}>
+              <Grid.Col span={6}>
                 <TextInput required label={CustomerGroupConfigs.properties.name.label} />
               </Grid.Col>
               <Grid.Col>
                 <TextInput required label={CustomerGroupConfigs.properties.description.label} />
               </Grid.Col>
-              <Grid.Col xs={6}>
+              <Grid.Col span={6}>
                 <ColorInput required label={CustomerGroupConfigs.properties.color.label} placeholder="Chọn màu" />
               </Grid.Col>
-              <Grid.Col xs={6}>
+              <Grid.Col span={6}>
                 <Select required label={CustomerGroupConfigs.properties.status.label} placeholder="--" />
               </Grid.Col>
             </Grid>
