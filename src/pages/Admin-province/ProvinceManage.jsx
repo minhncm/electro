@@ -94,7 +94,7 @@ function ProvinceManage() {
   );
   return (
     <Stack>
-      <ManageHeader title="Quản lý tỉnh thành" />
+      <ManageHeader title={ProvinceConfigs.manageTitle} />
 
       <SearchPanel />
       <FilterPanel />

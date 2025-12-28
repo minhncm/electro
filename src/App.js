@@ -72,6 +72,9 @@ import CustomerResourseUpdate from "~/pages/Admin-customer-resource/CustomerReso
 import CustomerStatusManage from "~/pages/Admin-customer-status";
 import CustomerStatusCreate from "~/pages/Admin-customer-status/CustomerStatusCreate";
 import CustomerStatusUpdate from "~/pages/Admin-customer-status/CustomerStatusUpdate";
+import ProductManage from "~/pages/Admin-product";
+import ProductCreate from "~/pages/Admin-product/ProductCreate";
+import ProductUpdate from "~/pages/Admin-product/ProductUpdate";
 
 function App() {
   return (
@@ -150,6 +153,9 @@ function App() {
                 <Route path={ManagerPath.CUSTOMER_STATUS} element={<CustomerStatusManage />} />
                 <Route path={ManagerPath.CUSTOMER_STATUS + "/create"} element={<CustomerStatusCreate />} />
                 <Route path={ManagerPath.CUSTOMER_STATUS + "/update/:id"} element={<CustomerStatusUpdate />} />
+                <Route path={ManagerPath.PRODUCT} element={<ProductManage />} />
+                <Route path={ManagerPath.PRODUCT + "/create"} element={<ProductCreate />} />
+                <Route path={ManagerPath.PRODUCT + "/update/:id"} element={<ProductUpdate />} />
               </Route>
             </Routes>
           </div>
