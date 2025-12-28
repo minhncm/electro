@@ -75,6 +75,9 @@ import CustomerStatusUpdate from "~/pages/Admin-customer-status/CustomerStatusUp
 import ProductManage from "~/pages/Admin-product";
 import ProductCreate from "~/pages/Admin-product/ProductCreate";
 import ProductUpdate from "~/pages/Admin-product/ProductUpdate";
+import CategoryManage from "~/pages/Admin-category";
+import CategoryCreate from "~/pages/Admin-category/CategoryCreate";
+import CategoryUpdate from "~/pages/Admin-category/CategoryUpdate";
 
 function App() {
   return (
@@ -156,6 +159,9 @@ function App() {
                 <Route path={ManagerPath.PRODUCT} element={<ProductManage />} />
                 <Route path={ManagerPath.PRODUCT + "/create"} element={<ProductCreate />} />
                 <Route path={ManagerPath.PRODUCT + "/update/:id"} element={<ProductUpdate />} />
+                <Route path={ManagerPath.CATEGORY} element={<CategoryManage />} />
+                <Route path={ManagerPath.CATEGORY + "/create"} element={<CategoryCreate />} />
+                <Route path={ManagerPath.CATEGORY + "/update/:id"} element={<CategoryUpdate />} />
               </Route>
             </Routes>
           </div>
