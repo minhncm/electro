@@ -69,6 +69,9 @@ import CustomerGroupUpdate from "~/pages/Admin-customer-group/CustomerGroupUpdat
 import CustomerResourseManage from "~/pages/Admin-customer-resource";
 import CustomerResourseCreate from "~/pages/Admin-customer-resource/CustomerResourseCreate";
 import CustomerResourseUpdate from "~/pages/Admin-customer-resource/CustomerResourseUpdate";
+import CustomerStatusManage from "~/pages/Admin-customer-status";
+import CustomerStatusCreate from "~/pages/Admin-customer-status/CustomerStatusCreate";
+import CustomerStatusUpdate from "~/pages/Admin-customer-status/CustomerStatusUpdate";
 
 function App() {
   return (
@@ -144,6 +147,9 @@ function App() {
                 <Route path={ManagerPath.CUSTOMER_RESOURCE} element={<CustomerResourseManage />} />
                 <Route path={ManagerPath.CUSTOMER_RESOURCE + "/create"} element={<CustomerResourseCreate />} />
                 <Route path={ManagerPath.CUSTOMER_RESOURCE + "/update/:id"} element={<CustomerResourseUpdate />} />
+                <Route path={ManagerPath.CUSTOMER_STATUS} element={<CustomerStatusManage />} />
+                <Route path={ManagerPath.CUSTOMER_STATUS + "/create"} element={<CustomerStatusCreate />} />
+                <Route path={ManagerPath.CUSTOMER_STATUS + "/update/:id"} element={<CustomerStatusUpdate />} />
               </Route>
             </Routes>
           </div>
