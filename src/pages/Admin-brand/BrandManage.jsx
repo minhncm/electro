@@ -64,7 +64,7 @@ const listResponse = {
   last: false,
 };
 
-function Manage() {
+function BrandManage() {
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -141,4 +141,4 @@ function Manage() {
   );
 }
 
-export default Manage;
+export default BrandManage;

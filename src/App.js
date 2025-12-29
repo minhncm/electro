@@ -81,6 +81,9 @@ import CategoryUpdate from "~/pages/Admin-category/CategoryUpdate";
 import BrandManage from "~/pages/Admin-brand";
 import BrandCreate from "~/pages/Admin-brand/BrandCreate";
 import BrandUpdate from "~/pages/Admin-brand/BrandUpdate";
+import SupplierManage from "./pages/Admin-supplier";
+import SupplierCreate from "./pages/Admin-supplier/SupplierCreate";
+import SuppilerUpdate from "./pages/Admin-supplier/SupplierUpdate";
 
 function App() {
   return (
@@ -168,6 +171,9 @@ function App() {
                 <Route path={ManagerPath.BRAND} element={<BrandManage />} />
                 <Route path={ManagerPath.BRAND + "/create"} element={<BrandCreate />} />
                 <Route path={ManagerPath.BRAND + "/update/:id"} element={<BrandUpdate />} />
+                <Route path={ManagerPath.SUPPLIER} element={<SupplierManage />} />
+                <Route path={ManagerPath.SUPPLIER + "/create"} element={<SupplierCreate />} />
+                <Route path={ManagerPath.SUPPLIER + "/update/:id"} element={<SuppilerUpdate />} />
               </Route>
             </Routes>
           </div>
