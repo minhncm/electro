@@ -78,6 +78,9 @@ import ProductUpdate from "~/pages/Admin-product/ProductUpdate";
 import CategoryManage from "~/pages/Admin-category";
 import CategoryCreate from "~/pages/Admin-category/CategoryCreate";
 import CategoryUpdate from "~/pages/Admin-category/CategoryUpdate";
+import BrandManage from "~/pages/Admin-brand";
+import BrandCreate from "~/pages/Admin-brand/BrandCreate";
+import BrandUpdate from "~/pages/Admin-brand/BrandUpdate";
 
 function App() {
   return (
@@ -162,6 +165,9 @@ function App() {
                 <Route path={ManagerPath.CATEGORY} element={<CategoryManage />} />
                 <Route path={ManagerPath.CATEGORY + "/create"} element={<CategoryCreate />} />
                 <Route path={ManagerPath.CATEGORY + "/update/:id"} element={<CategoryUpdate />} />
+                <Route path={ManagerPath.BRAND} element={<BrandManage />} />
+                <Route path={ManagerPath.BRAND + "/create"} element={<BrandCreate />} />
+                <Route path={ManagerPath.BRAND + "/update/:id"} element={<BrandUpdate />} />
               </Route>
             </Routes>
           </div>
