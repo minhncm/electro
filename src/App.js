@@ -87,6 +87,7 @@ import SuppilerUpdate from "~/pages/Admin-supplier/SupplierUpdate";
 import UnitManage from "~/pages/Admin-unit/UnitManage";
 import UnitCreate from "~/pages/Admin-unit/UnitCreate";
 import UnitUpdate from "~/pages/Admin-unit/UnitUpdate";
+import TagManage, { TagCreate, TagUpdate } from "~/pages/Admin-tag";
 
 function App() {
   return (
@@ -180,6 +181,9 @@ function App() {
                 <Route path={ManagerPath.UNIT} element={<UnitManage />} />
                 <Route path={ManagerPath.UNIT + "/create"} element={<UnitCreate />} />
                 <Route path={ManagerPath.UNIT + "/update/:id"} element={<UnitUpdate />} />
+                <Route path={ManagerPath.TAG} element={<TagManage />} />
+                <Route path={ManagerPath.TAG + "/create"} element={<TagCreate />} />
+                <Route path={ManagerPath.TAG + "/update/:id"} element={<TagUpdate />} />
               </Route>
             </Routes>
           </div>
