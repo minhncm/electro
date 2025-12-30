@@ -88,6 +88,7 @@ import UnitManage from "~/pages/Admin-unit/UnitManage";
 import UnitCreate from "~/pages/Admin-unit/UnitCreate";
 import UnitUpdate from "~/pages/Admin-unit/UnitUpdate";
 import TagManage, { TagCreate, TagUpdate } from "~/pages/Admin-tag";
+import GuaranteeManage, { GuaranteeCreate, GuaranteeUpdate } from "~/pages/Admin-guarantee";
 
 function App() {
   return (
@@ -184,6 +185,9 @@ function App() {
                 <Route path={ManagerPath.TAG} element={<TagManage />} />
                 <Route path={ManagerPath.TAG + "/create"} element={<TagCreate />} />
                 <Route path={ManagerPath.TAG + "/update/:id"} element={<TagUpdate />} />
+                <Route path={ManagerPath.GUARANTEE} element={<GuaranteeManage />} />
+                <Route path={ManagerPath.GUARANTEE + "/create"} element={<GuaranteeCreate />} />
+                <Route path={ManagerPath.GUARANTEE + "/update/:id"} element={<GuaranteeUpdate />} />
               </Route>
             </Routes>
           </div>
