@@ -92,6 +92,7 @@ import GuaranteeManage, { GuaranteeCreate, GuaranteeUpdate } from "~/pages/Admin
 import PropertyManage, { PropertyCreate, PropertyUpdate } from "~/pages/Admin-property";
 import SpecificationManage, { SpecificationCreate, SpecificationUpdate } from "~/pages/Admin-specification";
 import InventoryManage from "~/pages/Admin-inventory";
+import WarehouseManage, { WarehouseCreate, WarehouseUpdate } from "~/pages/Admin-warehouse";
 
 function App() {
   return (
@@ -198,6 +199,9 @@ function App() {
                 <Route path={ManagerPath.SPECIFICATION + "/create"} element={<SpecificationCreate />} />
                 <Route path={ManagerPath.SPECIFICATION + "/update/:id"} element={<SpecificationUpdate />} />
                 <Route path={ManagerPath.INVENTORY} element={<InventoryManage />} />
+                <Route path={ManagerPath.WAREHOUSE} element={<WarehouseManage />} />
+                <Route path={ManagerPath.WAREHOUSE + "/create"} element={<WarehouseCreate />} />
+                <Route path={ManagerPath.WAREHOUSE + "/update/:id"} element={<WarehouseUpdate />} />
               </Route>
             </Routes>
           </div>
