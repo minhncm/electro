@@ -25,6 +25,20 @@ const ResourceUrl = {
   PROPERTY: ApplicationPath.API_PATH + "/properties",
   SPECIFICATION: ApplicationPath.API_PATH + "/specifications",
   VARIANT: ApplicationPath.API_PATH + "/variants",
+
+  PRODUCT_INVENTORY: ApplicationPath + "/product-inventories",
+  VARIANT_INVENTORY: ApplicationPath + "/variant-inventories",
+  WAREHOUSE: ApplicationPath + "/warehouses",
+  PURCHASE_ORDER: ApplicationPath + "/purchase-orders",
+  PURCHASE_ORDER_VARIANT: ApplicationPath + "/purchase-order-variants",
+  DESTINATION: ApplicationPath + "/destinations",
+  DOCKET: ApplicationPath + "/dockets",
+  DOCKET_VARIANT: ApplicationPath + "/docket-variants",
+  DOCKET_REASON: ApplicationPath + "/docket-reasons",
+  COUNT: ApplicationPath + "/counts",
+  COUNT_VARIANT: ApplicationPath + "/count-variants",
+  TRANSFER: ApplicationPath + "/transfers",
+  TRANSFER_VARIANT: ApplicationPath + "/transfer-variants",
 };
 
 export default ResourceUrl;
