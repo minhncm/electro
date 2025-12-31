@@ -7,7 +7,7 @@ import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
-import PropertyConfigs from "~/pages/Admin-property/PropertyConfigs";
+import SpecificationConfigs from "~/pages/Admin-specification/SpecificationConfigs";
 
 const listResponse = {
   content: [
@@ -15,8 +15,8 @@ const listResponse = {
       id: 2,
       createdAt: "2022-05-01T06:27:06Z",
       updatedAt: "2022-02-02T09:18:00Z",
-      name: "Màu sắc",
-      code: "color",
+      name: "CPU",
+      code: "cpu",
       description: null,
       status: 1,
     },
@@ -24,8 +24,8 @@ const listResponse = {
       id: 1,
       createdAt: "2022-05-01T06:27:06Z",
       updatedAt: "2022-02-02T09:18:00Z",
-      name: "Kích cỡ",
-      code: "size",
+      name: "Cỡ màn hình",
+      code: "screen-size",
       description: "Lorem ipsum dolor sit amet",
       status: 1,
     },
@@ -37,7 +37,7 @@ const listResponse = {
   last: true,
 };
 
-function PropertyManage() {
+function SpecificationManage() {
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -62,31 +62,31 @@ function PropertyManage() {
   const EntityDetailTableRowsFragment = ({ entity }) => (
     <>
       <Table.Tr>
-        <Table.Td>{PropertyConfigs.properties.id.label}</Table.Td>
+        <Table.Td>{SpecificationConfigs.properties.id.label}</Table.Td>
         <Table.Td>{entity.id}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{PropertyConfigs.properties.createdAt.label}</Table.Td>
+        <Table.Td>{SpecificationConfigs.properties.createdAt.label}</Table.Td>
         <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{PropertyConfigs.properties.updatedAt.label}</Table.Td>
+        <Table.Td>{SpecificationConfigs.properties.updatedAt.label}</Table.Td>
         <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{PropertyConfigs.properties.name.label}</Table.Td>
+        <Table.Td>{SpecificationConfigs.properties.name.label}</Table.Td>
         <Table.Td>{entity.name}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{PropertyConfigs.properties.code.label}</Table.Td>
+        <Table.Td>{SpecificationConfigs.properties.code.label}</Table.Td>
         <Table.Td>{entity.code}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{PropertyConfigs.properties.description.label}</Table.Td>
+        <Table.Td>{SpecificationConfigs.properties.description.label}</Table.Td>
         <Table.Td maw={300}>{entity.description}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{PropertyConfigs.properties.status.label}</Table.Td>
+        <Table.Td>{SpecificationConfigs.properties.status.label}</Table.Td>
         <Table.Td>
           <EnableStatusBadge status={entity.status} />
         </Table.Td>
@@ -95,7 +95,7 @@ function PropertyManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={PropertyConfigs.manageTitle} />
+      <ManageHeader title={SpecificationConfigs.manageTitle} />
 
       <SearchPanel />
       <FilterPanel />
@@ -103,7 +103,7 @@ function PropertyManage() {
       <ManageMain listResponse={listResponse} isLoading={false}>
         <ManageTable
           listResponse={listResponse}
-          properties={PropertyConfigs.properties}
+          properties={SpecificationConfigs.properties}
           showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
           entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
         ></ManageTable>
@@ -114,4 +114,4 @@ function PropertyManage() {
   );
 }
 
-export default PropertyManage;
+export default SpecificationManage;

@@ -90,6 +90,7 @@ import UnitUpdate from "~/pages/Admin-unit/UnitUpdate";
 import TagManage, { TagCreate, TagUpdate } from "~/pages/Admin-tag";
 import GuaranteeManage, { GuaranteeCreate, GuaranteeUpdate } from "~/pages/Admin-guarantee";
 import PropertyManage, { PropertyCreate, PropertyUpdate } from "~/pages/Admin-property";
+import SpecificationManage, { SpecificationCreate, SpecificationUpdate } from "~/pages/Admin-specification";
 
 function App() {
   return (
@@ -192,6 +193,9 @@ function App() {
                 <Route path={ManagerPath.PROPERTY} element={<PropertyManage />} />
                 <Route path={ManagerPath.PROPERTY + "/create"} element={<PropertyCreate />} />
                 <Route path={ManagerPath.PROPERTY + "/update/:id"} element={<PropertyUpdate />} />
+                <Route path={ManagerPath.SPECIFICATION} element={<SpecificationManage />} />
+                <Route path={ManagerPath.SPECIFICATION + "/create"} element={<SpecificationCreate />} />
+                <Route path={ManagerPath.SPECIFICATION + "/update/:id"} element={<SpecificationUpdate />} />
               </Route>
             </Routes>
           </div>
