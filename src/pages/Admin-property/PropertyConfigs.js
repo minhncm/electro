@@ -4,28 +4,32 @@ import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import ProductConfigs from "~/pages/Admin-product/ProductConfigs";
 
-class TagConfigs extends Configs {
-  static managerPath = ManagerPath.TAG;
-  static resourceUrl = ResourceUrl.TAG;
-  static resourceKey = "tags";
-  static createTitle = "Thêm tag";
-  static updateTitle = "Cập nhật tag";
-  static manageTitle = "Quản lý tag";
+class PropertyConfigs extends Configs {
+  static managerPath = ManagerPath.PROPERTY;
+  static resourceUrl = ResourceUrl.PROPERTY;
+  static resourceKey = "properties";
+  static createTitle = "Thêm thuộc tính sản phẩm";
+  static updateTitle = "Cập nhật thuộc tính sản phẩm";
+  static manageTitle = "Quản lý thuộc tính sản phẩm";
 
   static manageTitleLinks = ProductConfigs.manageTitleLinks;
 
   static _rawProperties = {
     ...PageConfigs.getProperties(true, true, true),
     name: {
-      label: "Tên đơn vị tính",
+      label: "Tên thuộc tính sản phẩm",
       isShowInTable: true,
     },
-    slug: {
-      label: "Slug tag",
+    code: {
+      label: "Mã thuộc tính sản phẩm",
       isShowInTable: true,
+    },
+    description: {
+      label: "Mô tả thuộc tính sản phẩm",
+      isShowInTable: false,
     },
     status: {
-      label: "Trạng thái đơn vị tính",
+      label: "Trạng thái thuộc tính sản phẩm",
       isShowInTable: true,
     },
   };
@@ -35,4 +39,4 @@ class TagConfigs extends Configs {
   static createUpdateFormSchema = {};
 }
 
-export default TagConfigs;
+export default PropertyConfigs;
