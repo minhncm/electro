@@ -95,6 +95,7 @@ import InventoryManage from "~/pages/Admin-inventory";
 import WarehouseManage, { WarehouseCreate, WarehouseUpdate } from "~/pages/Admin-warehouse";
 import PurchaseOrderManage, { PurchaseOrderCreate, PurchaseOrderUpdate } from "./pages/Admin-purchase-order";
 import DestinationManage, { DestinationCreate, DestinationUpdate } from "~/pages/Admin-destination";
+import DocketManage, { DocketCreate, DocketUpdate } from "~/pages/Admin-docket";
 
 function App() {
   return (
@@ -210,6 +211,9 @@ function App() {
                 <Route path={ManagerPath.DESTINATION} element={<DestinationManage />} />
                 <Route path={ManagerPath.DESTINATION + "/create"} element={<DestinationCreate />} />
                 <Route path={ManagerPath.DESTINATION + "/update/:id"} element={<DestinationUpdate />} />
+                <Route path={ManagerPath.DOCKET} element={<DocketManage />} />
+                <Route path={ManagerPath.DOCKET + "/create"} element={<DocketCreate />} />
+                <Route path={ManagerPath.DOCKET + "/update/:id"} element={<DocketUpdate />} />
               </Route>
             </Routes>
           </div>

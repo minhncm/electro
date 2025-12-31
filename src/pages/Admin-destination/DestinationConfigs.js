@@ -1,8 +1,8 @@
-import { Configs } from "~/types";
 import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
-import ProductConfigs from "~/pages/Admin-product/ProductConfigs";
+import { Configs } from "~/types";
+import WarehouseConfigs from "~/pages/Admin-warehouse/WarehouseConfigs";
 
 class DestinationConfigs extends Configs {
   static managerPath = ManagerPath.DESTINATION;
@@ -12,7 +12,7 @@ class DestinationConfigs extends Configs {
   static updateTitle = "Cập nhật điểm nhập hàng";
   static manageTitle = "Quản lý điểm nhập hàng";
 
-  static manageTitleLinks = ProductConfigs.manageTitleLinks;
+  static manageTitleLinks = WarehouseConfigs.manageTitleLinks;
 
   static _rawProperties = {
     ...PageConfigs.getProperties(true, true, true),

@@ -9,8 +9,10 @@ class MiscUtils {
 
   static parserPrice = (value) => (value || "").replace(/(\.)/g, "");
 
-  static formatterPrice = (value) =>
-    !Number.isNaN(parseFloat(value || "")) ? (value || "").replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "";
+  static formatterPrice = (value) => {
+    if (value === null || value === undefined) return 0;
+    return !Number.isNaN(parseFloat(value)) ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "";
+  };
 
   static toVND = (value) => {
     value = value.toString().replace(/\./g, "");
