@@ -9,6 +9,9 @@ class MiscUtils {
 
   static parserPrice = (value) => (value || "").replace(/(\.)/g, "");
 
+  static formatterPrice = (value) =>
+    !Number.isNaN(parseFloat(value || "")) ? (value || "").replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "";
+
   static toVND = (value) => {
     value = value.toString().replace(/\./g, "");
     const formatted = new Intl.NumberFormat("vi-VN", {
