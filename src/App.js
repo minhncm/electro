@@ -98,6 +98,7 @@ import DestinationManage, { DestinationCreate, DestinationUpdate } from "~/pages
 import DocketManage, { DocketCreate, DocketUpdate } from "~/pages/Admin-docket";
 import DocketReasonManage, { DocketReasonCreate, DocketReasonUpdate } from "./pages/Admin-docket-reason";
 import CountManage, { CountCreate, CountUpdate } from "~/pages/Admin-count";
+import TransferManage, { TransferCreate, TransferUpdate } from "~/pages/Admin-transfer";
 
 function App() {
   return (
@@ -222,6 +223,9 @@ function App() {
                 <Route path={ManagerPath.COUNT} element={<CountManage />} />
                 <Route path={ManagerPath.COUNT + "/create"} element={<CountCreate />} />
                 <Route path={ManagerPath.COUNT + "/update/:id"} element={<CountUpdate />} />
+                <Route path={ManagerPath.TRANSFER} element={<TransferManage />} />
+                <Route path={ManagerPath.TRANSFER + "/create"} element={<TransferCreate />} />
+                <Route path={ManagerPath.TRANSFER + "/update/:id"} element={<TransferUpdate />} />
               </Route>
             </Routes>
           </div>

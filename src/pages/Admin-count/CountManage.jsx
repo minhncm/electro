@@ -1,14 +1,14 @@
 import { Highlight, Stack, Table } from "@mantine/core";
-import EnableStatusBadge from "~/components/EnableStatusBadge";
+import DocketStatusBadge from "~/components/DocketStatusBadge";
 import FilterPanel from "~/components/FilterPanel";
 import ManageHeader from "~/components/ManageHeader";
 import ManageMain from "~/components/ManageMain/ManageMain";
 import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
+import CountConfigs from "~/pages/Admin-count/CountConfigs";
 import DateUtils from "~/utils/DateUtils";
 import MiscUtils from "~/utils/MiscUtils";
-import CountConfigs from "~/pages/Admin-count/CountConfigs";
 
 const listResponse = {
   content: [
@@ -318,7 +318,7 @@ function CountManage() {
         <Highlight size="sm">{entity.warehouse.name}</Highlight>
       </Table.Td>
       <Table.Td>
-        <EnableStatusBadge status={entity.status} />
+        <DocketStatusBadge status={entity.status} />
       </Table.Td>
     </>
   );
@@ -356,7 +356,7 @@ function CountManage() {
       <Table.Tr>
         <Table.Td>{CountConfigs.properties.status.label}</Table.Td>
         <Table.Td>
-          <EnableStatusBadge status={entity.status} />
+          <DocketStatusBadge status={entity.status} />
         </Table.Td>
       </Table.Tr>
     </>
