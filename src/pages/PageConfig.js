@@ -74,8 +74,8 @@ export const categorySlugIconMap = new Proxy(
 );
 
 export const paymentMethodIconMap = {
-  cash: Cash,
-  paypal: BrandPaypal,
+  CASH: Cash,
+  PAYPAL: BrandPaypal,
 };
 
 const notificationType = {

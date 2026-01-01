@@ -39,6 +39,11 @@ const ResourceUrl = {
   COUNT_VARIANT: ApplicationPath + "/count-variants",
   TRANSFER: ApplicationPath + "/transfers",
   TRANSFER_VARIANT: ApplicationPath + "/transfer-variants",
+
+  ORDER: ApplicationPath + "/orders",
+  ORDER_VARIANT: ApplicationPath + "/order-variants",
+  ORDER_RESOURCE: ApplicationPath + "/order-resources",
+  ORDER_CANCELLATION_REASON: ApplicationPath + "/order-cancellation-reasons",
 };
 
 export default ResourceUrl;

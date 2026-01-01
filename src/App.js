@@ -5,6 +5,8 @@ import Client from "~/pages/Client";
 import ClientOrder from "~/pages/Client-order/ClientOrder";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
+import { Notifications } from "@mantine/notifications";
 import ClientOrderDetail from "~/pages/Client-order-detail/ClientOrderDetail";
 import { ModalsProvider } from "@mantine/modals";
 import ClientUser from "~/pages/Client-user/ClientUser";
@@ -99,11 +101,13 @@ import DocketManage, { DocketCreate, DocketUpdate } from "~/pages/Admin-docket";
 import DocketReasonManage, { DocketReasonCreate, DocketReasonUpdate } from "./pages/Admin-docket-reason";
 import CountManage, { CountCreate, CountUpdate } from "~/pages/Admin-count";
 import TransferManage, { TransferCreate, TransferUpdate } from "~/pages/Admin-transfer";
+import OrderManage, { OrderCreate, OrderUpdate } from "~/pages/Admin-order";
 
 function App() {
   return (
     <BrowserRouter>
       <MantineProvider withGlobalStyles withNormalizeCSS>
+        <Notifications />
         <ModalsProvider>
           <div className="App">
             <Routes>
@@ -226,6 +230,9 @@ function App() {
                 <Route path={ManagerPath.TRANSFER} element={<TransferManage />} />
                 <Route path={ManagerPath.TRANSFER + "/create"} element={<TransferCreate />} />
                 <Route path={ManagerPath.TRANSFER + "/update/:id"} element={<TransferUpdate />} />
+                <Route path={ManagerPath.ORDER} element={<OrderManage />} />
+                <Route path={ManagerPath.ORDER + "/create"} element={<OrderCreate />} />
+                <Route path={ManagerPath.ORDER + "/update/:id"} element={<OrderUpdate />} />
               </Route>
             </Routes>
           </div>

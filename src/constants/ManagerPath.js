@@ -29,14 +29,18 @@ const ManagerPath = {
   PROPERTY: "/admin/product/property",
   SPECIFICATION: "/admin/product/specification",
 
-  INVENTORY: '/admin/inventory',
-  WAREHOUSE: '/admin/inventory/warehouse',
-  PURCHASE_ORDER: '/admin/inventory/purchase-order',
-  DESTINATION: '/admin/inventory/destination',
-  DOCKET: '/admin/inventory/docket',
-  DOCKET_REASON: '/admin/inventory/docket-reason',
-  COUNT: '/admin/inventory/count',
-  TRANSFER: '/admin/inventory/transfer',
+  INVENTORY: "/admin/inventory",
+  WAREHOUSE: "/admin/inventory/warehouse",
+  PURCHASE_ORDER: "/admin/inventory/purchase-order",
+  DESTINATION: "/admin/inventory/destination",
+  DOCKET: "/admin/inventory/docket",
+  DOCKET_REASON: "/admin/inventory/docket-reason",
+  COUNT: "/admin/inventory/count",
+  TRANSFER: "/admin/inventory/transfer",
+
+  ORDER: "/admin/order",
+  ORDER_RESOURCE: "/admin/order/resource",
+  ORDER_CANCELLATION_REASON: "/admin/order/cancellation-reason",
 };
 
 export default ManagerPath;
