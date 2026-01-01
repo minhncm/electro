@@ -103,6 +103,10 @@ import CountManage, { CountCreate, CountUpdate } from "~/pages/Admin-count";
 import TransferManage, { TransferCreate, TransferUpdate } from "~/pages/Admin-transfer";
 import OrderManage, { OrderCreate, OrderUpdate } from "~/pages/Admin-order";
 import OrderResourceManage, { OrderResourceCreate, OrderResourceUpdate } from "~/pages/Admin-order-resourse";
+import OrderCancellationReasonManage, {
+  OrderCancellationReasonCreate,
+  OrderCancellationReasonUpdate,
+} from "~/pages/Admin-order-cancellation-reason";
 
 function App() {
   return (
@@ -237,6 +241,15 @@ function App() {
                 <Route path={ManagerPath.ORDER_RESOURCE} element={<OrderResourceManage />} />
                 <Route path={ManagerPath.ORDER_RESOURCE + "/create"} element={<OrderResourceCreate />} />
                 <Route path={ManagerPath.ORDER_RESOURCE + "/update/:id"} element={<OrderResourceUpdate />} />
+                <Route path={ManagerPath.ORDER_CANCELLATION_REASON} element={<OrderCancellationReasonManage />} />
+                <Route
+                  path={ManagerPath.ORDER_CANCELLATION_REASON + "/create"}
+                  element={<OrderCancellationReasonCreate />}
+                />
+                <Route
+                  path={ManagerPath.ORDER_CANCELLATION_REASON + "/update/:id"}
+                  element={<OrderCancellationReasonUpdate />}
+                />
               </Route>
             </Routes>
           </div>
