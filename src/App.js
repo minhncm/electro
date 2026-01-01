@@ -97,6 +97,7 @@ import PurchaseOrderManage, { PurchaseOrderCreate, PurchaseOrderUpdate } from ".
 import DestinationManage, { DestinationCreate, DestinationUpdate } from "~/pages/Admin-destination";
 import DocketManage, { DocketCreate, DocketUpdate } from "~/pages/Admin-docket";
 import DocketReasonManage, { DocketReasonCreate, DocketReasonUpdate } from "./pages/Admin-docket-reason";
+import CountManage, { CountCreate, CountUpdate } from "~/pages/Admin-count";
 
 function App() {
   return (
@@ -218,6 +219,9 @@ function App() {
                 <Route path={ManagerPath.DOCKET_REASON} element={<DocketReasonManage />} />
                 <Route path={ManagerPath.DOCKET_REASON + "/create"} element={<DocketReasonCreate />} />
                 <Route path={ManagerPath.DOCKET_REASON + "/update/:id"} element={<DocketReasonUpdate />} />
+                <Route path={ManagerPath.COUNT} element={<CountManage />} />
+                <Route path={ManagerPath.COUNT + "/create"} element={<CountCreate />} />
+                <Route path={ManagerPath.COUNT + "/update/:id"} element={<CountUpdate />} />
               </Route>
             </Routes>
           </div>
