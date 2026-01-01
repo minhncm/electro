@@ -102,6 +102,7 @@ import DocketReasonManage, { DocketReasonCreate, DocketReasonUpdate } from "./pa
 import CountManage, { CountCreate, CountUpdate } from "~/pages/Admin-count";
 import TransferManage, { TransferCreate, TransferUpdate } from "~/pages/Admin-transfer";
 import OrderManage, { OrderCreate, OrderUpdate } from "~/pages/Admin-order";
+import OrderResourceManage, { OrderResourceCreate, OrderResourceUpdate } from "~/pages/Admin-order-resourse";
 
 function App() {
   return (
@@ -233,6 +234,9 @@ function App() {
                 <Route path={ManagerPath.ORDER} element={<OrderManage />} />
                 <Route path={ManagerPath.ORDER + "/create"} element={<OrderCreate />} />
                 <Route path={ManagerPath.ORDER + "/update/:id"} element={<OrderUpdate />} />
+                <Route path={ManagerPath.ORDER_RESOURCE} element={<OrderResourceManage />} />
+                <Route path={ManagerPath.ORDER_RESOURCE + "/create"} element={<OrderResourceCreate />} />
+                <Route path={ManagerPath.ORDER_RESOURCE + "/update/:id"} element={<OrderResourceUpdate />} />
               </Route>
             </Routes>
           </div>
