@@ -114,6 +114,8 @@ import RewardStartegyManage from "~/pages/Admin-reward-strategy";
 import VoucherManage from "~/pages/Admin-voucher";
 import PaymentMethodManage from "~/pages/Admin-payment-method";
 import PromotionManage, { PromotionCreate, PromotionUpdate } from "~/pages/Admin-promotion";
+import AdminNotification from "~/pages/admin-notification";
+import AdminAccount from "~/pages/admin-account";
 
 function App() {
   return (
@@ -271,6 +273,10 @@ function App() {
                 <Route path={ManagerPath.PROMOTION} element={<PromotionManage />} />
                 <Route path={ManagerPath.PROMOTION + "/create"} element={<PromotionCreate />} />
                 <Route path={ManagerPath.PROMOTION + "/update/:id"} element={<PromotionUpdate />} />
+
+                <Route path={ManagerPath.NOTIFICATION} element={<AdminNotification />} />
+
+                <Route path={ManagerPath.ACCOUNT} element={<AdminAccount />} />
               </Route>
             </Routes>
           </div>
