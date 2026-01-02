@@ -110,6 +110,7 @@ import DocketReasonManage, { DocketReasonCreate, DocketReasonUpdate } from "./pa
 import PurchaseOrderManage, { PurchaseOrderCreate, PurchaseOrderUpdate } from "./pages/Admin-purchase-order";
 import WaybillManage, { WaybillCreate, WaybillUpdate } from "~/pages/Admin-waybill";
 import ReviewManage from "~/pages/Admin-review";
+import RewardStartegyManage from "./pages/Admin-reward-strategy";
 
 function App() {
   return (
@@ -257,6 +258,7 @@ function App() {
                 <Route path={ManagerPath.WAYBILL + "/create"} element={<WaybillCreate />} />
                 <Route path={ManagerPath.WAYBILL + "/update/:id"} element={<WaybillUpdate />} />
                 <Route path={ManagerPath.REVIEW} element={<ReviewManage />} />
+                <Route path={ManagerPath.REWARD_STRATEGY} element={<RewardStartegyManage />} />
               </Route>
             </Routes>
           </div>

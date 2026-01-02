@@ -145,7 +145,7 @@ function ReviewManage() {
         </Anchor>
       </Table.Td>
       <Table.Td>
-        <ReviewStar ratingScore={entity.ratingScore} />
+        <ReviewStar score={entity.ratingScore} />
       </Table.Td>
       <Table.Td maw={300}>
         <Highlight inherit>
