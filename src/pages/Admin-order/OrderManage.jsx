@@ -5,8 +5,8 @@ import ManageHeader from "~/components/ManageHeader";
 import ManageMain from "~/components/ManageMain/ManageMain";
 import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
-import OrderPaymentStatusBadge from "~/components/OrderPaymentStatusBadge";
 import OrderStatusBadge from "~/components/OrderStatusBadge";
+import PaymentStatusBadge from "~/components/PaymentStatusBadge";
 import SearchPanel from "~/components/SearchPanel";
 import DocketConfigs from "~/pages/Admin-docket/DocketConfigs";
 import OrderConfigs from "~/pages/Admin-order/OrderConfigs";
@@ -642,112 +642,9 @@ function OrderManage() {
         <Table.Td>
           <Stack gap="xs" sx={{ alignItems: "start" }}>
             <OrderStatusBadge status={entity.status} />
-            <OrderPaymentStatusBadge status={entity.paymentStatus} />
+            <PaymentStatusBadge status={entity.paymentStatus} />
           </Stack>
         </Table.Td>
-      </>
-    );
-  };
-
-  const EntityDetailTableRowsFragment = ({ entity }) => {
-    const PaymentMethodIcon = PageConfigs.paymentMethodIconMap[entity.paymentMethodType];
-
-    return (
-      <>
-        <Table.Tr>
-          <Table.Td>{OrderConfigs.properties.id.label}</Table.Td>
-          <Table.Td>{entity.id}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>{OrderConfigs.properties.createdAt.label}</Table.Td>
-          <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>{OrderConfigs.properties.updatedAt.label}</Table.Td>
-          <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>{OrderConfigs.properties.code.label}</Table.Td>
-          <Table.Td>{entity.code}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>{OrderConfigs.properties.status.label}</Table.Td>
-          <Table.Td>
-            <OrderStatusBadge status={entity.status} />
-          </Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>{OrderConfigs.properties["orderResource.name"].label}</Table.Td>
-          <Table.Td>
-            <Group gap="xs">
-              <ColorSwatch color={entity.orderResource.color} />
-              {entity.orderResource.name}
-            </Group>
-          </Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Tên lý do hủy đơn hàng</Table.Td>
-          <Table.Td>{entity.orderCancellationReason?.name}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Ghi chú đơn hàng</Table.Td>
-          <Table.Td style={{ maxWidth: 300 }}>{entity.note}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Người đặt hàng</Table.Td>
-          <Table.Td>
-            <Stack gap={0}>
-              <Text size="sm">{entity.user.fullname}</Text>
-              <Text size="xs" c="dimmed">
-                {entity.user.username}
-              </Text>
-            </Stack>
-          </Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Người nhận hàng</Table.Td>
-          <Table.Td>
-            <Stack gap={0}>
-              <Text size="sm">{entity.toName}</Text>
-              <Text size="xs">{entity.toPhone}</Text>
-              <Text size="xs" c="dimmed">
-                {[entity.toAddress, entity.toWardName, entity.toDistrictName, entity.toProvinceName].join(", ")}
-              </Text>
-            </Stack>
-          </Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Số mặt hàng</Table.Td>
-          <Table.Td>{entity.orderVariants.length} SKU</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Tổng thành tiền</Table.Td>
-          <Table.Td>{MiscUtils.toVND(entity.totalAmount)}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Thuế</Table.Td>
-          <Table.Td>{entity.tax * 100 + "%"}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Phí vận chuyển</Table.Td>
-          <Table.Td>{MiscUtils.toVND(entity.shippingCost)}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>{OrderConfigs.properties.totalPay.label}</Table.Td>
-          <Table.Td>{MiscUtils.toVND(entity.totalPay)}</Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Hình thức thanh toán</Table.Td>
-          <Table.Td>
-            <PaymentMethodIcon />
-          </Table.Td>
-        </Table.Tr>
-        <Table.Tr>
-          <Table.Td>Trạng thái thanh toán</Table.Td>
-          <Table.Td>
-            <OrderPaymentStatusBadge status={entity.paymentStatus} />
-          </Table.Td>
-        </Table.Tr>
       </>
     );
   };
@@ -764,7 +661,7 @@ function OrderManage() {
           listResponse={listResponse}
           properties={OrderConfigs.properties}
           showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          entityDetailTableRowsFragment={(entity) => <OrderConfigs.EntityDetailTableRowsFragment entity={entity} />}
         ></ManageTable>
       </ManageMain>
 

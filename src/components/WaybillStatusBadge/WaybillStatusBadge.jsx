@@ -1,7 +1,6 @@
 import { Badge } from "@mantine/core";
 
-
-function OrderBadge({ status }) {
+function WaybillStatusBadge({ status }) {
   switch (status) {
     case 1:
       return (
@@ -38,4 +37,4 @@ function OrderBadge({ status }) {
   }
 }
 
-export default OrderBadge;
+export default WaybillStatusBadge;

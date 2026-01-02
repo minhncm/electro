@@ -1,7 +1,7 @@
 import { Anchor, Button, Card, Divider, Group, Image, Stack, Text, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
-import OrderBadge from "~/components/OrderBadge/OrderBadge";
-import PaymentBadge from "~/components/PaymentBadge/PaymentBadge";
+import OrderBadge from "~/components/OrderStatusBadge/OrderStatusBadge";
+import PaymentBadge from "~/components/PaymentStatusBadge/PaymentStatusBadge";
 import DateUtils from "~/utils/DateUtils";
 import DefaultImage from "~/images/image_default.png";
 import MiscUtils from "~/utils/MiscUtils";

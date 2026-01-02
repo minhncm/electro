@@ -41,6 +41,12 @@ const ManagerPath = {
   ORDER: "/admin/order",
   ORDER_RESOURCE: "/admin/order/resource",
   ORDER_CANCELLATION_REASON: "/admin/order/cancellation-reason",
+
+  WAYBILL: "/admin/waybill",
+
+  REVIEW: "/admin/review",
+
+  REWARD_STRATEGY: "/admin/reward-strategy",
 };
 
 export default ManagerPath;

@@ -11,8 +11,8 @@ import {
   ThemeIcon,
   useMantineTheme,
 } from "@mantine/core";
-import OrderBadge from "~/components/OrderBadge/OrderBadge";
-import PaymentBadge from "~/components/PaymentBadge/PaymentBadge";
+import OrderBadge from "~/components/OrderStatusBadge/OrderStatusBadge";
+import PaymentBadge from "~/components/PaymentStatusBadge/PaymentStatusBadge";
 import { Cash, Plus } from "tabler-icons-react";
 import OrderItemRow from "./OrderIteRow";
 
