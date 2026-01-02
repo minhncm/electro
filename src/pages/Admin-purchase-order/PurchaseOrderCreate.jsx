@@ -64,7 +64,7 @@ function PurchaseOrderCreate() {
 
                 <Divider mt="xs" />
 
-                <Group position="apart" p="sm">
+                <Group justify="space-between" p="sm">
                   <Button variant="default">Mặc định</Button>
                   <Button type="submit">Thêm</Button>
                 </Group>

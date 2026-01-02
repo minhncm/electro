@@ -50,6 +50,10 @@ const ResourceUrl = {
   REVIEW: ApplicationPath.API_PATH + "/reviews",
 
   REWARD_STRATEGY: ApplicationPath.API_PATH + "/reward-strategies",
+
+  VOUCHER: ApplicationPath.API_PATH + "/vouchers",
+  PAYMENT_METHOD: ApplicationPath.API_PATH + "/payment-methods",
+  PROMOTION: ApplicationPath.API_PATH + "/promotions",
 };
 
 export default ResourceUrl;

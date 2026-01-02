@@ -110,7 +110,10 @@ import DocketReasonManage, { DocketReasonCreate, DocketReasonUpdate } from "./pa
 import PurchaseOrderManage, { PurchaseOrderCreate, PurchaseOrderUpdate } from "./pages/Admin-purchase-order";
 import WaybillManage, { WaybillCreate, WaybillUpdate } from "~/pages/Admin-waybill";
 import ReviewManage from "~/pages/Admin-review";
-import RewardStartegyManage from "./pages/Admin-reward-strategy";
+import RewardStartegyManage from "~/pages/Admin-reward-strategy";
+import VoucherManage from "~/pages/Admin-voucher";
+import PaymentMethodManage from "~/pages/Admin-payment-method";
+import PromotionManage, { PromotionCreate, PromotionUpdate } from "~/pages/Admin-promotion";
 
 function App() {
   return (
@@ -257,8 +260,17 @@ function App() {
                 <Route path={ManagerPath.WAYBILL} element={<WaybillManage />} />
                 <Route path={ManagerPath.WAYBILL + "/create"} element={<WaybillCreate />} />
                 <Route path={ManagerPath.WAYBILL + "/update/:id"} element={<WaybillUpdate />} />
+
                 <Route path={ManagerPath.REVIEW} element={<ReviewManage />} />
+
                 <Route path={ManagerPath.REWARD_STRATEGY} element={<RewardStartegyManage />} />
+
+                <Route path={ManagerPath.VOUCHER} element={<VoucherManage />} />
+                <Route path={ManagerPath.PAYMENT_METHOD} element={<PaymentMethodManage />} />
+
+                <Route path={ManagerPath.PROMOTION} element={<PromotionManage />} />
+                <Route path={ManagerPath.PROMOTION + "/create"} element={<PromotionCreate />} />
+                <Route path={ManagerPath.PROMOTION + "/update/:id"} element={<PromotionUpdate />} />
               </Route>
             </Routes>
           </div>

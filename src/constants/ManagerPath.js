@@ -47,6 +47,14 @@ const ManagerPath = {
   REVIEW: "/admin/review",
 
   REWARD_STRATEGY: "/admin/reward-strategy",
+
+  VOUCHER: "/admin/voucher",
+  PAYMENT_METHOD: "/admin/payment-method",
+  PROMOTION: "/admin/promotion",
+
+  CHAT: "/admin/chat",
+  NOTIFICATION: "/admin/notification",
+  ACCOUNT: "/admin/account",
 };
 
 export default ManagerPath;
