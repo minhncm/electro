@@ -109,6 +109,7 @@ import ClientWishlist from "~/pages/Client-wishlist";
 import DocketReasonManage, { DocketReasonCreate, DocketReasonUpdate } from "./pages/Admin-docket-reason";
 import PurchaseOrderManage, { PurchaseOrderCreate, PurchaseOrderUpdate } from "./pages/Admin-purchase-order";
 import WaybillManage, { WaybillCreate, WaybillUpdate } from "~/pages/Admin-waybill";
+import ReviewManage from "~/pages/Admin-review";
 
 function App() {
   return (
@@ -255,6 +256,7 @@ function App() {
                 <Route path={ManagerPath.WAYBILL} element={<WaybillManage />} />
                 <Route path={ManagerPath.WAYBILL + "/create"} element={<WaybillCreate />} />
                 <Route path={ManagerPath.WAYBILL + "/update/:id"} element={<WaybillUpdate />} />
+                <Route path={ManagerPath.REVIEW} element={<ReviewManage />} />
               </Route>
             </Routes>
           </div>
