@@ -116,6 +116,7 @@ import PaymentMethodManage from "~/pages/Admin-payment-method";
 import PromotionManage, { PromotionCreate, PromotionUpdate } from "~/pages/Admin-promotion";
 import AdminNotification from "~/pages/admin-notification";
 import AdminAccount from "~/pages/admin-account";
+import AdminDashboard from "~/pages/Admin-dashboard";
 
 function App() {
   return (
@@ -150,6 +151,7 @@ function App() {
                 <Route path="/signup" element={<ClientSignup />} />
               </Route>
               <Route path="/admin" element={<Admin />}>
+                <Route index element={<AdminDashboard />} />
                 <Route path={ManagerPath.ADDRESS} element={<AddressManage />} />
                 <Route path={ManagerPath.ADDRESS + "/create"} element={<AddressCreate />} />
                 <Route path={ManagerPath.ADDRESS + "/update/:id"} element={<AddressUpdate />} />
