@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: electro
+  datasource:
+    username: root
+    password: minh071205
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: @spring.profiles.active@
+
