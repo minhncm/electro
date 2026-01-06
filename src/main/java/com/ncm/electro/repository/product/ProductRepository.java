@@ -1,0 +1,7 @@
+package com.ncm.electro.repository.product;
+
+import com.ncm.electro.entity.product.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepository extends JpaRepository<Product, Long> {
+}

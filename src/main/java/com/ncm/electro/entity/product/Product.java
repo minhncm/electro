@@ -79,7 +79,7 @@ public class Product extends BaseEntity {
     @OneToOne(mappedBy = "product")
     private ProductInventoryLimit productInventoryLimit;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany
     @JoinTable(
             name = "product_tag",
             joinColumns = @JoinColumn(name = "product_id", nullable = false),

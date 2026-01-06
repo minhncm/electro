@@ -1,0 +1,7 @@
+package com.ncm.electro.repository.reward;
+
+import com.ncm.electro.entity.reward.RewardStrategy;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RewardStrategyRepository extends JpaRepository<RewardStrategy, Long> {
+}

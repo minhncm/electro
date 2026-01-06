@@ -31,7 +31,7 @@ public class Promotion extends BaseEntity {
     @Column(name = "status", nullable = false)
     private Byte status;
 
-    @ManyToMany(mappedBy = "promotions")
+    @ManyToMany
     @JoinTable(
             name = "promotion_product",
             joinColumns = @JoinColumn(name = "promotion_id", nullable = false),
