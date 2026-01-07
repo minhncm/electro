@@ -2,6 +2,7 @@ package com.ncm.electro.repository.inventory;
 
 import com.ncm.electro.entity.inventory.StorageLocation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface StorageLocationRepository extends JpaRepository<StorageLocation, Long> {
+public interface StorageLocationRepository extends JpaRepository<StorageLocation, Long>, JpaSpecificationExecutor<StorageLocation> {
 }
