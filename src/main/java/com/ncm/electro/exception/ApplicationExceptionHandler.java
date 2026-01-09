@@ -1,2 +1,24 @@
-package com.ncm.electro.exception;public class ApplicationExceptionHandler {
+package com.ncm.electro.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+
+import java.time.Instant;
+
+@RestControllerAdvice
+public class ApplicationExceptionHandler {
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ErrorMessage resourceNotfoundExceptionHandler(ResourceNotFoundException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false));
+    }
+
 }
