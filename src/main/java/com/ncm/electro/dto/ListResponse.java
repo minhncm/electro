@@ -1,9 +1,11 @@
 package com.ncm.electro.dto;
 
+import lombok.Value;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+@Value
 public class ListResponse<T> {
     List<T> content;
     int page;
