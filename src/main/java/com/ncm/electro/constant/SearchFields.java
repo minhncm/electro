@@ -16,9 +16,29 @@ public final class SearchFields {
     );
 
     public static final List<String> WARD = List.of(
-      "name",
-      "code",
-      "district.name",
-      "district.code"
+            "name",
+            "code",
+            "district.name",
+            "district.code"
+    );
+
+    public static final List<String> ADDRESS = List.of(
+            "line",
+            "province.name",
+            "province.code",
+            "district.name",
+            "district.code"
+    );
+
+    public static final List<String> USER = List.of(
+            "username",
+            "fullName",
+            "email",
+            "phone",
+            "address.line",
+            "address.province.name",
+            "address.province.code",
+            "address.district.name",
+            "address.district.code"
     );
 }

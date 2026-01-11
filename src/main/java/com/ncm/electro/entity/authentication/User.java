@@ -34,7 +34,7 @@ public class User extends BaseEntity {
     private String password;
 
     @Column(name = "fullname", nullable = false)
-    private String fullname;
+    private String fullName;
 
     @Column(name = "email", nullable = false)
     private String email;
