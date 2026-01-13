@@ -46,4 +46,51 @@ public final class SearchFields {
             "code",
             "name"
     );
+
+    public static final List<String> DEPARTMENT = List.of(
+            "name"
+    );
+
+    public static final List<String> JOB_LEVEL = List.of(
+            "name"
+    );
+
+    public static final List<String> JOB_TITLE = List.of(
+            "name"
+    );
+
+    public static final List<String> JOB_TYPE = List.of(
+            "name"
+    );
+
+    public static final List<String> OFFICE = List.of(
+            "name",
+            "address.line",
+            "address.province.name",
+            "address.province.code",
+            "address.district.name",
+            "address.district.code"
+    );
+
+    public static final List<String> EMPLOYEE = List.of(
+            "user.username",
+            "user.fullname",
+            "user.email",
+            "user.phone",
+            "user.address.line",
+            "user.address.province.name",
+            "user.address.province.code",
+            "user.address.district.name",
+            "user.address.district.code",
+            "office.name",
+            "office.address.line",
+            "office.address.province.name",
+            "office.address.province.code",
+            "office.address.district.name",
+            "office.address.district.code",
+            "department.name",
+            "jobType.name",
+            "jobLevel.name",
+            "jobTitle.name"
+    );
 }

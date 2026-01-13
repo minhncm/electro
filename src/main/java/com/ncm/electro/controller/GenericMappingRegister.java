@@ -6,24 +6,28 @@ import com.ncm.electro.dto.authentication.RoleRequest;
 import com.ncm.electro.dto.authentication.RoleResponse;
 import com.ncm.electro.dto.authentication.UserRequest;
 import com.ncm.electro.dto.authentication.UserResponse;
+import com.ncm.electro.dto.employee.*;
 import com.ncm.electro.entity.address.Address;
 import com.ncm.electro.entity.address.District;
 import com.ncm.electro.entity.address.Province;
 import com.ncm.electro.entity.address.Ward;
 import com.ncm.electro.entity.authentication.Role;
 import com.ncm.electro.entity.authentication.User;
+import com.ncm.electro.entity.employee.*;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
 import com.ncm.electro.mapper.address.ProvinceMapper;
 import com.ncm.electro.mapper.address.WardMapper;
 import com.ncm.electro.mapper.authentication.RoleMapper;
 import com.ncm.electro.mapper.authentication.UserMapper;
+import com.ncm.electro.mapper.employee.*;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
 import com.ncm.electro.repository.address.ProvinceRepository;
 import com.ncm.electro.repository.address.WardRepository;
 import com.ncm.electro.repository.authentication.RoleRepository;
 import com.ncm.electro.repository.authentication.UserRepository;
+import com.ncm.electro.repository.employee.*;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
 import jakarta.annotation.PostConstruct;
@@ -53,6 +57,12 @@ public class GenericMappingRegister {
     private GenericController<AddressRequest, AddressResponse> addressController;
     private GenericController<UserRequest, UserResponse> userController;
     private GenericController<RoleRequest, RoleResponse> roleController;
+    private GenericController<DepartmentRequest, DepartmentResponse> departmentController;
+    private GenericController<JobLevelRequest, JobLevelResponse> jobLevelController;
+    private GenericController<JobTypeRequest, JobTypeResponse> jobTypeController;
+    private GenericController<JobTitleRequest, JobTitleResponse> jobTitleController;
+    private GenericController<OfficeRequest, OfficeResponse> officeController;
+    private GenericController<EmployeeRequest, EmployeeResponse> employeeController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -61,6 +71,12 @@ public class GenericMappingRegister {
     private GenericService<Address, AddressRequest, AddressResponse> addressService;
     private GenericService<User, UserRequest, UserResponse> userService;
     private GenericService<Role, RoleRequest, RoleResponse> roleService;
+    private GenericService<Department, DepartmentRequest, DepartmentResponse> departmentService;
+    private GenericService<JobLevel, JobLevelRequest, JobLevelResponse> jobLevelService;
+    private GenericService<JobType, JobTypeRequest, JobTypeResponse> jobTypeService;
+    private GenericService<JobTitle, JobTitleRequest, JobTitleResponse> jobTitleService;
+    private GenericService<Office, OfficeRequest, OfficeResponse> officeService;
+    private GenericService<Employee, EmployeeRequest, EmployeeResponse> employeeService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -104,6 +120,48 @@ public class GenericMappingRegister {
                 SearchFields.ROLE,
                 Role.class.getSimpleName()
         ), RoleRequest.class);
+
+        register("departments", departmentController, departmentService.init(
+                context.getBean(DepartmentRepository.class),
+                context.getBean(DepartmentMapper.class),
+                SearchFields.DEPARTMENT,
+                Department.class.getSimpleName()
+        ), DepartmentRequest.class);
+
+        register("job-levels", jobLevelController, jobLevelService.init(
+                context.getBean(JobLevelRepository.class),
+                context.getBean(JobLevelMapper.class),
+                SearchFields.JOB_LEVEL,
+                JobLevel.class.getSimpleName()
+        ), JobLevelRequest.class);
+
+        register("job-types", jobTypeController, jobTypeService.init(
+                context.getBean(JobTypeRepository.class),
+                context.getBean(JobTypeMapper.class),
+                SearchFields.JOB_TYPE,
+                JobType.class.getSimpleName()
+        ), JobTypeRequest.class);
+
+        register("job-titles", jobTitleController, jobTitleService.init(
+                context.getBean(JobTitleRepository.class),
+                context.getBean(JobTitleMapper.class),
+                SearchFields.JOB_TITLE,
+                JobTitle.class.getSimpleName()
+        ), JobTitleRequest.class);
+
+        register("offices", officeController, officeService.init(
+                context.getBean(OfficeRepository.class),
+                context.getBean(OfficeMapper.class),
+                SearchFields.OFFICE,
+                Office.class.getSimpleName()
+        ), OfficeRequest.class);
+
+        register("employees", employeeController, employeeService.init(
+                context.getBean(EmployeeRepository.class),
+                context.getBean(EmployeeMapper.class),
+                SearchFields.EMPLOYEE,
+                Employee.class.getSimpleName()
+        ), EmployeeRequest.class);
     }
 
     private <I, O> void register(String resource,
