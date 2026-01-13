@@ -11,12 +11,12 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class UserResponse extends BaseResponse {
     private String username;
-    private String fullName;
+    private String fullname;
     private String email;
     private String phone;
     private String gender;
     private AddressResponse address;
     private String avatar;
-    private Integer Status;
+    private Integer status;
     private Set<RoleResponse> roles;
 }

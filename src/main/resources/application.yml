@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  jackson:
+    mapper:
+      sort-properties-alphabetically: false
   application:
     name: electro
   datasource:

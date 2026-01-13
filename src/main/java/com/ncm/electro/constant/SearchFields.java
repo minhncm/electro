@@ -41,4 +41,9 @@ public final class SearchFields {
             "address.district.name",
             "address.district.code"
     );
+
+    public static final List<String> ROLE = List.of(
+            "code",
+            "name"
+    );
 }

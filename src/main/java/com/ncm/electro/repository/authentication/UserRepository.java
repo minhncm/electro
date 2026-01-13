@@ -13,6 +13,6 @@ import org.springframework.data.jpa.repository.Query;
 @NullMarked
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-    @EntityGraph(attributePaths = {"roles"})
+    @EntityGraph(attributePaths = {"roles", "address.province", "address.district", "address.ward",})
     Page<User> findAll(Specification<User> specification, Pageable pageable);
 }

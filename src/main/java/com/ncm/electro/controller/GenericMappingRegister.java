@@ -2,22 +2,27 @@ package com.ncm.electro.controller;
 
 import com.ncm.electro.constant.SearchFields;
 import com.ncm.electro.dto.address.*;
+import com.ncm.electro.dto.authentication.RoleRequest;
+import com.ncm.electro.dto.authentication.RoleResponse;
 import com.ncm.electro.dto.authentication.UserRequest;
 import com.ncm.electro.dto.authentication.UserResponse;
 import com.ncm.electro.entity.address.Address;
 import com.ncm.electro.entity.address.District;
 import com.ncm.electro.entity.address.Province;
 import com.ncm.electro.entity.address.Ward;
+import com.ncm.electro.entity.authentication.Role;
 import com.ncm.electro.entity.authentication.User;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
 import com.ncm.electro.mapper.address.ProvinceMapper;
 import com.ncm.electro.mapper.address.WardMapper;
+import com.ncm.electro.mapper.authentication.RoleMapper;
 import com.ncm.electro.mapper.authentication.UserMapper;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
 import com.ncm.electro.repository.address.ProvinceRepository;
 import com.ncm.electro.repository.address.WardRepository;
+import com.ncm.electro.repository.authentication.RoleRepository;
 import com.ncm.electro.repository.authentication.UserRepository;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
@@ -47,6 +52,7 @@ public class GenericMappingRegister {
     private GenericController<WardRequest, WardResponse> wardController;
     private GenericController<AddressRequest, AddressResponse> addressController;
     private GenericController<UserRequest, UserResponse> userController;
+    private GenericController<RoleRequest, RoleResponse> roleController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -54,6 +60,7 @@ public class GenericMappingRegister {
     private GenericService<Ward, WardRequest, WardResponse> wardService;
     private GenericService<Address, AddressRequest, AddressResponse> addressService;
     private GenericService<User, UserRequest, UserResponse> userService;
+    private GenericService<Role, RoleRequest, RoleResponse> roleService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -90,6 +97,13 @@ public class GenericMappingRegister {
                 SearchFields.USER,
                 User.class.getSimpleName()
         ), UserRequest.class);
+
+        register("roles", roleController, roleService.init(
+                context.getBean(RoleRepository.class),
+                context.getBean(RoleMapper.class),
+                SearchFields.ROLE,
+                Role.class.getSimpleName()
+        ), RoleRequest.class);
     }
 
     private <I, O> void register(String resource,
