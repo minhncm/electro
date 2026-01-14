@@ -6,6 +6,7 @@ import com.ncm.electro.dto.authentication.RoleRequest;
 import com.ncm.electro.dto.authentication.RoleResponse;
 import com.ncm.electro.dto.authentication.UserRequest;
 import com.ncm.electro.dto.authentication.UserResponse;
+import com.ncm.electro.dto.customer.*;
 import com.ncm.electro.dto.employee.*;
 import com.ncm.electro.entity.address.Address;
 import com.ncm.electro.entity.address.District;
@@ -13,6 +14,10 @@ import com.ncm.electro.entity.address.Province;
 import com.ncm.electro.entity.address.Ward;
 import com.ncm.electro.entity.authentication.Role;
 import com.ncm.electro.entity.authentication.User;
+import com.ncm.electro.entity.customer.Customer;
+import com.ncm.electro.entity.customer.CustomerGroup;
+import com.ncm.electro.entity.customer.CustomerResource;
+import com.ncm.electro.entity.customer.CustomerStatus;
 import com.ncm.electro.entity.employee.*;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
@@ -20,6 +25,10 @@ import com.ncm.electro.mapper.address.ProvinceMapper;
 import com.ncm.electro.mapper.address.WardMapper;
 import com.ncm.electro.mapper.authentication.RoleMapper;
 import com.ncm.electro.mapper.authentication.UserMapper;
+import com.ncm.electro.mapper.customer.CustomerGroupMapper;
+import com.ncm.electro.mapper.customer.CustomerMapper;
+import com.ncm.electro.mapper.customer.CustomerResourceMapper;
+import com.ncm.electro.mapper.customer.CustomerStatusMapper;
 import com.ncm.electro.mapper.employee.*;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
@@ -27,6 +36,10 @@ import com.ncm.electro.repository.address.ProvinceRepository;
 import com.ncm.electro.repository.address.WardRepository;
 import com.ncm.electro.repository.authentication.RoleRepository;
 import com.ncm.electro.repository.authentication.UserRepository;
+import com.ncm.electro.repository.customer.CustomerGroupRepository;
+import com.ncm.electro.repository.customer.CustomerRepository;
+import com.ncm.electro.repository.customer.CustomerResourceRepository;
+import com.ncm.electro.repository.customer.CustomerStatusRepository;
 import com.ncm.electro.repository.employee.*;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
@@ -63,6 +76,10 @@ public class GenericMappingRegister {
     private GenericController<JobTitleRequest, JobTitleResponse> jobTitleController;
     private GenericController<OfficeRequest, OfficeResponse> officeController;
     private GenericController<EmployeeRequest, EmployeeResponse> employeeController;
+    private GenericController<CustomerGroupRequest, CustomerGroupResponse> customerGroupController;
+    private GenericController<CustomerResourceRequest, CustomerResourceResponse> customerResourceController;
+    private GenericController<CustomerStatusRequest, CustomerStatusResponse> customerStatusController;
+    private GenericController<CustomerRequest, CustomerResponse> customerController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -77,6 +94,10 @@ public class GenericMappingRegister {
     private GenericService<JobTitle, JobTitleRequest, JobTitleResponse> jobTitleService;
     private GenericService<Office, OfficeRequest, OfficeResponse> officeService;
     private GenericService<Employee, EmployeeRequest, EmployeeResponse> employeeService;
+    private GenericService<CustomerGroup, CustomerGroupRequest, CustomerGroupResponse> customerGroupService;
+    private GenericService<CustomerResource, CustomerResourceRequest, CustomerResourceResponse> customerResourceService;
+    private GenericService<CustomerStatus, CustomerStatusRequest, CustomerStatusResponse> customerStatusService;
+    private GenericService<Customer, CustomerRequest, CustomerResponse> customerService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -162,6 +183,34 @@ public class GenericMappingRegister {
                 SearchFields.EMPLOYEE,
                 Employee.class.getSimpleName()
         ), EmployeeRequest.class);
+
+        register("customer-groups", customerGroupController, customerGroupService.init(
+                context.getBean(CustomerGroupRepository.class),
+                context.getBean(CustomerGroupMapper.class),
+                SearchFields.CUSTOMER_GROUP,
+                CustomerGroup.class.getSimpleName()
+        ), CustomerGroupRequest.class);
+
+        register("customer-resources", customerResourceController, customerResourceService.init(
+                context.getBean(CustomerResourceRepository.class),
+                context.getBean(CustomerResourceMapper.class),
+                SearchFields.CUSTOMER_RESOURCE,
+                CustomerResource.class.getSimpleName()
+        ), CustomerResourceRequest.class);
+
+        register("customer-status", customerStatusController, customerStatusService.init(
+                context.getBean(CustomerStatusRepository.class),
+                context.getBean(CustomerStatusMapper.class),
+                SearchFields.CUSTOMER_STATUS,
+                CustomerStatus.class.getSimpleName()
+        ), CustomerStatusRequest.class);
+
+        register("customers", customerController, customerService.init(
+                context.getBean(CustomerRepository.class),
+                context.getBean(CustomerMapper.class),
+                SearchFields.CUSTOMER,
+                Customer.class.getSimpleName()
+        ), CustomerRequest.class);
     }
 
     private <I, O> void register(String resource,

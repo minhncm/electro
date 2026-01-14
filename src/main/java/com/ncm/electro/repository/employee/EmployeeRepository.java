@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 @NullMarked
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
     @EntityGraph(attributePaths = {
-            "user", "user.address", "office", "office.address",
+            "user", "user.address", "user.roles", "office", "office.address",
             "department", "jobType", "jobLevel", "jobTitle"})
     Page<Employee> findAll(Specification<Employee> specification, Pageable pageable);
 }

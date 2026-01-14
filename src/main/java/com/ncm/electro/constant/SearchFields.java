@@ -93,4 +93,40 @@ public final class SearchFields {
             "jobLevel.name",
             "jobTitle.name"
     );
+
+    public static final List<String> CUSTOMER_GROUP = List.of(
+            "code",
+            "name",
+            "description"
+    );
+
+    public static final List<String> CUSTOMER_RESOURCE = List.of(
+            "code",
+            "name",
+            "description"
+    );
+
+    public static final List<String> CUSTOMER_STATUS = List.of(
+            "code",
+            "name",
+            "description"
+    );
+
+    public static final List<String> CUSTOMER = List.of(
+            "user.username",
+            "user.fullname",
+            "user.email",
+            "user.phone",
+            "user.address.line",
+            "user.address.province.name",
+            "user.address.province.code",
+            "user.address.district.name",
+            "user.address.district.code",
+            "customerGroup.code",
+            "customerGroup.name",
+            "customerResource.code",
+            "customerResource.name",
+            "customerStatus.code",
+            "customerStatus.name"
+    );
 }
