@@ -8,5 +8,5 @@ public class CustomerGroupRequest {
     private String name;
     private String description;
     private String color;
-    private String status;
+    private Integer status;
 }

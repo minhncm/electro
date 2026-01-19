@@ -129,4 +129,16 @@ public final class SearchFields {
             "customerStatus.code",
             "customerStatus.name"
     );
+
+    public static final List<String> PROPERTY = List.of(
+            "name",
+            "code",
+            "description"
+    );
+
+    public static final List<String> CATEGORY = List.of(
+            "name",
+            "code",
+            "description"
+    );
 }

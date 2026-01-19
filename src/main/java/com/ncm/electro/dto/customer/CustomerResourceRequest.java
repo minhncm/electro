@@ -8,5 +8,5 @@ public class CustomerResourceRequest {
     private String name;
     private String Description;
     private String color;
-    private String status;
+    private Integer status;
 }
