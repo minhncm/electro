@@ -8,10 +8,7 @@ import com.ncm.electro.dto.authentication.UserRequest;
 import com.ncm.electro.dto.authentication.UserResponse;
 import com.ncm.electro.dto.customer.*;
 import com.ncm.electro.dto.employee.*;
-import com.ncm.electro.dto.product.CategoryRequest;
-import com.ncm.electro.dto.product.CategoryResponse;
-import com.ncm.electro.dto.product.PropertyRequest;
-import com.ncm.electro.dto.product.PropertyResponse;
+import com.ncm.electro.dto.product.*;
 import com.ncm.electro.entity.address.Address;
 import com.ncm.electro.entity.address.District;
 import com.ncm.electro.entity.address.Province;
@@ -23,8 +20,7 @@ import com.ncm.electro.entity.customer.CustomerGroup;
 import com.ncm.electro.entity.customer.CustomerResource;
 import com.ncm.electro.entity.customer.CustomerStatus;
 import com.ncm.electro.entity.employee.*;
-import com.ncm.electro.entity.product.Category;
-import com.ncm.electro.entity.product.Property;
+import com.ncm.electro.entity.product.*;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
 import com.ncm.electro.mapper.address.ProvinceMapper;
@@ -36,8 +32,7 @@ import com.ncm.electro.mapper.customer.CustomerMapper;
 import com.ncm.electro.mapper.customer.CustomerResourceMapper;
 import com.ncm.electro.mapper.customer.CustomerStatusMapper;
 import com.ncm.electro.mapper.employee.*;
-import com.ncm.electro.mapper.product.CategoryMapper;
-import com.ncm.electro.mapper.product.PropertyMapper;
+import com.ncm.electro.mapper.product.*;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
 import com.ncm.electro.repository.address.ProvinceRepository;
@@ -49,8 +44,7 @@ import com.ncm.electro.repository.customer.CustomerRepository;
 import com.ncm.electro.repository.customer.CustomerResourceRepository;
 import com.ncm.electro.repository.customer.CustomerStatusRepository;
 import com.ncm.electro.repository.employee.*;
-import com.ncm.electro.repository.product.CategoryRepository;
-import com.ncm.electro.repository.product.PropertyRepository;
+import com.ncm.electro.repository.product.*;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
 import jakarta.annotation.PostConstruct;
@@ -92,6 +86,12 @@ public class GenericMappingRegister {
     private GenericController<CustomerRequest, CustomerResponse> customerController;
     private GenericController<PropertyRequest, PropertyResponse> propertyController;
     private GenericController<CategoryRequest, CategoryResponse> categoryController;
+    private GenericController<TagRequest, TagResponse> tagController;
+    private GenericController<GuaranteeRequest, GuaranteeResponse> guaranteeController;
+    private GenericController<UnitRequest, UnitResponse> unitController;
+    private GenericController<SupplierRequest, SupplierResponse> supplierController;
+    private GenericController<BrandRequest, BrandResponse> brandController;
+    private GenericController<SpecificationRequest, SpecificationResponse> specificationController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -112,6 +112,12 @@ public class GenericMappingRegister {
     private GenericService<Customer, CustomerRequest, CustomerResponse> customerService;
     private GenericService<Property, PropertyRequest, PropertyResponse> propertyService;
     private GenericService<Category, CategoryRequest, CategoryResponse> categoryService;
+    private GenericService<Tag, TagRequest, TagResponse> tagService;
+    private GenericService<Guarantee, GuaranteeRequest, GuaranteeResponse> guaranteeService;
+    private GenericService<Unit, UnitRequest, UnitResponse> unitService;
+    private GenericService<Supplier, SupplierRequest, SupplierResponse> supplierService;
+    private GenericService<Brand, BrandRequest, BrandResponse> brandService;
+    private GenericService<Specification, SpecificationRequest, SpecificationResponse> specificationService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -239,6 +245,48 @@ public class GenericMappingRegister {
                 SearchFields.CATEGORY,
                 Category.class.getSimpleName()
         ), CategoryRequest.class);
+
+        register("tags", tagController, tagService.init(
+                context.getBean(TagRepository.class),
+                context.getBean(TagMapper.class),
+                SearchFields.TAG,
+                Tag.class.getSimpleName()
+        ), TagRequest.class);
+
+        register("guarantees", guaranteeController, guaranteeService.init(
+                context.getBean(GuaranteeRepository.class),
+                context.getBean(GuaranteeMapper.class),
+                SearchFields.GUARANTEE,
+                Guarantee.class.getSimpleName()
+        ), GuaranteeRequest.class);
+
+        register("units", unitController, unitService.init(
+                context.getBean(UnitRepository.class),
+                context.getBean(UnitMapper.class),
+                SearchFields.UNIT,
+                Unit.class.getSimpleName()
+        ), UnitRequest.class);
+
+        register("suppliers", supplierController, supplierService.init(
+                context.getBean(SupplierRepository.class),
+                context.getBean(SupplierMapper.class),
+                SearchFields.SUPPLIER,
+                Supplier.class.getSimpleName()
+        ), SupplierRequest.class);
+
+        register("brands", brandController, brandService.init(
+                context.getBean(BrandRepository.class),
+                context.getBean(BrandMapper.class),
+                SearchFields.BRAND,
+                Brand.class.getSimpleName()
+        ), BrandRequest.class);
+
+        register("specifications", specificationController, specificationService.init(
+                context.getBean(SpecificationRepository.class),
+                context.getBean(SpecificationMapper.class),
+                SearchFields.SPECIFICATION,
+                Specification.class.getSimpleName()
+        ), SpecificationRequest.class);
     }
 
     private <I, O> void register(String resource,

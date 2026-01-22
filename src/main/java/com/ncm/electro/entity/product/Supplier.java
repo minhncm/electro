@@ -58,8 +58,8 @@ public class Supplier extends BaseEntity {
     @Column(name = "note")
     private String note;
 
-    @Column(name = "status", nullable = false)
-    private Byte status;
+    @Column(name = "status", nullable = false, columnDefinition = "TINYINT")
+    private Integer status;
 
     @OneToMany(mappedBy = "supplier")
     private Set<Product> products = new LinkedHashSet<>();

@@ -21,7 +21,7 @@ public class Specification extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "status", nullable = false)
-    private Byte status;
+    @Column(name = "status", nullable = false, columnDefinition = "TINYINT")
+    private Integer status;
 
 }

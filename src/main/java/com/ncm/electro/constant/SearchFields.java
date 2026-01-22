@@ -141,4 +141,50 @@ public final class SearchFields {
             "code",
             "description"
     );
+
+    public static final List<String> TAG = List.of(
+            "name",
+            "slug"
+    );
+
+    public static final List<String> GUARANTEE = List.of(
+            "name",
+            "description"
+    );
+
+    public static final List<String> UNIT = List.of(
+            "name"
+    );
+
+    public static final List<String> SUPPLIER = List.of(
+            "displayName",
+                    "code",
+                    "contactFullname",
+                    "contactEmail",
+                    "contactPhone",
+                    "companyName",
+                    "taxCode",
+                    "email",
+                    "phone",
+                    "fax",
+                    "website",
+                    "address.province.name",
+                    "address.province.code",
+                    "address.district.name",
+                    "address.district.code",
+                    "description",
+                    "note"
+    );
+
+    public static final List<String> BRAND = List.of(
+            "name",
+            "code",
+            "description"
+    );
+
+    public static final List<String> SPECIFICATION = List.of(
+            "name",
+            "code",
+            "description"
+    );
 }
