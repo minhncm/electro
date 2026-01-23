@@ -220,4 +220,22 @@ public final class SearchFields {
             "unit.name",
             "guarantee.name"
     );
+
+    public static final List<String> PRODUCT_INVENTORY_LIMIT = List.of(
+            "product.name",
+            "product.code",
+            "product.category.name",
+            "minimumLimit",
+            "maximumLimit"
+    );
+
+    public static final List<String> VARIANT_INVENTORY_LIMIT = List.of(
+            "variant.product.name",
+            "variant.product.code",
+            "variant.sku",
+            "variant.cost",
+            "variant.price",
+            "minimumLimit",
+            "maximumLimit"
+    );
 }

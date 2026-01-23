@@ -10,6 +10,10 @@ import com.ncm.electro.dto.customer.*;
 import com.ncm.electro.dto.employee.*;
 import com.ncm.electro.dto.genaral.ImageRequest;
 import com.ncm.electro.dto.genaral.ImageResponse;
+import com.ncm.electro.dto.inventory.ProductInventoryLimitRequest;
+import com.ncm.electro.dto.inventory.ProductInventoryLimitResponse;
+import com.ncm.electro.dto.inventory.VariantInventoryLimitRequest;
+import com.ncm.electro.dto.inventory.VariantInventoryLimitResponse;
 import com.ncm.electro.dto.product.*;
 import com.ncm.electro.entity.address.Address;
 import com.ncm.electro.entity.address.District;
@@ -23,6 +27,8 @@ import com.ncm.electro.entity.customer.CustomerResource;
 import com.ncm.electro.entity.customer.CustomerStatus;
 import com.ncm.electro.entity.employee.*;
 import com.ncm.electro.entity.general.Image;
+import com.ncm.electro.entity.inventory.ProductInventoryLimit;
+import com.ncm.electro.entity.inventory.VariantInventoryLimit;
 import com.ncm.electro.entity.product.*;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
@@ -36,6 +42,8 @@ import com.ncm.electro.mapper.customer.CustomerResourceMapper;
 import com.ncm.electro.mapper.customer.CustomerStatusMapper;
 import com.ncm.electro.mapper.employee.*;
 import com.ncm.electro.mapper.genaral.ImageMapper;
+import com.ncm.electro.mapper.inventory.ProductInventoryLimitMapper;
+import com.ncm.electro.mapper.inventory.VariantInventoryLimitMapper;
 import com.ncm.electro.mapper.product.*;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
@@ -49,6 +57,8 @@ import com.ncm.electro.repository.customer.CustomerResourceRepository;
 import com.ncm.electro.repository.customer.CustomerStatusRepository;
 import com.ncm.electro.repository.employee.*;
 import com.ncm.electro.repository.general.ImageRepository;
+import com.ncm.electro.repository.inventory.ProductInventoryLimitRepository;
+import com.ncm.electro.repository.inventory.VariantInventoryLimitRepository;
 import com.ncm.electro.repository.product.*;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
@@ -100,6 +110,8 @@ public class GenericMappingRegister {
     private GenericController<ImageRequest, ImageResponse> imageController;
     private GenericController<VariantRequest, VariantResponse> variantController;
     private GenericController<ProductRequest, ProductResponse> productController;
+    private GenericController<ProductInventoryLimitRequest, ProductInventoryLimitResponse> productInventoryLimitController;
+    private GenericController<VariantInventoryLimitRequest, VariantInventoryLimitResponse> variantInventoryLimitController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -129,6 +141,8 @@ public class GenericMappingRegister {
     private GenericService<Image, ImageRequest, ImageResponse> imageService;
     private GenericService<Variant, VariantRequest, VariantResponse> variantService;
     private GenericService<Product, ProductRequest, ProductResponse> productService;
+    private GenericService<ProductInventoryLimit, ProductInventoryLimitRequest, ProductInventoryLimitResponse> productInventoryLimitService;
+    private GenericService<VariantInventoryLimit, VariantInventoryLimitRequest, VariantInventoryLimitResponse> variantInventoryLimitService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -319,6 +333,20 @@ public class GenericMappingRegister {
                 SearchFields.PRODUCT,
                 Product.class.getSimpleName()
         ), ProductRequest.class);
+
+        register("product-inventory-limits", productInventoryLimitController, productInventoryLimitService.init(
+                context.getBean(ProductInventoryLimitRepository.class),
+                context.getBean(ProductInventoryLimitMapper.class),
+                SearchFields.PRODUCT_INVENTORY_LIMIT,
+                ProductInventoryLimit.class.getSimpleName()
+        ), ProductInventoryLimitRequest.class);
+
+        register("variant-inventory-limits", variantInventoryLimitController, variantInventoryLimitService.init(
+                context.getBean(VariantInventoryLimitRepository.class),
+                context.getBean(VariantInventoryLimitMapper.class),
+                SearchFields.VARIANT_INVENTORY_LIMIT,
+                VariantInventoryLimitMapper.class.getSimpleName()
+        ), VariantInventoryLimitRequest.class);
     }
 
     private <I, O> void register(String resource,
