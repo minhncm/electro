@@ -4,11 +4,13 @@ import com.ncm.electro.entity.BaseEntity;
 import com.ncm.electro.entity.cart.CartVariant;
 import com.ncm.electro.entity.inventory.*;
 import com.ncm.electro.entity.order.OrderVariant;
+import com.ncm.electro.utils.JsonNodeConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import tools.jackson.databind.JsonNode;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -33,13 +35,13 @@ public class Variant extends BaseEntity {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "properties")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> properties;
+    @Column(name = "properties", columnDefinition = "JSON")
+    @Convert(converter = JsonNodeConverter.class)
+    private JsonNode properties;
 
-    @Column(name = "images")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> images;
+    @Column(name = "images", columnDefinition = "JSON")
+    @Convert(converter = JsonNodeConverter.class)
+    private JsonNode images;
 
     @Column(name = "status", nullable = false, columnDefinition = "TINYINT")
     private Integer status;

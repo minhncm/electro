@@ -8,6 +8,8 @@ import com.ncm.electro.dto.authentication.UserRequest;
 import com.ncm.electro.dto.authentication.UserResponse;
 import com.ncm.electro.dto.customer.*;
 import com.ncm.electro.dto.employee.*;
+import com.ncm.electro.dto.genaral.ImageRequest;
+import com.ncm.electro.dto.genaral.ImageResponse;
 import com.ncm.electro.dto.product.*;
 import com.ncm.electro.entity.address.Address;
 import com.ncm.electro.entity.address.District;
@@ -20,6 +22,7 @@ import com.ncm.electro.entity.customer.CustomerGroup;
 import com.ncm.electro.entity.customer.CustomerResource;
 import com.ncm.electro.entity.customer.CustomerStatus;
 import com.ncm.electro.entity.employee.*;
+import com.ncm.electro.entity.general.Image;
 import com.ncm.electro.entity.product.*;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
@@ -32,6 +35,7 @@ import com.ncm.electro.mapper.customer.CustomerMapper;
 import com.ncm.electro.mapper.customer.CustomerResourceMapper;
 import com.ncm.electro.mapper.customer.CustomerStatusMapper;
 import com.ncm.electro.mapper.employee.*;
+import com.ncm.electro.mapper.genaral.ImageMapper;
 import com.ncm.electro.mapper.product.*;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
@@ -44,6 +48,7 @@ import com.ncm.electro.repository.customer.CustomerRepository;
 import com.ncm.electro.repository.customer.CustomerResourceRepository;
 import com.ncm.electro.repository.customer.CustomerStatusRepository;
 import com.ncm.electro.repository.employee.*;
+import com.ncm.electro.repository.general.ImageRepository;
 import com.ncm.electro.repository.product.*;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
@@ -92,6 +97,9 @@ public class GenericMappingRegister {
     private GenericController<SupplierRequest, SupplierResponse> supplierController;
     private GenericController<BrandRequest, BrandResponse> brandController;
     private GenericController<SpecificationRequest, SpecificationResponse> specificationController;
+    private GenericController<ImageRequest, ImageResponse> imageController;
+    private GenericController<VariantRequest, VariantResponse> variantController;
+    private GenericController<ProductRequest, ProductResponse> productController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -118,6 +126,9 @@ public class GenericMappingRegister {
     private GenericService<Supplier, SupplierRequest, SupplierResponse> supplierService;
     private GenericService<Brand, BrandRequest, BrandResponse> brandService;
     private GenericService<Specification, SpecificationRequest, SpecificationResponse> specificationService;
+    private GenericService<Image, ImageRequest, ImageResponse> imageService;
+    private GenericService<Variant, VariantRequest, VariantResponse> variantService;
+    private GenericService<Product, ProductRequest, ProductResponse> productService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -287,6 +298,27 @@ public class GenericMappingRegister {
                 SearchFields.SPECIFICATION,
                 Specification.class.getSimpleName()
         ), SpecificationRequest.class);
+
+        register("images", imageController, imageService.init(
+                context.getBean(ImageRepository.class),
+                context.getBean(ImageMapper.class),
+                SearchFields.IMAGE,
+                Image.class.getSimpleName()
+        ), ImageRequest.class);
+
+        register("variants", variantController, variantService.init(
+                context.getBean(VariantRepository.class),
+                context.getBean(VariantMapper.class),
+                SearchFields.VARIANT,
+                Variant.class.getSimpleName()
+        ), VariantRequest.class);
+
+        register("products", productController, productService.init(
+                context.getBean(ProductRepository.class),
+                context.getBean(ProductMapper.class),
+                SearchFields.PRODUCT,
+                Product.class.getSimpleName()
+        ), ProductRequest.class);
     }
 
     private <I, O> void register(String resource,

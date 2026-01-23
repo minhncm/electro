@@ -187,4 +187,37 @@ public final class SearchFields {
             "code",
             "description"
     );
+
+    public static final List<String> IMAGE = List.of(
+            "name",
+            "contentType"
+    );
+
+    public static final List<String> VARIANT = List.of(
+            "product.name",
+            "product.code",
+            "sku"
+    );
+
+    public static final List<String> PRODUCT = List.of(
+            "name",
+            "code",
+            "slug",
+            "shortDescription",
+            "description",
+            "category.name",
+            "brand.name",
+            "brand.code",
+            "supplier.displayName",
+            "supplier.code",
+            "supplier.contactFullname",
+            "supplier.contactEmail",
+            "supplier.contactPhone",
+            "supplier.companyName",
+            "supplier.taxCode",
+            "supplier.email",
+            "supplier.phone",
+            "unit.name",
+            "guarantee.name"
+    );
 }

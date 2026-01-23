@@ -7,11 +7,13 @@ import com.ncm.electro.entity.general.Image;
 import com.ncm.electro.entity.inventory.ProductInventoryLimit;
 import com.ncm.electro.entity.promotion.Promotion;
 import com.ncm.electro.entity.review.Review;
+import com.ncm.electro.utils.JsonNodeConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import tools.jackson.databind.JsonNode;
 
 import java.util.*;
 
@@ -56,12 +58,12 @@ public class Product extends BaseEntity {
     private Unit unit;
 
     @Column(name = "specifications")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> specifications;
+    @Convert(converter = JsonNodeConverter.class)
+    private JsonNode specifications;
 
     @Column(name = "properties")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Object> properties;
+    @Convert(converter = JsonNodeConverter.class)
+    private JsonNode properties;
 
     @Column(name = "weight")
     private Double weight;
