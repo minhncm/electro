@@ -10,10 +10,7 @@ import com.ncm.electro.dto.customer.*;
 import com.ncm.electro.dto.employee.*;
 import com.ncm.electro.dto.genaral.ImageRequest;
 import com.ncm.electro.dto.genaral.ImageResponse;
-import com.ncm.electro.dto.inventory.ProductInventoryLimitRequest;
-import com.ncm.electro.dto.inventory.ProductInventoryLimitResponse;
-import com.ncm.electro.dto.inventory.VariantInventoryLimitRequest;
-import com.ncm.electro.dto.inventory.VariantInventoryLimitResponse;
+import com.ncm.electro.dto.inventory.*;
 import com.ncm.electro.dto.product.*;
 import com.ncm.electro.entity.address.Address;
 import com.ncm.electro.entity.address.District;
@@ -27,8 +24,7 @@ import com.ncm.electro.entity.customer.CustomerResource;
 import com.ncm.electro.entity.customer.CustomerStatus;
 import com.ncm.electro.entity.employee.*;
 import com.ncm.electro.entity.general.Image;
-import com.ncm.electro.entity.inventory.ProductInventoryLimit;
-import com.ncm.electro.entity.inventory.VariantInventoryLimit;
+import com.ncm.electro.entity.inventory.*;
 import com.ncm.electro.entity.product.*;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
@@ -42,8 +38,7 @@ import com.ncm.electro.mapper.customer.CustomerResourceMapper;
 import com.ncm.electro.mapper.customer.CustomerStatusMapper;
 import com.ncm.electro.mapper.employee.*;
 import com.ncm.electro.mapper.genaral.ImageMapper;
-import com.ncm.electro.mapper.inventory.ProductInventoryLimitMapper;
-import com.ncm.electro.mapper.inventory.VariantInventoryLimitMapper;
+import com.ncm.electro.mapper.inventory.*;
 import com.ncm.electro.mapper.product.*;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
@@ -57,8 +52,7 @@ import com.ncm.electro.repository.customer.CustomerResourceRepository;
 import com.ncm.electro.repository.customer.CustomerStatusRepository;
 import com.ncm.electro.repository.employee.*;
 import com.ncm.electro.repository.general.ImageRepository;
-import com.ncm.electro.repository.inventory.ProductInventoryLimitRepository;
-import com.ncm.electro.repository.inventory.VariantInventoryLimitRepository;
+import com.ncm.electro.repository.inventory.*;
 import com.ncm.electro.repository.product.*;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
@@ -112,6 +106,12 @@ public class GenericMappingRegister {
     private GenericController<ProductRequest, ProductResponse> productController;
     private GenericController<ProductInventoryLimitRequest, ProductInventoryLimitResponse> productInventoryLimitController;
     private GenericController<VariantInventoryLimitRequest, VariantInventoryLimitResponse> variantInventoryLimitController;
+    private GenericController<WarehouseRequest, WarehouseResponse> warehouseController;
+    private GenericController<CountRequest, CountResponse> countController;
+    private GenericController<DestinationRequest, DestinationResponse> destinationController;
+    private GenericController<DocketReasonRequest, DocketReasonResponse> docketReasonController;
+    private GenericController<DocketRequest, DocketResponse> docketController;
+    private GenericController<TransferRequest, TransferResponse> transferController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -143,6 +143,12 @@ public class GenericMappingRegister {
     private GenericService<Product, ProductRequest, ProductResponse> productService;
     private GenericService<ProductInventoryLimit, ProductInventoryLimitRequest, ProductInventoryLimitResponse> productInventoryLimitService;
     private GenericService<VariantInventoryLimit, VariantInventoryLimitRequest, VariantInventoryLimitResponse> variantInventoryLimitService;
+    private GenericService<Warehouse, WarehouseRequest, WarehouseResponse> warehouseService;
+    private GenericService<Count, CountRequest, CountResponse> countService;
+    private GenericService<Destination, DestinationRequest, DestinationResponse> destinationService;
+    private GenericService<DocketReason, DocketReasonRequest, DocketReasonResponse> docketReasonService;
+    private GenericService<Docket, DocketRequest, DocketResponse> docketService;
+    private GenericService<Transfer, TransferRequest, TransferResponse> transferService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -347,12 +353,54 @@ public class GenericMappingRegister {
                 SearchFields.VARIANT_INVENTORY_LIMIT,
                 VariantInventoryLimitMapper.class.getSimpleName()
         ), VariantInventoryLimitRequest.class);
+
+        register("warehouses", warehouseController, warehouseService.init(
+                context.getBean(WarehouseRepository.class),
+                context.getBean(WarehouseMapper.class),
+                SearchFields.WAREHOUSE,
+                Warehouse.class.getSimpleName()
+        ), WarehouseRequest.class);
+
+        register("counts", countController, countService.init(
+                context.getBean(CountRepository.class),
+                context.getBean(CountMapper.class),
+                SearchFields.COUNT,
+                Count.class.getSimpleName()
+        ), CountRequest.class);
+
+        register("destinations", destinationController, destinationService.init(
+                context.getBean(DestinationRepository.class),
+                context.getBean(DestinationMapper.class),
+                SearchFields.DESTINATION,
+                Destination.class.getSimpleName()
+        ), DestinationRequest.class);
+
+        register("docket-reasons", docketReasonController, docketReasonService.init(
+                context.getBean(DocketReasonRepository.class),
+                context.getBean(DocketReasonMapper.class),
+                SearchFields.DOCKET_REASON,
+                DocketReason.class.getSimpleName()
+        ), DocketReasonRequest.class);
+
+        register("dockets", docketController, docketService.init(
+                context.getBean(DocketRepository.class),
+                context.getBean(DocketMapper.class),
+                SearchFields.DOCKET,
+                Docket.class.getSimpleName()
+        ), DocketRequest.class);
+
+        register("transfers", transferController, transferService.init(
+                context.getBean(TransferRepository.class),
+                context.getBean(TransferMapper.class),
+                SearchFields.TRANSFER,
+                Transfer.class.getSimpleName()
+        ), TransferRequest.class);
     }
 
     private <I, O> void register(String resource,
-                          GenericController<I, O> controller,
-                          CrudService<Long, I, O> service,
-                          Class<I> requestType)
+                                 GenericController<I, O> controller,
+                                 CrudService<Long, I, O> service,
+                                 Class<I> requestType)
             throws NoSuchMethodException {
         RequestMappingInfo.BuilderConfiguration options = new RequestMappingInfo.BuilderConfiguration();
         options.setPatternParser(new PathPatternParser());

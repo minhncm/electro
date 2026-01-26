@@ -158,22 +158,22 @@ public final class SearchFields {
 
     public static final List<String> SUPPLIER = List.of(
             "displayName",
-                    "code",
-                    "contactFullname",
-                    "contactEmail",
-                    "contactPhone",
-                    "companyName",
-                    "taxCode",
-                    "email",
-                    "phone",
-                    "fax",
-                    "website",
-                    "address.province.name",
-                    "address.province.code",
-                    "address.district.name",
-                    "address.district.code",
-                    "description",
-                    "note"
+            "code",
+            "contactFullname",
+            "contactEmail",
+            "contactPhone",
+            "companyName",
+            "taxCode",
+            "email",
+            "phone",
+            "fax",
+            "website",
+            "address.province.name",
+            "address.province.code",
+            "address.district.name",
+            "address.district.code",
+            "description",
+            "note"
     );
 
     public static final List<String> BRAND = List.of(
@@ -237,5 +237,47 @@ public final class SearchFields {
             "variant.price",
             "minimumLimit",
             "maximumLimit"
+    );
+
+    public static final List<String> WAREHOUSE = List.of(
+            "code",
+            "name",
+            "address.line",
+            "address.province.name",
+            "address.province.code",
+            "address.district.name",
+            "address.district.code"
+    );
+
+    public static final List<String> COUNT = List.of(
+            "code",
+            "warehouse.code",
+            "warehouse.name"
+    );
+
+    public static final List<String> DESTINATION = List.of(
+            "contactFullname",
+            "contactEmail",
+            "contactPhone",
+            "address.line",
+            "address.province.name",
+            "address.province.code",
+            "address.district.name",
+            "address.district.code"
+    );
+
+    public static final List<String> DOCKET_REASON = List.of(
+            "name"
+    );
+
+    public static final List<String> DOCKET = List.of(
+            "code",
+            "reason.name",
+            "warehouse.code",
+            "warehouse.name"
+    );
+
+    public static final List<String> TRANSFER = List.of(
+            "code"
     );
 }
