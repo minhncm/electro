@@ -280,4 +280,23 @@ public final class SearchFields {
     public static final List<String> TRANSFER = List.of(
             "code"
     );
+
+    public static final List<String> STORAGE_LOCATION = List.of(
+            "name",
+            "warehouse.code",
+            "warehouse.name"
+    );
+
+    public static final List<String> PURCHASE_ORDER = List.of(
+            "code",
+            "supplier.displayName",
+            "supplier.code",
+            "supplier.contactFullname",
+            "supplier.contactEmail",
+            "supplier.contactPhone",
+            "supplier.companyName",
+            "destination.contactFullname",
+            "destination.contactEmail",
+            "destination.contactPhone"
+    );
 }

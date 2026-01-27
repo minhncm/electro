@@ -112,6 +112,8 @@ public class GenericMappingRegister {
     private GenericController<DocketReasonRequest, DocketReasonResponse> docketReasonController;
     private GenericController<DocketRequest, DocketResponse> docketController;
     private GenericController<TransferRequest, TransferResponse> transferController;
+    private GenericController<StorageLocationRequest, StorageLocationResponse> storageLocationController;
+    private GenericController<PurchaseOrderRequest, PurchaseOrderResponse> purchaseOrderController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -149,6 +151,8 @@ public class GenericMappingRegister {
     private GenericService<DocketReason, DocketReasonRequest, DocketReasonResponse> docketReasonService;
     private GenericService<Docket, DocketRequest, DocketResponse> docketService;
     private GenericService<Transfer, TransferRequest, TransferResponse> transferService;
+    private GenericService<StorageLocation, StorageLocationRequest, StorageLocationResponse> storageLocationService;
+    private GenericService<PurchaseOrder, PurchaseOrderRequest, PurchaseOrderResponse> purchaseOrderService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -395,6 +399,20 @@ public class GenericMappingRegister {
                 SearchFields.TRANSFER,
                 Transfer.class.getSimpleName()
         ), TransferRequest.class);
+
+        register("storage-locations", storageLocationController, storageLocationService.init(
+                context.getBean(StorageLocationRepository.class),
+                context.getBean(StorageLocationMapper.class),
+                SearchFields.STORAGE_LOCATION,
+                StorageLocation.class.getSimpleName()
+        ), StorageLocationRequest.class);
+
+        register("purchase-orders", purchaseOrderController, purchaseOrderService.init(
+                context.getBean(PurchaseOrderRepository.class),
+                context.getBean(PurchaseOrderMapper.class),
+                SearchFields.PURCHASE_ORDER,
+                PurchaseOrder.class.getSimpleName()
+        ), PurchaseOrderRequest.class);
     }
 
     private <I, O> void register(String resource,
