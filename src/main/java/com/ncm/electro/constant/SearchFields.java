@@ -338,4 +338,25 @@ public final class SearchFields {
             "product.slug",
             "content"
     );
+
+    public static final List<String> PAYMENT_METHOD = List.of(
+            "name",
+            "code"
+    );
+
+    public static final List<String> PROMOTION = List.of(
+            "name"
+    );
+
+    public static final List<String> ROOM = List.of(
+            "id",
+            "name",
+            "user.id"
+    );
+
+    public static final List<String> REWARD_STRATEGY = List.of(
+            "name",
+            "code",
+            "formula"
+    );
 }

@@ -28,8 +28,8 @@ public class Promotion extends BaseEntity {
     @Column(name = "percent", nullable = false)
     private Integer percent;
 
-    @Column(name = "status", nullable = false)
-    private Byte status;
+    @Column(name = "status", columnDefinition = "TINYINT",nullable = false)
+    private Integer status;
 
     @ManyToMany
     @JoinTable(

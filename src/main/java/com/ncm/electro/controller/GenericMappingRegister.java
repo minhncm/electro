@@ -6,6 +6,10 @@ import com.ncm.electro.dto.authentication.RoleRequest;
 import com.ncm.electro.dto.authentication.RoleResponse;
 import com.ncm.electro.dto.authentication.UserRequest;
 import com.ncm.electro.dto.authentication.UserResponse;
+import com.ncm.electro.dto.cashbook.PaymentMethodRequest;
+import com.ncm.electro.dto.cashbook.PaymentMethodResponse;
+import com.ncm.electro.dto.chat.RoomRequest;
+import com.ncm.electro.dto.chat.RoomResponse;
 import com.ncm.electro.dto.customer.*;
 import com.ncm.electro.dto.employee.*;
 import com.ncm.electro.dto.genaral.ImageRequest;
@@ -13,8 +17,12 @@ import com.ncm.electro.dto.genaral.ImageResponse;
 import com.ncm.electro.dto.inventory.*;
 import com.ncm.electro.dto.order.*;
 import com.ncm.electro.dto.product.*;
+import com.ncm.electro.dto.promotion.PromotionRequest;
+import com.ncm.electro.dto.promotion.PromotionResponse;
 import com.ncm.electro.dto.review.ReviewRequest;
 import com.ncm.electro.dto.review.ReviewResponse;
+import com.ncm.electro.dto.reward.RewardStrategyRequest;
+import com.ncm.electro.dto.reward.RewardStrategyResponse;
 import com.ncm.electro.dto.waybill.WaybillRequest;
 import com.ncm.electro.dto.waybill.WaybillResponse;
 import com.ncm.electro.entity.address.Address;
@@ -23,6 +31,8 @@ import com.ncm.electro.entity.address.Province;
 import com.ncm.electro.entity.address.Ward;
 import com.ncm.electro.entity.authentication.Role;
 import com.ncm.electro.entity.authentication.User;
+import com.ncm.electro.entity.cashbook.PaymentMethod;
+import com.ncm.electro.entity.chat.Room;
 import com.ncm.electro.entity.customer.Customer;
 import com.ncm.electro.entity.customer.CustomerGroup;
 import com.ncm.electro.entity.customer.CustomerResource;
@@ -34,7 +44,9 @@ import com.ncm.electro.entity.order.Order;
 import com.ncm.electro.entity.order.OrderCancellationReason;
 import com.ncm.electro.entity.order.OrderResource;
 import com.ncm.electro.entity.product.*;
+import com.ncm.electro.entity.promotion.Promotion;
 import com.ncm.electro.entity.review.Review;
+import com.ncm.electro.entity.reward.RewardStrategy;
 import com.ncm.electro.entity.waybill.Waybill;
 import com.ncm.electro.mapper.WaybillMapper;
 import com.ncm.electro.mapper.address.AddressMapper;
@@ -43,6 +55,8 @@ import com.ncm.electro.mapper.address.ProvinceMapper;
 import com.ncm.electro.mapper.address.WardMapper;
 import com.ncm.electro.mapper.authentication.RoleMapper;
 import com.ncm.electro.mapper.authentication.UserMapper;
+import com.ncm.electro.mapper.cashbook.PaymentMethodMapper;
+import com.ncm.electro.mapper.chat.RoomMapper;
 import com.ncm.electro.mapper.customer.CustomerGroupMapper;
 import com.ncm.electro.mapper.customer.CustomerMapper;
 import com.ncm.electro.mapper.customer.CustomerResourceMapper;
@@ -54,13 +68,17 @@ import com.ncm.electro.mapper.order.OrderCancellationReasonMapper;
 import com.ncm.electro.mapper.order.OrderMapper;
 import com.ncm.electro.mapper.order.OrderResourceMapper;
 import com.ncm.electro.mapper.product.*;
+import com.ncm.electro.mapper.promotion.PromotionMapper;
 import com.ncm.electro.mapper.review.ReviewMapper;
+import com.ncm.electro.mapper.reward.RewardStrategyMapper;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
 import com.ncm.electro.repository.address.ProvinceRepository;
 import com.ncm.electro.repository.address.WardRepository;
 import com.ncm.electro.repository.authentication.RoleRepository;
 import com.ncm.electro.repository.authentication.UserRepository;
+import com.ncm.electro.repository.cashbook.PaymentMethodRepository;
+import com.ncm.electro.repository.chat.RoomRepository;
 import com.ncm.electro.repository.customer.CustomerGroupRepository;
 import com.ncm.electro.repository.customer.CustomerRepository;
 import com.ncm.electro.repository.customer.CustomerResourceRepository;
@@ -72,7 +90,9 @@ import com.ncm.electro.repository.order.OrderCancellationReasonRepository;
 import com.ncm.electro.repository.order.OrderRepository;
 import com.ncm.electro.repository.order.OrderResourceRepository;
 import com.ncm.electro.repository.product.*;
+import com.ncm.electro.repository.promotion.PromotionRepository;
 import com.ncm.electro.repository.review.ReviewRepository;
+import com.ncm.electro.repository.reward.RewardStrategyRepository;
 import com.ncm.electro.repository.waybill.WaybillRepository;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
@@ -139,6 +159,10 @@ public class GenericMappingRegister {
     private GenericController<OrderRequest, OrderResponse> orderController;
     private GenericController<WaybillRequest, WaybillResponse> waybillController;
     private GenericController<ReviewRequest, ReviewResponse> reviewController;
+    private GenericController<PaymentMethodRequest, PaymentMethodResponse> paymentMethodController;
+    private GenericController<PromotionRequest, PromotionResponse> promotionController;
+    private GenericController<RoomRequest, RoomResponse> roomController;
+    private GenericController<RewardStrategyRequest, RewardStrategyResponse> rewardStrategyController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -183,6 +207,10 @@ public class GenericMappingRegister {
     private GenericService<Order, OrderRequest, OrderResponse> orderService;
     private GenericService<Waybill, WaybillRequest, WaybillResponse> waybillService;
     private GenericService<Review, ReviewRequest, ReviewResponse> reviewService;
+    private GenericService<PaymentMethod, PaymentMethodRequest, PaymentMethodResponse> paymentMethodService;
+    private GenericService<Promotion, PromotionRequest, PromotionResponse> promotionService;
+    private GenericService<Room, RoomRequest, RoomResponse> roomService;
+    private GenericService<RewardStrategy, RewardStrategyRequest, RewardStrategyResponse> rewardStrategyService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -478,6 +506,34 @@ public class GenericMappingRegister {
                 SearchFields.REVIEW,
                 Review.class.getSimpleName()
         ), ReviewRequest.class);
+
+        register("payment-methods", paymentMethodController, paymentMethodService.init(
+                context.getBean(PaymentMethodRepository.class),
+                context.getBean(PaymentMethodMapper.class),
+                SearchFields.PAYMENT_METHOD,
+                PaymentMethod.class.getSimpleName()
+        ), PaymentMethodRequest.class);
+
+        register("promotions", promotionController, promotionService.init(
+                context.getBean(PromotionRepository.class),
+                context.getBean(PromotionMapper.class),
+                SearchFields.PROMOTION,
+                Promotion.class.getSimpleName()
+        ), PromotionRequest.class);
+
+        register("rooms", roomController, roomService.init(
+                context.getBean(RoomRepository.class),
+                context.getBean(RoomMapper.class),
+                SearchFields.ROOM,
+                Room.class.getSimpleName()
+        ), RoomRequest.class);
+
+        register("reward-strategies", rewardStrategyController, rewardStrategyService.init(
+                context.getBean(RewardStrategyRepository.class),
+                context.getBean(RewardStrategyMapper.class),
+                SearchFields.REWARD_STRATEGY,
+                RewardStrategy.class.getSimpleName()
+        ), RewardStrategyRequest.class);
     }
 
     private <I, O> void register(String resource,
