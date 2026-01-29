@@ -16,7 +16,7 @@ public class ListResponse<T> {
 
     public <E> ListResponse(List<T> content, Page<E> page) {
         this.content = content;
-        this.page = page.getNumber() - 1;
+        this.page = page.getNumber() + 1;
         this.size = page.getSize();
         this.totalElements = page.getTotalElements();
         this.totalPages = page.getTotalPages();

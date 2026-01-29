@@ -1,0 +1,35 @@
+package com.ncm.electro.dto.order;
+
+import com.ncm.electro.dto.authentication.UserResponse;
+import com.ncm.electro.entity.cashbook.PaymentMethodType;
+import com.ncm.electro.entity.order.OrderVariant;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+
+@Data
+public class OrderResponse {
+    private String code;
+    private Integer status;
+    private String toName;
+    private String toPhone;
+    private String toAddress;
+    private String toWardName;
+    private String toDistrictName;
+    private String toProvinceName;
+    private OrderResourceResponse orderResource;
+    private OrderCancellationReasonResponse orderCancellationReason;
+    private String note;
+    private UserResponse user;
+    private BigDecimal totalAmount;
+    private BigDecimal tax;
+    private BigDecimal shippingCost;
+    private BigDecimal totalPay;
+    private PaymentMethodType paymentMethodType;
+    private Integer paymentStatus;
+    private String paypalOrderId;
+    private String paypalOrderStatus;
+    private Set<OrderVariantResponse> orderVariants;
+}

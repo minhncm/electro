@@ -299,4 +299,43 @@ public final class SearchFields {
             "destination.contactEmail",
             "destination.contactPhone"
     );
+
+    public static final List<String> ORDER_RESOURCE = List.of(
+            "name",
+            "code",
+            "color",
+            "customerResource.name",
+            "customerResource.code"
+    );
+
+    public static final List<String> ORDER_CANCELLATION_REASON = List.of(
+            "name"
+    );
+
+    public static final List<String> ORDER = List.of(
+            "code",
+            "toName",
+            "toPhone",
+            "toAddress",
+            "toWardName",
+            "toDistrictName",
+            "toProvinceName",
+            "orderResource.name",
+            "user.username",
+            "user.fullname"
+    );
+
+    public static final List<String> WAYBILL = List.of(
+            "code",
+            "order.code"
+    );
+
+    public static final List<String> REVIEW = List.of(
+            "user.username",
+            "user.fullname",
+            "product.name",
+            "product.code",
+            "product.slug",
+            "content"
+    );
 }

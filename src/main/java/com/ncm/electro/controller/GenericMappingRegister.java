@@ -11,7 +11,12 @@ import com.ncm.electro.dto.employee.*;
 import com.ncm.electro.dto.genaral.ImageRequest;
 import com.ncm.electro.dto.genaral.ImageResponse;
 import com.ncm.electro.dto.inventory.*;
+import com.ncm.electro.dto.order.*;
 import com.ncm.electro.dto.product.*;
+import com.ncm.electro.dto.review.ReviewRequest;
+import com.ncm.electro.dto.review.ReviewResponse;
+import com.ncm.electro.dto.waybill.WaybillRequest;
+import com.ncm.electro.dto.waybill.WaybillResponse;
 import com.ncm.electro.entity.address.Address;
 import com.ncm.electro.entity.address.District;
 import com.ncm.electro.entity.address.Province;
@@ -25,7 +30,13 @@ import com.ncm.electro.entity.customer.CustomerStatus;
 import com.ncm.electro.entity.employee.*;
 import com.ncm.electro.entity.general.Image;
 import com.ncm.electro.entity.inventory.*;
+import com.ncm.electro.entity.order.Order;
+import com.ncm.electro.entity.order.OrderCancellationReason;
+import com.ncm.electro.entity.order.OrderResource;
 import com.ncm.electro.entity.product.*;
+import com.ncm.electro.entity.review.Review;
+import com.ncm.electro.entity.waybill.Waybill;
+import com.ncm.electro.mapper.WaybillMapper;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
 import com.ncm.electro.mapper.address.ProvinceMapper;
@@ -39,7 +50,11 @@ import com.ncm.electro.mapper.customer.CustomerStatusMapper;
 import com.ncm.electro.mapper.employee.*;
 import com.ncm.electro.mapper.genaral.ImageMapper;
 import com.ncm.electro.mapper.inventory.*;
+import com.ncm.electro.mapper.order.OrderCancellationReasonMapper;
+import com.ncm.electro.mapper.order.OrderMapper;
+import com.ncm.electro.mapper.order.OrderResourceMapper;
 import com.ncm.electro.mapper.product.*;
+import com.ncm.electro.mapper.review.ReviewMapper;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
 import com.ncm.electro.repository.address.ProvinceRepository;
@@ -53,7 +68,12 @@ import com.ncm.electro.repository.customer.CustomerStatusRepository;
 import com.ncm.electro.repository.employee.*;
 import com.ncm.electro.repository.general.ImageRepository;
 import com.ncm.electro.repository.inventory.*;
+import com.ncm.electro.repository.order.OrderCancellationReasonRepository;
+import com.ncm.electro.repository.order.OrderRepository;
+import com.ncm.electro.repository.order.OrderResourceRepository;
 import com.ncm.electro.repository.product.*;
+import com.ncm.electro.repository.review.ReviewRepository;
+import com.ncm.electro.repository.waybill.WaybillRepository;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
 import jakarta.annotation.PostConstruct;
@@ -114,6 +134,11 @@ public class GenericMappingRegister {
     private GenericController<TransferRequest, TransferResponse> transferController;
     private GenericController<StorageLocationRequest, StorageLocationResponse> storageLocationController;
     private GenericController<PurchaseOrderRequest, PurchaseOrderResponse> purchaseOrderController;
+    private GenericController<OrderResourceRequest, OrderResourceResponse> orderResourceController;
+    private GenericController<OrderCancellationReasonRequest, OrderCancellationReasonResponse> orderCancellationReasonController;
+    private GenericController<OrderRequest, OrderResponse> orderController;
+    private GenericController<WaybillRequest, WaybillResponse> waybillController;
+    private GenericController<ReviewRequest, ReviewResponse> reviewController;
 
     //service
     private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
@@ -153,6 +178,11 @@ public class GenericMappingRegister {
     private GenericService<Transfer, TransferRequest, TransferResponse> transferService;
     private GenericService<StorageLocation, StorageLocationRequest, StorageLocationResponse> storageLocationService;
     private GenericService<PurchaseOrder, PurchaseOrderRequest, PurchaseOrderResponse> purchaseOrderService;
+    private GenericService<OrderResource, OrderResourceRequest, OrderResourceResponse> orderResourceService;
+    private GenericService<OrderCancellationReason, OrderCancellationReasonRequest, OrderCancellationReasonResponse> orderCancellationReasonService;
+    private GenericService<Order, OrderRequest, OrderResponse> orderService;
+    private GenericService<Waybill, WaybillRequest, WaybillResponse> waybillService;
+    private GenericService<Review, ReviewRequest, ReviewResponse> reviewService;
 
     @PostConstruct
     public void registerControllers() throws NoSuchMethodException {
@@ -413,6 +443,41 @@ public class GenericMappingRegister {
                 SearchFields.PURCHASE_ORDER,
                 PurchaseOrder.class.getSimpleName()
         ), PurchaseOrderRequest.class);
+
+        register("order-resources", orderResourceController, orderResourceService.init(
+                context.getBean(OrderResourceRepository.class),
+                context.getBean(OrderResourceMapper.class),
+                SearchFields.ORDER_RESOURCE,
+                OrderResource.class.getSimpleName()
+        ), OrderResourceRequest.class);
+
+        register("order-cancellation-reasons", orderCancellationReasonController, orderCancellationReasonService.init(
+                context.getBean(OrderCancellationReasonRepository.class),
+                context.getBean(OrderCancellationReasonMapper.class),
+                SearchFields.ORDER_CANCELLATION_REASON,
+                OrderCancellationReason.class.getSimpleName()
+        ), OrderCancellationReasonRequest.class);
+
+        register("orders", orderController, orderService.init(
+                context.getBean(OrderRepository.class),
+                context.getBean(OrderMapper.class),
+                SearchFields.ORDER,
+                Order.class.getSimpleName()
+        ), OrderRequest.class);
+
+        register("waybills", waybillController, waybillService.init(
+                context.getBean(WaybillRepository.class),
+                context.getBean(WaybillMapper.class),
+                SearchFields.WAYBILL,
+                Waybill.class.getSimpleName()
+        ), WaybillRequest.class);
+
+        register("reviews", reviewController, reviewService.init(
+                context.getBean(ReviewRepository.class),
+                context.getBean(ReviewMapper.class),
+                SearchFields.REVIEW,
+                Review.class.getSimpleName()
+        ), ReviewRequest.class);
     }
 
     private <I, O> void register(String resource,
