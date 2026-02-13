@@ -8,36 +8,12 @@ import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import PropertyConfigs from "~/pages/Admin-property/PropertyConfigs";
-
-const listResponse = {
-  content: [
-    {
-      id: 2,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Màu sắc",
-      code: "color",
-      description: null,
-      status: 1,
-    },
-    {
-      id: 1,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Kích cỡ",
-      code: "size",
-      description: "Lorem ipsum dolor sit amet",
-      status: 1,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 2,
-  totalPages: 1,
-  last: true,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function PropertyManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(PropertyConfigs.resourceUrl, PropertyConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -100,16 +76,20 @@ function PropertyManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse} isLoading={false}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={PropertyConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         ></ManageTable>
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

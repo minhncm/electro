@@ -8,42 +8,13 @@ import ManageTable from "~/components/ManageTable";
 import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import RoleBagdeStatus from "~/components/RoleBagdeStatus";
-
-const listResponse = {
-  content: [
-    {
-      id: 3,
-      createdAt: "1989-01-25T16:05:02Z",
-      updatedAt: "2001-01-13T02:01:36Z",
-      code: "CUSTOMER",
-      name: "Khách hàng",
-      status: 1,
-    },
-    {
-      id: 2,
-      createdAt: "1995-08-23T10:15:34Z",
-      updatedAt: "1983-06-17T20:01:29Z",
-      code: "EMPLOYEE",
-      name: "Nhân viên",
-      status: 1,
-    },
-    {
-      id: 1,
-      createdAt: "1971-04-11T00:45:46Z",
-      updatedAt: "2006-04-25T20:05:23Z",
-      code: "ADMIN",
-      name: "Quản trị viên",
-      status: 1,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 3,
-  totalPages: 1,
-  last: true,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function RoleManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(RoleConfigs.resourceUrl, RoleConfigs.resourceKey);
+
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -101,16 +72,20 @@ function RoleManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={RoleConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         />
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

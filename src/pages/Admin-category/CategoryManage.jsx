@@ -10,78 +10,15 @@ import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import CategoryConfigs from "~/pages/Admin-category/CategoryConfigs";
 import DateUtils from "~/utils/DateUtils";
-
-const listResponse = {
-  content: [
-    {
-      id: 8,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Balo",
-      slug: "balo",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      thumbnail: null,
-      parentCategory: null,
-      status: 1,
-      categories: [],
-    },
-    {
-      id: 7,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "PC",
-      slug: "pc",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      thumbnail: null,
-      parentCategory: null,
-      status: 1,
-      categories: [],
-    },
-    {
-      id: 6,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "CPU",
-      slug: "cpu",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      thumbnail: null,
-      parentCategory: null,
-      status: 1,
-      categories: [],
-    },
-    {
-      id: 5,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Chuột",
-      slug: "chuot",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      thumbnail: null,
-      parentCategory: null,
-      status: 1,
-      categories: [],
-    },
-    {
-      id: 4,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Máy chơi game",
-      slug: "may-choi-game",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      thumbnail: null,
-      parentCategory: null,
-      status: 1,
-      categories: [],
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 8,
-  totalPages: 2,
-  last: false,
-};
+import BrandConfigs from "../Admin-brand/BrandConfigs";
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function CategoryManage() {
+  const { isLoading, data: listResponse = PageConfigs.initialListResponse } =
+    useGetAllApi(BrandConfigs.resourceUrl, BrandConfigs.resourceKey);
+  console.log(listResponse);
+
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -96,11 +33,19 @@ function CategoryManage() {
         </Highlight>
       </Table.Td>
       <Table.Td>
-        <Avatar src={entity.thumbnail} alt={entity.name} radius="lg" size="lg" color="grape">
+        <Avatar
+          src={entity.thumbnail}
+          alt={entity.name}
+          radius="lg"
+          size="lg"
+          color="grape"
+        >
           <QuestionMark size={30} />
         </Avatar>
       </Table.Td>
-      <Table.Td>{entity.parentCategory ? entity.parentCategory.name : <em>không có</em>}</Table.Td>
+      <Table.Td>
+        {entity.parentCategory ? entity.parentCategory.name : <em>không có</em>}
+      </Table.Td>
       <Table.Td>
         <EnableStatusBadge status={entity.status} />
       </Table.Td>
@@ -136,14 +81,28 @@ function CategoryManage() {
       <Table.Tr>
         <Table.Td>{CategoryConfigs.properties.thumbnail.label}</Table.Td>
         <Table.Td>
-          <Avatar src={entity.thumbnail} alt={entity.name} radius="lg" size="lg" color="grape">
+          <Avatar
+            src={entity.thumbnail}
+            alt={entity.name}
+            radius="lg"
+            size="lg"
+            color="grape"
+          >
             <QuestionMark size={30} />
           </Avatar>
         </Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CategoryConfigs.properties["parentCategory.name"].label}</Table.Td>
-        <Table.Td>{entity.parentCategory ? entity.parentCategory.name : <em>không có</em>}</Table.Td>
+        <Table.Td>
+          {CategoryConfigs.properties["parentCategory.name"].label}
+        </Table.Td>
+        <Table.Td>
+          {entity.parentCategory ? (
+            entity.parentCategory.name
+          ) : (
+            <em>không có</em>
+          )}
+        </Table.Td>
       </Table.Tr>
       <Table.Tr>
         <Table.Td>{CategoryConfigs.properties.status.label}</Table.Td>
@@ -160,12 +119,16 @@ function CategoryManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse} isLoading={false}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={CategoryConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         ></ManageTable>
       </ManageMain>
 

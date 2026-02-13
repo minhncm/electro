@@ -1,25 +1,53 @@
 import { Group, Pagination, Select, Text } from "@mantine/core";
+import React from "react";
+import useManagePaginationViewModel from "~/components/ManagePagination/ManagePagination.vm";
+import * as PageConfigs from "~/pages/PageConfig";
 
-function ManagePagination() {
+function ManagePagination({ listResponse }) {
+  const {
+    activePage,
+    activePageSize,
+    handlePageSizeSelect,
+    handlePaginationButton,
+  } = useManagePaginationViewModel();
+
+  if (!listResponse || listResponse.totalElements === 0) return null;
+
+  const pageSizeSelectList = PageConfigs.initialListSelectList.map(
+    (pageSize) =>
+      Number(pageSize.value) > listResponse.totalElements
+        ? { ...pageSize, disabled: true }
+        : pageSize,
+  );
+
   return (
-    // TODO: need to complete logic
     <Group justify="space-between">
       <Text>
         <Text component="span" fw={500}>
-          Trang 1
+          Trang {activePage}
         </Text>
-        <span> / 7</span>
+        <span> / {listResponse.totalPages}</span>
         <Text component="span" c="gray" size="sm">
-          (34)
+          ({listResponse.totalElements})
         </Text>
       </Text>
-      <Pagination total={7} value={1} />
+      <Pagination
+        total={listResponse.totalPages}
+        value={activePage}
+        onChange={handlePaginationButton}
+      />
       <Group>
         <Text size="sm">Số hàng trên trang </Text>
-        <Select w={72} variant="filled" value={5} />
+        <Select
+          w={72}
+          variant="filled"
+          value={String(activePageSize)}
+          data={pageSizeSelectList}
+          onChange={handlePageSizeSelect}
+        />
       </Group>
     </Group>
   );
 }
 
-export default ManagePagination;
+export default React.memo(ManagePagination);

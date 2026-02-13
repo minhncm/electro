@@ -1,6 +1,6 @@
-import create from "zustand";
+import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { CreateTrackedSelector } from "react-tracked";
+import { createTrackedSelector } from "react-tracked";
 import createManagePageSlice from "~/stores/create-manage-page-slice";
 
 export const extractValue = (state, value, key) => ({
@@ -15,8 +15,8 @@ const useAppStore = create(
     {
       name: "AppStore",
       anonymousActionType: "AppStore",
-    }
-  )
+    },
+  ),
 );
 
-export default CreateTrackedSelector(useAppStore);
+export default createTrackedSelector(useAppStore);

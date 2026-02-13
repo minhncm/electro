@@ -47,7 +47,8 @@ const properties = {
 export const getProperties = (...isShowInTable) => {
   const _properties = JSON.parse(JSON.stringify(properties));
   Object.values(_properties).forEach(
-    (value, index) => isShowInTable[index] && (value.isShowInTable = isShowInTable[index])
+    (value, index) =>
+      isShowInTable[index] && (value.isShowInTable = isShowInTable[index]),
   );
   return _properties;
 };
@@ -68,9 +69,11 @@ export const categorySlugIconMap = new Proxy(
   {
     get: function (target, name) {
       // kiểm tra xem object target có thuộc tính name hay không
-      return Object.prototype.hasOwnProperty.call(target, name) ? target[name] : Box;
+      return Object.prototype.hasOwnProperty.call(target, name)
+        ? target[name]
+        : Box;
     },
-  }
+  },
 );
 
 export const paymentMethodIconMap = {
@@ -148,3 +151,22 @@ export const initialListResponse = {
   totalPages: 0,
   last: false,
 };
+
+export const initialListSelectList = [
+  {
+    value: "5",
+    label: "5",
+  },
+  {
+    value: "10",
+    label: "10",
+  },
+  {
+    value: "25",
+    label: "25",
+  },
+  {
+    value: "50",
+    label: "50",
+  },
+];

@@ -15,6 +15,11 @@ const ResourceUrl = {
   JOB_LEVEL: ApplicationPath.API_PATH + "/job-levels",
   JOB_TITLE: ApplicationPath.API_PATH + "/job-titles",
 
+  CUSTOMER: ApplicationPath.API_PATH + "/customers",
+  CUSTOMER_GROUP: ApplicationPath.API_PATH + "/customer-groups",
+  CUSTOMER_STATUS: ApplicationPath.API_PATH + "/customer-status",
+  CUSTOMER_RESOURCE: ApplicationPath.API_PATH + "/customer-resources",
+
   PRODUCT: ApplicationPath.API_PATH + "/products",
   CATEGORY: ApplicationPath.API_PATH + "/categories",
   BRAND: ApplicationPath.API_PATH + "/brands",
@@ -43,7 +48,8 @@ const ResourceUrl = {
   ORDER: ApplicationPath.API_PATH + "/orders",
   ORDER_VARIANT: ApplicationPath.API_PATH + "/order-variants",
   ORDER_RESOURCE: ApplicationPath.API_PATH + "/order-resources",
-  ORDER_CANCELLATION_REASON: ApplicationPath.API_PATH + "/order-cancellation-reasons",
+  ORDER_CANCELLATION_REASON:
+    ApplicationPath.API_PATH + "/order-cancellation-reasons",
 
   WAYBILL: ApplicationPath.API_PATH + "/waybills",
 

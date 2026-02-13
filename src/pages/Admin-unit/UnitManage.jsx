@@ -8,32 +8,12 @@ import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import UnitConfigs from "~/pages/Admin-unit/UnitConfigs";
-
-const listResponse = {
-  content: [
-    {
-      id: 2,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Hộp",
-      status: 2,
-    },
-    {
-      id: 1,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Cái",
-      status: 1,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 2,
-  totalPages: 1,
-  last: true,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function UnitManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(UnitConfigs.resourceUrl, UnitConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -83,16 +63,20 @@ function UnitManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse} isLoading={false}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={UnitConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         ></ManageTable>
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

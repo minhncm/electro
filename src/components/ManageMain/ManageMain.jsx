@@ -1,22 +1,33 @@
-import { Center, LoadingOverlay, Paper, ScrollArea, Stack, Text, useMantineTheme } from "@mantine/core";
+import {
+  Center,
+  LoadingOverlay,
+  Paper,
+  ScrollArea,
+  Stack,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
+import React from "react";
 import { Marquee } from "tabler-icons-react";
 
 function ManageMain({ listResponse, isLoading, children }) {
   const theme = useMantineTheme();
 
-  const manageMainInnerFragment = <ScrollArea>{children}</ScrollArea>;
+  let manageMainInnerFragment = <ScrollArea>{children}</ScrollArea>;
 
-  if (listResponse.totalElements === 0) {
-    <Center h="100%">
-      {!isLoading && (
-        <Stack my={theme.spacing.xl} align="center" bg={theme.colors.blue}>
-          <Marquee size={75} strokeWidth={1} />
-          <Text size="lg" fw={500}>
-            Không có nội dung
-          </Text>
-        </Stack>
-      )}
-    </Center>;
+  if (!listResponse || listResponse.totalElements === 0) {
+    manageMainInnerFragment = (
+      <Center h="100%">
+        {!isLoading && (
+          <Stack my={theme.spacing.xl} align="center" bg={theme.colors.blue}>
+            <Marquee size={75} strokeWidth={1} />
+            <Text size="lg" fw={500}>
+              Không có nội dung
+            </Text>
+          </Stack>
+        )}
+      </Center>
+    );
   }
 
   return (
@@ -27,4 +38,4 @@ function ManageMain({ listResponse, isLoading, children }) {
   );
 }
 
-export default ManageMain;
+export default React.memo(ManageMain);

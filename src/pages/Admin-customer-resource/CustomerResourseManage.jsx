@@ -1,4 +1,11 @@
-import { Code, ColorSwatch, Group, Highlight, Stack, Table } from "@mantine/core";
+import {
+  Code,
+  ColorSwatch,
+  Group,
+  Highlight,
+  Stack,
+  Table,
+} from "@mantine/core";
 import FilterPanel from "~/components/FilterPanel";
 import ManageHeader from "~/components/ManageHeader";
 import ManageMain from "~/components/ManageMain/ManageMain";
@@ -8,68 +15,15 @@ import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import CustomerResourseConfigs from "~/pages/Admin-customer-resource/CustomerResourseConfigs";
-
-const listResponse = {
-  content: [
-    {
-      id: 5,
-      createdAt: "2022-02-13T03:28:33Z",
-      updatedAt: "2022-05-10T20:36:22Z",
-      code: "13537-455",
-      name: "AVD",
-      description: "Other testicular hypofunction",
-      color: "Orange",
-      status: 1,
-    },
-    {
-      id: 4,
-      createdAt: "2022-03-19T09:57:29Z",
-      updatedAt: "2021-11-28T04:50:59Z",
-      code: "11559-724",
-      name: "Normal",
-      description: "Unspecified failure in dosage",
-      color: "Green",
-      status: 1,
-    },
-    {
-      id: 3,
-      createdAt: "2022-04-23T23:46:43Z",
-      updatedAt: "2021-10-21T12:59:04Z",
-      code: "64616-082",
-      name: "Instagram",
-      description: "Sedative, hypnotic or anxiolytic dependence, continuous",
-      color: "Crimson",
-      status: 2,
-    },
-    {
-      id: 2,
-      createdAt: "2022-01-11T01:53:09Z",
-      updatedAt: "2022-05-16T12:00:07Z",
-      code: "76358-195",
-      name: "Google",
-      description: "Blisters, epidermal loss [second degree] of hand, unspecified site",
-      color: "Violet",
-      status: 3,
-    },
-    {
-      id: 1,
-      createdAt: "2021-08-25T18:48:14Z",
-      updatedAt: "2021-10-18T21:58:04Z",
-      code: "53499-5971",
-      name: "Facebook",
-      description: "Congenital mitral insufficiency",
-      color: "Blue",
-      status: 1,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 5,
-  totalPages: 1,
-  last: true,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function CustomerResourseManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(
+      CustomerResourseConfigs.resourceUrl,
+      CustomerResourseConfigs.resourceKey,
+    );
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -102,11 +56,15 @@ function CustomerResourseManage() {
         <Table.Td>{entity.id}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CustomerResourseConfigs.properties.createdAt.label}</Table.Td>
+        <Table.Td>
+          {CustomerResourseConfigs.properties.createdAt.label}
+        </Table.Td>
         <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CustomerResourseConfigs.properties.updatedAt.label}</Table.Td>
+        <Table.Td>
+          {CustomerResourseConfigs.properties.updatedAt.label}
+        </Table.Td>
         <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       </Table.Tr>
       <Table.Tr>
@@ -118,7 +76,9 @@ function CustomerResourseManage() {
         <Table.Td>{entity.name}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CustomerResourseConfigs.properties.description.label}</Table.Td>
+        <Table.Td>
+          {CustomerResourseConfigs.properties.description.label}
+        </Table.Td>
         <Table.Td maw={300}>{entity.description}</Table.Td>
       </Table.Tr>
       <Table.Tr>
@@ -145,16 +105,20 @@ function CustomerResourseManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse} isLoading={false}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={CustomerResourseConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         ></ManageTable>
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

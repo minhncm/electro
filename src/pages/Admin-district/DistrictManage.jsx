@@ -5,90 +5,14 @@ import ManageMain from "~/components/ManageMain/ManageMain";
 import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 import DistrictConfigs from "~/pages/Admin-district/DistrictConfigs";
 import DateUtils from "~/utils/DateUtils";
 
-const listResponse = {
-  content: [
-    {
-      id: 705,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Thành phố Thủ Đức",
-      code: "769",
-      province: {
-        id: 29,
-        createdAt: "2023-02-14T17:00:00Z",
-        updatedAt: "2023-02-14T17:00:00Z",
-        name: "Thành phố Hồ Chí Minh",
-        code: "79",
-      },
-    },
-    {
-      id: 704,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Huyện Ngọc Hiển",
-      code: "973",
-      province: {
-        id: 9,
-        createdAt: "2023-02-14T17:00:00Z",
-        updatedAt: "2023-02-14T17:00:00Z",
-        name: "Cà Mau",
-        code: "96",
-      },
-    },
-    {
-      id: 703,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Huyện Phú Tân",
-      code: "972",
-      province: {
-        id: 9,
-        createdAt: "2023-02-14T17:00:00Z",
-        updatedAt: "2023-02-14T17:00:00Z",
-        name: "Cà Mau",
-        code: "96",
-      },
-    },
-    {
-      id: 702,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Huyện Năm Căn",
-      code: "971",
-      province: {
-        id: 9,
-        createdAt: "2023-02-14T17:00:00Z",
-        updatedAt: "2023-02-14T17:00:00Z",
-        name: "Cà Mau",
-        code: "96",
-      },
-    },
-    {
-      id: 701,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Huyện Đầm Dơi",
-      code: "970",
-      province: {
-        id: 9,
-        createdAt: "2023-02-14T17:00:00Z",
-        updatedAt: "2023-02-14T17:00:00Z",
-        name: "Cà Mau",
-        code: "96",
-      },
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 705,
-  totalPages: 141,
-  last: false,
-};
-
 function DistrictManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(DistrictConfigs.resourceUrl, DistrictConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -149,16 +73,20 @@ function DistrictManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={DistrictConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         />
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

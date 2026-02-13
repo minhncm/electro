@@ -8,43 +8,19 @@ import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import GuaranteeConfigs from "~/pages/Admin-guarantee/GuaranteeConfigs";
-
-const listResponse = {
-  content: [
-    {
-      id: 2,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Bảo hành 1 năm",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      status: 2,
-    },
-    {
-      id: 1,
-      createdAt: "2022-05-01T06:27:06Z",
-      updatedAt: "2022-02-02T09:18:00Z",
-      name: "Bảo hành 6 tháng",
-      description: null,
-      status: 1,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 2,
-  totalPages: 1,
-  last: true,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function GuaranteeManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(GuaranteeConfigs.resourceUrl, GuaranteeConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
         <EnableStatusBadge status={entity.status} />
@@ -89,16 +65,20 @@ function GuaranteeManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse} isLoading={false}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={GuaranteeConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         ></ManageTable>
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

@@ -1,4 +1,11 @@
-import { Code, ColorSwatch, Group, Highlight, Stack, Table } from "@mantine/core";
+import {
+  Code,
+  ColorSwatch,
+  Group,
+  Highlight,
+  Stack,
+  Table,
+} from "@mantine/core";
 import FilterPanel from "~/components/FilterPanel";
 import ManageHeader from "~/components/ManageHeader";
 import ManageMain from "~/components/ManageMain/ManageMain";
@@ -8,48 +15,15 @@ import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import CustomerStatusConfigs from "~/pages/Admin-customer-status/CustomerStatusConfigs";
-
-const listResponse = {
-  content: [
-    {
-      id: 3,
-      createdAt: "2022-03-26T23:15:17Z",
-      updatedAt: "2021-09-29T10:49:37Z",
-      code: "49281-395",
-      name: "None",
-      description: "Other lymphedema",
-      color: "Maroon",
-      status: 2,
-    },
-    {
-      id: 2,
-      createdAt: "2021-11-04T12:46:58Z",
-      updatedAt: "2022-01-06T14:22:50Z",
-      code: "60429-239",
-      name: "Disable",
-      description: "Screening for malignant neoplasms of skin",
-      color: "Aquamarine",
-      status: 1,
-    },
-    {
-      id: 1,
-      createdAt: "2022-03-06T05:54:55Z",
-      updatedAt: "2022-02-28T18:22:53Z",
-      code: "55045-3602",
-      name: "Active",
-      description: "Miliary tuberculosis, unspecified, unspecified",
-      color: "Pink",
-      status: 3,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 3,
-  totalPages: 1,
-  last: true,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function CustomerStatusManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(
+      CustomerStatusConfigs.resourceUrl,
+      CustomerStatusConfigs.resourceKey,
+    );
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -98,7 +72,9 @@ function CustomerStatusManage() {
         <Table.Td>{entity.name}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CustomerStatusConfigs.properties.description.label}</Table.Td>
+        <Table.Td>
+          {CustomerStatusConfigs.properties.description.label}
+        </Table.Td>
         <Table.Td maw={300}>{entity.description}</Table.Td>
       </Table.Tr>
       <Table.Tr>
@@ -125,16 +101,20 @@ function CustomerStatusManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse} isLoading={false}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={CustomerStatusConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         ></ManageTable>
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

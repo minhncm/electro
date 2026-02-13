@@ -8,32 +8,12 @@ import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import JobTypeConfigs from "~/pages/Admin-jobType/JobTypeConfigs";
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
-const listResponse = {
-  content: [
-    {
-      id: 2,
-      createdAt: "2021-12-08T09:13:12Z",
-      updatedAt: "2022-03-26T12:37:23Z",
-      name: "Part-time",
-      status: 1,
-    },
-    {
-      id: 1,
-      createdAt: "2021-09-11T16:37:21Z",
-      updatedAt: "2021-08-20T03:54:26Z",
-      name: "Full-time",
-      status: 1,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 2,
-  totalPages: 1,
-  last: true,
-};
-
-function jobTypeManage() {
+function JobTypeManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(JobTypeConfigs.resourceUrl, JobTypeConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -82,18 +62,22 @@ function jobTypeManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={JobTypeConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         />
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }
 
-export default jobTypeManage;
+export default JobTypeManage;

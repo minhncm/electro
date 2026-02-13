@@ -7,53 +7,12 @@ import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import ProvinceConfigs from "~/pages/Admin-province/ProvinceConfigs";
-
-const listResponse = {
-  content: [
-    {
-      id: 63,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Bạc Liêu",
-      code: "95",
-    },
-    {
-      id: 62,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Sóc Trăng",
-      code: "94",
-    },
-    {
-      id: 61,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Hậu Giang",
-      code: "93",
-    },
-    {
-      id: 60,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Cần Thơ",
-      code: "92",
-    },
-    {
-      id: 59,
-      createdAt: "2023-02-14T17:00:00Z",
-      updatedAt: "2023-02-14T17:00:00Z",
-      name: "Kiên Giang",
-      code: "91",
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 63,
-  totalPages: 13,
-  last: false,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function ProvinceManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(ProvinceConfigs.resourceUrl, ProvinceConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -99,16 +58,20 @@ function ProvinceManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse} isLoading={false}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={ProvinceConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         ></ManageTable>
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

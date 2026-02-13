@@ -1,4 +1,14 @@
-import { ActionIcon, Anchor, Group, Highlight, Stack, Table, Text, Title, useMantineTheme } from "@mantine/core";
+import {
+  ActionIcon,
+  Anchor,
+  Group,
+  Highlight,
+  Stack,
+  Table,
+  Text,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import { Check, Hash, Message2, Search, Trash } from "tabler-icons-react";
 import CheckReviewModal from "~/components/CheckReviewModal";
@@ -10,74 +20,23 @@ import ReviewSearchPanel from "~/components/ReviewSearchPanel";
 import ReviewStar from "~/components/ReviewStar";
 import DateUtils from "~/utils/DateUtils";
 import ReviewConfigs from "./ReviewConfigs";
-
-const listResponse = {
-  content: [
-    {
-      id: 2,
-      createdAt: "2025-10-29T14:32:50Z",
-      updatedAt: "2025-10-29T14:32:50Z",
-      user: {
-        id: 6,
-        createdAt: "2025-10-23T10:21:42Z",
-        updatedAt: "2025-10-23T10:21:42Z",
-        username: "ncm",
-        fullname: "Nguyễn Công Minh",
-      },
-      product: {
-        id: 6,
-        createdAt: "2021-09-09T22:01:45Z",
-        updatedAt: "2022-01-12T14:36:14Z",
-        name: "Loa Harman Kardon Onyx Studio 7",
-        code: "49288-3039",
-        slug: "harman",
-      },
-      ratingScore: 5,
-      content: "ok giao nhanh, hàng chất lượng",
-      reply: null,
-      status: 2,
-    },
-    {
-      id: 1,
-      createdAt: "2021-10-03T14:16:01Z",
-      updatedAt: "2021-11-17T17:55:52Z",
-      user: {
-        id: 4,
-        createdAt: "2022-01-26T21:22:37Z",
-        updatedAt: "2022-05-03T19:25:59Z",
-        username: "dtreat3",
-        fullname: "Danila Treat",
-      },
-      product: {
-        id: 1,
-        createdAt: "2022-06-10T04:43:15Z",
-        updatedAt: "2021-06-29T03:23:48Z",
-        name: "Dell XPS 13 9315",
-        code: "0003-1967",
-        slug: "ealdus0",
-      },
-      ratingScore: 4,
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere felis sed justo finibus, eget maximus diam rhoncus. Integer posuere tempor magna, ut dictum massa suscipit vel. Sed quis placerat neque. Etiam urna sapien, accumsan nec nulla in, condimentum venenatis ex.",
-      reply: null,
-      status: 2,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 2,
-  totalPages: 1,
-  last: true,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function ReviewManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(ReviewConfigs.resourceUrl, ReviewConfigs.resourceKey);
+
   const theme = useMantineTheme();
   const modals = useModals();
 
   const handleDeleteEntityButton = (entityId) => {
     modals.openConfirmModal({
       size: "xs",
-      overlayColor: theme.colorScheme === "dark" ? theme.colors.dark[9] : theme.colors.gray[2],
+      overlayColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[9]
+          : theme.colors.gray[2],
       overlayOpacity: 0.55,
       overlayBlur: 3,
       closeOnClickOutside: false,
@@ -94,7 +53,10 @@ function ReviewManage() {
   const handleCheckReviewButton = (review) => {
     modals.openModal({
       size: "xl",
-      overlayColor: theme.colorScheme === "dark" ? theme.colors.dark[9] : theme.colors.gray[2],
+      overlayColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[9]
+          : theme.colors.gray[2],
       overlayOpacity: 0.55,
       overlayBlur: 3,
       title: <strong>Xem xét Đánh giá ID {review.id}</strong>,
@@ -105,7 +67,10 @@ function ReviewManage() {
   const handleReplyReviewButton = (review) => {
     modals.openModal({
       size: "xl",
-      overlayColor: theme.colorScheme === "dark" ? theme.colors.dark[9] : theme.colors.gray[2],
+      overlayColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[9]
+          : theme.colors.gray[2],
       overlayOpacity: 0.55,
       overlayBlur: 3,
       title: <strong>Phản hồi Đánh giá ID {review.id}</strong>,
@@ -140,7 +105,11 @@ function ReviewManage() {
         </Stack>
       </Table.Td>
       <Table.Td>
-        <Anchor href={"/product/" + entity.product.slug} target="_blank" inherit>
+        <Anchor
+          href={"/product/" + entity.product.slug}
+          target="_blank"
+          inherit
+        >
           <Highlight inherit>{entity.product.name}</Highlight>
         </Anchor>
       </Table.Td>
@@ -149,10 +118,14 @@ function ReviewManage() {
       </Table.Td>
       <Table.Td maw={300}>
         <Highlight inherit>
-          {entity.content.length > 120 ? entity.content.substring(0, 120).concat("...") : entity.content}
+          {entity.content.length > 120
+            ? entity.content.substring(0, 120).concat("...")
+            : entity.content}
         </Highlight>
       </Table.Td>
-      <Table.Td>{entity.reply && <Check color={theme.colors.teal[5]} />}</Table.Td>
+      <Table.Td>
+        {entity.reply && <Check color={theme.colors.teal[5]} />}
+      </Table.Td>
       <Table.Td>
         <ReviewBadge status={entity.status} />
       </Table.Td>
@@ -202,7 +175,7 @@ function ReviewManage() {
 
       <ReviewSearchPanel />
 
-      <ManageMain listResponse={listResponse}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <Table
           horizontalSpacing="sm"
           verticalSpacing="sm"
@@ -218,7 +191,7 @@ function ReviewManage() {
         </Table>
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

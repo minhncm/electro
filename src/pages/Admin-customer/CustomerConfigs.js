@@ -4,9 +4,9 @@ import { Configs } from "~/types";
 import * as PageConfigs from "~/pages/PageConfig";
 
 class CustomerConfigs extends Configs {
-  static managerPath = ManagerPath.USER;
-  static resourceUrl = ResourceUrl.USER;
-  static resourceKey = "users";
+  static managerPath = ManagerPath.CUSTOMER;
+  static resourceUrl = ResourceUrl.CUSTOMER;
+  static resourceKey = "customers";
   static createTitle = "Thêm người dùng";
   static updateTitle = "Cập nhật người dùng";
   static manageTitle = "Quản lý người dùng";

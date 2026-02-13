@@ -1,7 +1,24 @@
-import { ActionIcon, AppShell, Box, Burger, Button, Group, useMantineTheme } from "@mantine/core";
+import {
+  ActionIcon,
+  AppShell,
+  Box,
+  Burger,
+  Button,
+  Group,
+  useMantineTheme,
+} from "@mantine/core";
 import { Link } from "react-router-dom";
 import ElectroLogo from "../ElectroLogo/ElectroLogo";
-import { Bell, Browser, Logout, Messages, MoonStars, Search, Sun, User } from "tabler-icons-react";
+import {
+  Bell,
+  Browser,
+  Logout,
+  Messages,
+  MoonStars,
+  Search,
+  Sun,
+  User,
+} from "tabler-icons-react";
 
 function AdminHeader() {
   const theme = useMantineTheme();
@@ -32,12 +49,18 @@ function AdminHeader() {
       padding: "8px 12px",
       borderRadius: theme.radius.sm,
       textDecoration: "none",
-      color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.colors.gray[7],
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[0]
+          : theme.colors.gray[7],
       fontSize: theme.fontSizes.sm,
       fontWeight: 500,
 
       "&:hover": {
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0],
+        backgroundColor:
+          theme.colorScheme === "dark"
+            ? theme.colors.dark[6]
+            : theme.colors.gray[0],
         color: theme.colorScheme === "dark" ? theme.white : theme.black,
       },
 
@@ -84,9 +107,21 @@ function AdminHeader() {
 
         <Group>
           <Group ml={50} gap={5} style={classes.links}>
-            {headerLinks.map((headerLink) => (
-              <Button size="xs" variant="subtle" px={0} color={theme.colors.gray[5]} fw={500}>
-                <Link key={headerLink.label} to={headerLink.link} target={headerLink.target} style={classes.link}>
+            {headerLinks.map((headerLink, index) => (
+              <Button
+                key={index}
+                size="xs"
+                variant="subtle"
+                px={0}
+                color={theme.colors.gray[5]}
+                fw={500}
+              >
+                <Link
+                  key={headerLink.label}
+                  to={headerLink.link}
+                  target={headerLink.target}
+                  style={classes.link}
+                >
                   <headerLink.icon size={16} style={{ marginRight: 7.5 }} />
                   {headerLink.label}
                 </Link>
@@ -103,7 +138,11 @@ function AdminHeader() {
               title="Thay đổi chế độ màu"
               c={theme.colorScheme === "dark" ? "yellow" : "blue"}
             >
-              {theme.colorScheme === "dark" ? <Sun size={18} /> : <MoonStars size={18} />}
+              {theme.colorScheme === "dark" ? (
+                <Sun size={18} />
+              ) : (
+                <MoonStars size={18} />
+              )}
             </ActionIcon>
             <ActionIcon variant="outline" title="Đăng xuất" c="blue">
               <Logout size={18} />

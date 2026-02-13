@@ -8,46 +8,13 @@ import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import JobLevelConfigs from "~/pages/Admin-jobLevel/JobLevelConfigs";
-
-const listResponse = {
-  content: [
-    {
-      id: 4,
-      createdAt: "2022-02-08T12:12:42Z",
-      updatedAt: "2021-09-16T14:32:18Z",
-      name: "Fresher",
-      status: 1,
-    },
-    {
-      id: 3,
-      createdAt: "2022-01-20T05:14:44Z",
-      updatedAt: "2021-08-30T05:29:20Z",
-      name: "Intern",
-      status: 3,
-    },
-    {
-      id: 2,
-      createdAt: "2021-12-08T09:13:12Z",
-      updatedAt: "2022-03-26T12:37:23Z",
-      name: "Master",
-      status: 2,
-    },
-    {
-      id: 1,
-      createdAt: "2021-09-11T16:37:21Z",
-      updatedAt: "2021-08-20T03:54:26Z",
-      name: "Senior",
-      status: 1,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 4,
-  totalPages: 1,
-  last: true,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function JobLevelManage() {
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(JobLevelConfigs.resourceUrl, JobLevelConfigs.resourceKey);
+
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -96,16 +63,20 @@ function JobLevelManage() {
       <SearchPanel />
       <FilterPanel />
 
-      <ManageMain listResponse={listResponse}>
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
           properties={JobLevelConfigs.properties}
-          showedPropertiesFragment={(entity) => <ShowedPropertiesFragment entity={entity} />}
-          entityDetailTableRowsFragment={(entity) => <EntityDetailTableRowsFragment entity={entity} />}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
         />
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }
