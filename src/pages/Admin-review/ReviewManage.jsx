@@ -21,9 +21,12 @@ import ReviewStar from "~/components/ReviewStar";
 import DateUtils from "~/utils/DateUtils";
 import ReviewConfigs from "./ReviewConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function ReviewManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(ReviewConfigs.resourceUrl, ReviewConfigs.resourceKey);
 

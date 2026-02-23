@@ -11,9 +11,12 @@ import DateUtils from "~/utils/DateUtils";
 import MiscUtils from "~/utils/MiscUtils";
 import TransferConfigs from "~/pages/Admin-transfer/TransferConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function TransferManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(TransferConfigs.resourceUrl, TransferConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (

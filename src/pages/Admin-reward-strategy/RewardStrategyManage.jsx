@@ -15,6 +15,7 @@ import { Hash, MathFunction } from "tabler-icons-react";
 import RewardStartegyConfigs from "./RewardStrategyConfigs";
 import RewardStrategyStatusBadge from "~/components/RewardStrategyStatusBadge";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function RewardStrategyManage() {

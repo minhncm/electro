@@ -1,4 +1,12 @@
-import { Divider, Grid, Group, Paper, Select, Stack, TextInput } from "@mantine/core";
+import {
+  Divider,
+  Grid,
+  Group,
+  Paper,
+  Select,
+  Stack,
+  TextInput,
+} from "@mantine/core";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import RoleConfigs from "./RoleConfigs";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
@@ -7,7 +15,10 @@ import Button from "~/components/common/Button";
 function RoleUpdate() {
   return (
     <Stack sx={{ maxWidth: 800 }}>
-      <CreateUpdateTitle managerPath={RoleConfigs.managerPath} title={RoleConfigs.updateTitle} />
+      <CreateUpdateTitle
+        managerPath={RoleConfigs.managerPath}
+        title={RoleConfigs.updateTitle}
+      />
 
       <DefaultPropertyPanel />
 
@@ -22,7 +33,11 @@ function RoleUpdate() {
                 <TextInput required label={RoleConfigs.properties.name.label} />
               </Grid.Col>
               <Grid.Col span={6}>
-                <Select required label={RoleConfigs.properties.status.label} placeholder="--" />
+                <Select
+                  required
+                  label={RoleConfigs.properties.status.label}
+                  placeholder="--"
+                />
               </Grid.Col>
             </Grid>
 

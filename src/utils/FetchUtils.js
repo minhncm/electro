@@ -17,12 +17,12 @@ const getToken = (isAdmin) => {
 
 httpRequest.interceptors.request.use(
   (config) => {
-    if (config.auth) {
-      const token = getToken(config.isAdmin); // them khi call api coi quyen admin
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    }
+    // if (config.auth) {
+    //   const token = getToken(config.isAdmin); // them khi call api coi quyen admin
+    //   if (token) {
+    //     config.headers.Authorization = `Bearer ${token}`;
+    //   }
+    // }
     return config;
   },
   (error) => {
@@ -43,6 +43,26 @@ httpRequest.interceptors.response.use(
 class FetchUtils {
   static async getAll(url, params = {}) {
     return await httpRequest.get(url, { params });
+  }
+
+  static async getById(url, enityId) {
+    return await httpRequest.get(url + "/" + enityId);
+  }
+
+  static async create(url, data) {
+    return await httpRequest.post(url, data);
+  }
+
+  static async update(url, entityId, data) {
+    return await httpRequest.put(url + "/" + entityId, data);
+  }
+
+  static async deleteById(url, entityId) {
+    return await httpRequest.delete(url + "/" + entityId);
+  }
+
+  static async deleteByIds(url, entityIds) {
+    return await httpRequest.delete(url, { data: entityIds });
   }
 }
 

@@ -1,9 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import useAppStore from "~/stores/use-app-store";
 import FetchUtils from "~/utils/FetchUtils";
 import FilterUtils from "~/utils/FilterUtils";
 
-function useGetAllApi(resourceUrl, resourceKey, requestParams, options = {}) {
+function useGetAllApi(
+  resourceUrl,
+  resourceKey,
+  requestParams,
+  successCallBack,
+  options = {},
+) {
   const { activePage, activePageSize, activeFilter, searchToken } =
     useAppStore();
 
@@ -17,13 +24,17 @@ function useGetAllApi(resourceUrl, resourceKey, requestParams, options = {}) {
     };
   }
 
-  const queryKey = [resourceKey, "getAll", requestParams];
-
   const query = useQuery({
-    queryKey: queryKey,
+    queryKey: [resourceKey, "getAll", requestParams],
     queryFn: () => FetchUtils.getAll(resourceUrl, requestParams),
     ...options,
   });
+
+  useEffect(() => {
+    if (query.isSuccess && query.data && successCallBack) {
+      successCallBack(query.data);
+    }
+  }, [query.isSuccess, query.data]);
 
   return query;
 }

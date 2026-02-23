@@ -5,11 +5,16 @@ import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import AddressConfigs from "~/pages/Admin-address/AddressConfigs";
 import DateUtils from "~/utils/DateUtils";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function AdminAddress() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(AddressConfigs.resourceUrl, AddressConfigs.resourceKey);
 
@@ -69,7 +74,14 @@ function AdminAddress() {
 
   return (
     <Stack>
-      <ManageHeader title={"Quản lý địa chỉ"} />
+      <ManageHeader>
+        <ManageHeaderTitle title={"Quản lý địa chỉ"} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={AddressConfigs.resourceUrl}
+          resourceKey={AddressConfigs.resourceKey}
+        />
+      </ManageHeader>
       <SearchPanel />
       {/* <FilterPanel /> */}
 
@@ -77,6 +89,8 @@ function AdminAddress() {
         <ManageTable
           listResponse={listResponse}
           properties={AddressConfigs.properties}
+          resourceUrl={AddressConfigs.resourceUrl}
+          resourceKey={AddressConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}

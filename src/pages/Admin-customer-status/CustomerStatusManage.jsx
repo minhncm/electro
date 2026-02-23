@@ -16,9 +16,12 @@ import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import CustomerStatusConfigs from "~/pages/Admin-customer-status/CustomerStatusConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function CustomerStatusManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(
       CustomerStatusConfigs.resourceUrl,

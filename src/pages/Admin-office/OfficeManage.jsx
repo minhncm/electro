@@ -9,9 +9,12 @@ import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import ActiveStatusBadge from "~/components/ActiveStatusBadge";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function OfficeManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(OfficeConfigs.resourceUrl, OfficeConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (

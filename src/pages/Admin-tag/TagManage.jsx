@@ -9,9 +9,12 @@ import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import TagConfigs from "~/pages/Admin-tag/TagConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function TagManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(TagConfigs.resourceUrl, TagConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (

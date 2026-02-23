@@ -9,9 +9,12 @@ import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import DocketReasonConfigs from "~/pages/Admin-docket-reason/DocketReasonConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function DocketReasonManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(
       DocketReasonConfigs.resourceUrl,

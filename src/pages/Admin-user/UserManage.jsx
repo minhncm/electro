@@ -9,9 +9,12 @@ import ManagePagination from "~/components/ManagePagination";
 import UserStatusBagde from "~/components/UserStatusBagde";
 import DateUtils from "~/utils/DateUtils";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function UserManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(UserConfigs.resourceUrl, UserConfigs.resourceKey);
 

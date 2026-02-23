@@ -13,10 +13,13 @@ import ManageMain from "~/components/ManageMain/ManageMain";
 import ManagePagination from "~/components/ManagePagination";
 import ProductInventoryTransactionsModal from "~/components/ProductInventoryTransactionsModal";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import InventoryConfigs from "~/pages/Admin-inventory/InventoryConfigs";
 
 function InventoryManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(
       InventoryConfigs.productInventoryResourceUrl,

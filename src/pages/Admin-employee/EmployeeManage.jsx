@@ -9,11 +9,14 @@ import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import UserStatusBagde from "~/components/UserStatusBagde";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import EmployeeConfigs from "~/pages/Admin-employee/EmployeeConfigs";
 import DateUtils from "~/utils/DateUtils";
 
 function EmployeeManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(EmployeeConfigs.resourceUrl, EmployeeConfigs.resourceKey);
 

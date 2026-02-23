@@ -13,9 +13,6 @@ const queryClient = new QueryClient({
     },
   },
   queryCache: new QueryCache({
-    // onSuccess
-
-    // TODO: truyen message error vao
     onError: (error) =>
       NotifyUtils.simpleFailed(
         `Lỗi ${error.statusCode || "chưa biết"}: Lấy dữ liệu không thành công`,

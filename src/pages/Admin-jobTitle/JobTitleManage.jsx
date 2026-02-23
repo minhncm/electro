@@ -9,9 +9,12 @@ import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import JobTitleConfigs from "~/pages/Admin-jobTitle/JobTitleConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function JobTitleManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(JobTitleConfigs.resourceUrl, JobTitleConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (

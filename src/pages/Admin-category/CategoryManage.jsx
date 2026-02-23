@@ -12,6 +12,7 @@ import CategoryConfigs from "~/pages/Admin-category/CategoryConfigs";
 import DateUtils from "~/utils/DateUtils";
 import BrandConfigs from "../Admin-brand/BrandConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function CategoryManage() {

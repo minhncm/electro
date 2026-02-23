@@ -9,9 +9,12 @@ import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import GuaranteeConfigs from "~/pages/Admin-guarantee/GuaranteeConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function GuaranteeManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(GuaranteeConfigs.resourceUrl, GuaranteeConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (

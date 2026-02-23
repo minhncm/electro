@@ -9,9 +9,12 @@ import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import JobLevelConfigs from "~/pages/Admin-jobLevel/JobLevelConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function JobLevelManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(JobLevelConfigs.resourceUrl, JobLevelConfigs.resourceKey);
 

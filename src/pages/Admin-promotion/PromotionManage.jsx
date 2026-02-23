@@ -9,9 +9,12 @@ import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import PromotionConfigs from "~/pages/Admin-promotion/PromotionConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function PromotionManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(PromotionConfigs.resourceUrl, PromotionConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (

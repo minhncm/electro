@@ -21,8 +21,11 @@ import MiscUtils from "~/utils/MiscUtils";
 import OrderConfigs from "../Admin-order/OrderConfigs";
 import WaybillConfigs from "./WaybillConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 
 function WaybillManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(WaybillConfigs.resourceUrl, WaybillConfigs.resourceKey);
   const theme = useMantineTheme();

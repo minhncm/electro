@@ -10,9 +10,12 @@ import DateUtils from "~/utils/DateUtils";
 import MiscUtils from "~/utils/MiscUtils";
 import DocketConfigs from "~/pages/Admin-docket/DocketConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function DocketManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(DocketConfigs.resourceUrl, DocketConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (

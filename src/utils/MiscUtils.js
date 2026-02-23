@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 class MiscUtils {
   static makeCaterogyBreadcrumbs = (category) => {
     if (!category.categoryParent) {
@@ -11,7 +13,9 @@ class MiscUtils {
 
   static formatterPrice = (value) => {
     if (value === null || value === undefined) return 0;
-    return !Number.isNaN(parseFloat(value)) ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "";
+    return !Number.isNaN(parseFloat(value))
+      ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      : "";
   };
 
   static toVND = (value) => {
@@ -26,7 +30,8 @@ class MiscUtils {
     return formatted;
   };
 
-  static calculateDiscountedPrice = (price, discount) => (price * (100 - discount)) / 100;
+  static calculateDiscountedPrice = (price, discount) =>
+    (price * (100 - discount)) / 100;
 
   static generatePriceOptions = (filterPriceQuartiles) => {
     const start = filterPriceQuartiles[0];
@@ -68,8 +73,12 @@ class MiscUtils {
       return "Trên " + replaceMillion(priceOption[0]);
     }
 
-    return replaceMillion(priceOption[0]) + " đến " + replaceMillion(priceOption[1]);
+    return (
+      replaceMillion(priceOption[0]) + " đến " + replaceMillion(priceOption[1])
+    );
   };
+
+  static isEqual = (first, second) => _.isEqual(first, second);
 }
 
 export default MiscUtils;

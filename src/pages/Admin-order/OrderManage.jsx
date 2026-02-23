@@ -18,6 +18,7 @@ import OrderStatusBadge from "~/components/OrderStatusBadge";
 import PaymentStatusBadge from "~/components/PaymentStatusBadge";
 import SearchPanel from "~/components/SearchPanel";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import DocketConfigs from "~/pages/Admin-docket/DocketConfigs";
 import OrderConfigs from "~/pages/Admin-order/OrderConfigs";
@@ -26,6 +27,8 @@ import MiscUtils from "~/utils/MiscUtils";
 import NotifyUtils from "~/utils/NotifyUtils";
 
 function OrderManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(OrderConfigs.resourceUrl, OrderConfigs.resourceKey);
 

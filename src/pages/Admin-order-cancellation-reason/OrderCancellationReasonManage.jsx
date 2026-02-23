@@ -9,9 +9,12 @@ import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import OrderCancellationReasonConfigs from "~/pages/Admin-order-cancellation-reason/OrderCancellationReasonConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function OrderCancellationReasonManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(
       OrderCancellationReasonConfigs.resourceUrl,

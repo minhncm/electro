@@ -11,9 +11,12 @@ import MiscUtils from "~/utils/MiscUtils";
 import PurchaseOrderConfigs from "~/pages/Admin-purchase-order/PurchaseOrderConfigs";
 import PurchaseOrderStatusBadge from "~/components/PurchaseOrderStatusBadge";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 
 function PurchaseOrderManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(
       PurchaseOrderConfigs.resourceUrl,

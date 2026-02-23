@@ -1,12 +1,11 @@
-import { Divider, Grid, Group, Paper, Select, Stack, TextInput } from "@mantine/core";
+import { Button, Divider, Grid, Group, Paper, Select, Stack, TextInput } from "@mantine/core";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import RoleConfigs from "./RoleConfigs";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
-import Button from "~/components/common/Button";
 
 function RoleCreate() {
   return (
-    <Stack sx={{ maxWidth: 800 }}>
+    <Stack maw={800}>
       <CreateUpdateTitle managerPath={RoleConfigs.managerPath} title={RoleConfigs.createTitle} />
 
       <DefaultPropertyPanel />

@@ -2,6 +2,7 @@ import { Configs } from "~/types";
 import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfig from "~/pages/PageConfig";
+import z from "zod";
 
 class AddressConfigs extends Configs {
   static managerPath = ManagerPath.ADDRESS;
@@ -50,8 +51,18 @@ class AddressConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+
+  static initialCreateUpdateFormValues = {
+    line: "",
+    provinceId: null,
+    districtId: null,
+  };
+
+  static createUpdateFormSchema = z.object({
+    line: z.string(),
+    provinceId: z.string().nullable(),
+    districtId: z.string().nullable(),
+  });
 }
 
 export default AddressConfigs;

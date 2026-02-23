@@ -1,9 +1,22 @@
-import { ActionIcon, Checkbox, Group, Table, useMantineTheme } from "@mantine/core";
+import {
+  ActionIcon,
+  Checkbox,
+  Group,
+  Table,
+  useMantineTheme,
+} from "@mantine/core";
 import { Link } from "react-router-dom";
 import { Edit, Eye, Trash } from "tabler-icons-react";
-import useManageTableViewModel from "~/components/ManageTable/useMangeTableViewModel";
+import useManageTableViewModel from "~/components/ManageTable/ManageTable.vm";
 
-function ManageTable({ listResponse, properties, showedPropertiesFragment, entityDetailTableRowsFragment }) {
+function ManageTable({
+  listResponse,
+  properties,
+  resourceUrl,
+  resourceKey,
+  showedPropertiesFragment,
+  entityDetailTableRowsFragment,
+}) {
   const theme = useMantineTheme();
 
   const {
@@ -16,6 +29,8 @@ function ManageTable({ listResponse, properties, showedPropertiesFragment, entit
   } = useManageTableViewModel({
     listResponse,
     properties,
+    resourceUrl,
+    resourceKey,
     entityDetailTableRowsFragment,
   });
 
@@ -25,7 +40,10 @@ function ManageTable({ listResponse, properties, showedPropertiesFragment, entit
         <Checkbox
           onChange={handleToggleAllRowsCheckBox}
           checked={selection.length === listResponse.content.length}
-          indeterminate={selection.length > 0 && selection.length !== listResponse.content.length}
+          indeterminate={
+            selection.length > 0 &&
+            selection.length !== listResponse.content.length
+          }
         />
       </Table.Th>
       {tableHeads.map((item) => (
@@ -38,7 +56,10 @@ function ManageTable({ listResponse, properties, showedPropertiesFragment, entit
   const entitiesTableRowsFragment = listResponse.content.map((entity) => (
     <Table.Tr key={entity.id}>
       <Table.Td>
-        <Checkbox checked={selection.includes(entity.id)} onChange={() => handleToggleRowsCheckBox(entity.id)} />
+        <Checkbox
+          checked={selection.includes(entity.id)}
+          onChange={() => handleToggleRowsCheckBox(entity.id)}
+        />
       </Table.Td>
       {showedPropertiesFragment(entity)}
       <Table.Td>

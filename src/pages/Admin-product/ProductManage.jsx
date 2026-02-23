@@ -19,11 +19,14 @@ import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import VariantTablePopover from "~/components/VariantTablePopover";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import ProductConfigs from "~/pages/Admin-product/ProductConfigs";
 import DateUtils from "~/utils/DateUtils";
 
 function ProductManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(ProductConfigs.resourceUrl, ProductConfigs.resourceKey);
   const theme = useMantineTheme();
@@ -31,14 +34,10 @@ function ProductManage() {
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.code}
-        </Highlight>
+        <Highlight size="sm">{entity.code}</Highlight>
       </Table.Td>
       <Table.Td>
         <Avatar
@@ -55,9 +54,7 @@ function ProductManage() {
         <EnableStatusBadge status={entity.status} />
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.category?.name || ""}
-        </Highlight>
+        <Highlight size="sm">{entity.category?.name || ""}</Highlight>
       </Table.Td>
       <Table.Td>
         <Stack spacing="xs" align="flex-start">

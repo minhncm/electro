@@ -7,11 +7,14 @@ import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import SuppilerConfigs from "~/pages/Admin-supplier/SupplierConfigs";
 import DateUtils from "~/utils/DateUtils";
 
 function SupplierManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(SuppilerConfigs.resourceUrl, SuppilerConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (

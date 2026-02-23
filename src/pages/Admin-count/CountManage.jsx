@@ -7,12 +7,15 @@ import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import useGetAllApi from "~/hooks/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import CountConfigs from "~/pages/Admin-count/CountConfigs";
 import DateUtils from "~/utils/DateUtils";
 import MiscUtils from "~/utils/MiscUtils";
 
 function CountManage() {
+  useResetManagePageState();
+
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(CountConfigs.resourceUrl, CountConfigs.resourceKey);
   const ShowedPropertiesFragment = ({ entity }) => (
