@@ -2,6 +2,8 @@ import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import { Configs } from "~/types";
 import * as PageConfigs from "~/pages/PageConfig";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class UserConfigs extends Configs {
   static managerPath = ManagerPath.USER;
@@ -90,8 +92,40 @@ class UserConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    username: "",
+    password: "",
+    fullname: "",
+    email: "",
+    phone: "",
+    gender: "M" | "F",
+    address: {
+      line: "",
+      provinceId: null,
+      districtId: null,
+    },
+    avatar: "",
+    status: "1",
+    roles: [],
+  };
+  static createUpdateFormSchema = z.object({
+    username: z
+      .string()
+      .min(2, MessageUtils.min(UserConfigs.properties.username.label, 2)),
+    password: z.string(),
+    fullname: z.string(),
+    email: z.email(),
+    phone: z.string(),
+    gender: z.string(),
+    address: z.object({
+      line: z.string(),
+      provinceId: z.string(),
+      districtId: z.string(),
+    }),
+    avatar: z.string(),
+    status: z.string(),
+    roles: z.array(z.string()).nonempty(),
+  });
 }
 
 export default UserConfigs;

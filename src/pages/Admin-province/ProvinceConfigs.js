@@ -3,6 +3,8 @@ import ResourceUrl from "~/constants/ResourceURL";
 import { Configs } from "~/types";
 import AddressConfigs from "~/pages/Admin-address/AddressConfigs";
 import * as PageConfigs from "~/pages/PageConfig";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class ProvinceConfigs extends Configs {
   static managerPath = ManagerPath.PROVINCE;
@@ -26,8 +28,18 @@ class ProvinceConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    name: "",
+    code: "",
+  };
+  static createUpdateFormSchema = z.object({
+    name: z
+      .string()
+      .min(2, MessageUtils.min(ProvinceConfigs.properties.name.label, 2)),
+    code: z
+      .string()
+      .max(35, MessageUtils.max(ProvinceConfigs.properties.code.label, 35)),
+  });
 }
 
 export default ProvinceConfigs;

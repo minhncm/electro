@@ -11,6 +11,8 @@ import DateUtils from "~/utils/DateUtils";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function UserManage() {
   useResetManagePageState();
@@ -149,7 +151,14 @@ function UserManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={UserConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={UserConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={UserConfigs.resourceUrl}
+          resourceKey={UserConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -158,6 +167,8 @@ function UserManage() {
         <ManageTable
           listResponse={listResponse}
           properties={UserConfigs.properties}
+          resourceUrl={UserConfigs.resourceUrl}
+          resourceKey={UserConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}

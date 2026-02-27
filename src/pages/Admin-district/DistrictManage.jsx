@@ -10,6 +10,8 @@ import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import DistrictConfigs from "~/pages/Admin-district/DistrictConfigs";
 import DateUtils from "~/utils/DateUtils";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function DistrictManage() {
   useResetManagePageState();
@@ -71,7 +73,14 @@ function DistrictManage() {
 
   return (
     <Stack>
-      <ManageHeader title={DistrictConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={DistrictConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={DistrictConfigs.resourceUrl}
+          resourceKey={DistrictConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -80,6 +89,8 @@ function DistrictManage() {
         <ManageTable
           listResponse={listResponse}
           properties={DistrictConfigs.properties}
+          resourceUrl={DistrictConfigs.resourceUrl}
+          resourceKey={DistrictConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}

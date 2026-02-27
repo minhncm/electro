@@ -10,6 +10,8 @@ import ProvinceConfigs from "~/pages/Admin-province/ProvinceConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function ProvinceManage() {
   useResetManagePageState();
@@ -56,7 +58,15 @@ function ProvinceManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={ProvinceConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={ProvinceConfigs.manageTitle} />
+
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={ProvinceConfigs.resourceUrl}
+          resourceKey={ProvinceConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -65,6 +75,8 @@ function ProvinceManage() {
         <ManageTable
           listResponse={listResponse}
           properties={ProvinceConfigs.properties}
+          resourceUrl={ProvinceConfigs.resourceUrl}
+          resourceKey={ProvinceConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}
