@@ -11,20 +11,29 @@ import {
 } from "@mantine/core";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
-import CustomerGroupConfigs from "~/pages/Admin-customer-group/CustomerGroupConfigs";
-import useCustomerGroupCreateViewModel from "./CustomerGroupCreate.vm";
+import CustomerResourceConfigs from "~/pages/Admin-customer-resource/CustomerResourceConfigs";
+import useCustomerResourceUpdateViewModel from "./CustomerResourceUpdate.vm";
+import { useParams } from "react-router-dom";
 
-function CustomerGroupCreate() {
-  const { form, statusSelectList, handleFormSubmit } =
-    useCustomerGroupCreateViewModel();
+function CustomerResourceUpdate() {
+  const { id } = useParams();
+  const { form, customerResource, statusSelectList, handleFormSubmit } =
+    useCustomerResourceUpdateViewModel(id);
+
+  if (!customerResource) return null;
+
   return (
     <Stack maw={800}>
       <CreateUpdateTitle
-        managerPath={CustomerGroupConfigs.managerPath}
-        title={CustomerGroupConfigs.createTitle}
+        managerPath={CustomerResourceConfigs.managerPath}
+        title={CustomerResourceConfigs.updateTitle}
       />
 
-      <DefaultPropertyPanel />
+      <DefaultPropertyPanel
+        id={customerResource.id}
+        createdAt={customerResource.createdAt}
+        updatedAt={customerResource.updatedAt}
+      />
 
       <form onSubmit={handleFormSubmit}>
         <Paper shadow="xs">
@@ -34,7 +43,7 @@ function CustomerGroupCreate() {
                 <TextInput
                   key={form.key("code")}
                   required
-                  label={CustomerGroupConfigs.properties.code.label}
+                  label={CustomerResourceConfigs.properties.code.label}
                   {...form.getInputProps("code")}
                 />
               </Grid.Col>
@@ -42,7 +51,7 @@ function CustomerGroupCreate() {
                 <TextInput
                   key={form.key("name")}
                   required
-                  label={CustomerGroupConfigs.properties.name.label}
+                  label={CustomerResourceConfigs.properties.name.label}
                   {...form.getInputProps("name")}
                 />
               </Grid.Col>
@@ -50,7 +59,7 @@ function CustomerGroupCreate() {
                 <TextInput
                   key={form.key("description")}
                   required
-                  label={CustomerGroupConfigs.properties.description.label}
+                  label={CustomerResourceConfigs.properties.description.label}
                   {...form.getInputProps("description")}
                 />
               </Grid.Col>
@@ -58,7 +67,7 @@ function CustomerGroupCreate() {
                 <ColorInput
                   key={form.key("color")}
                   required
-                  label={CustomerGroupConfigs.properties.color.label}
+                  label={CustomerResourceConfigs.properties.color.label}
                   placeholder="Chọn màu"
                   {...form.getInputProps("color")}
                 />
@@ -67,7 +76,7 @@ function CustomerGroupCreate() {
                 <Select
                   key={form.key("status")}
                   required
-                  label={CustomerGroupConfigs.properties.status.label}
+                  label={CustomerResourceConfigs.properties.status.label}
                   placeholder="--"
                   {...form.getInputProps("status")}
                   data={statusSelectList}
@@ -81,7 +90,7 @@ function CustomerGroupCreate() {
               <Button variant="default" onClick={form.reset}>
                 Mặc định
               </Button>
-              <Button type="submit">Thêm</Button>
+              <Button type="submit">Cập nhật</Button>
             </Group>
           </Stack>
         </Paper>
@@ -90,4 +99,4 @@ function CustomerGroupCreate() {
   );
 }
 
-export default CustomerGroupCreate;
+export default CustomerResourceUpdate;

@@ -11,6 +11,8 @@ import JobLevelConfigs from "~/pages/Admin-jobLevel/JobLevelConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function JobLevelManage() {
   useResetManagePageState();
@@ -61,7 +63,14 @@ function JobLevelManage() {
 
   return (
     <Stack>
-      <ManageHeader title={JobLevelConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={JobLevelConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={JobLevelConfigs.resourceUrl}
+          resourceKey={JobLevelConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -70,6 +79,8 @@ function JobLevelManage() {
         <ManageTable
           listResponse={listResponse}
           properties={JobLevelConfigs.properties}
+          resourceUrl={JobLevelConfigs.resourceUrl}
+          resourceKey={JobLevelConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}

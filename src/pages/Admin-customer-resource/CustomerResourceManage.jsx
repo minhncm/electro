@@ -14,18 +14,20 @@ import SearchPanel from "~/components/SearchPanel";
 import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
-import CustomerResourseConfigs from "~/pages/Admin-customer-resource/CustomerResourseConfigs";
+import CustomerResourceConfigs from "~/pages/Admin-customer-resource/CustomerResourceConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
-function CustomerResourseManage() {
+function CustomerResourceManage() {
   useResetManagePageState();
 
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(
-      CustomerResourseConfigs.resourceUrl,
-      CustomerResourseConfigs.resourceKey,
+      CustomerResourceConfigs.resourceUrl,
+      CustomerResourceConfigs.resourceKey,
     );
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
@@ -55,37 +57,37 @@ function CustomerResourseManage() {
   const EntityDetailTableRowsFragment = ({ entity }) => (
     <>
       <Table.Tr>
-        <Table.Td>{CustomerResourseConfigs.properties.id.label}</Table.Td>
+        <Table.Td>{CustomerResourceConfigs.properties.id.label}</Table.Td>
         <Table.Td>{entity.id}</Table.Td>
       </Table.Tr>
       <Table.Tr>
         <Table.Td>
-          {CustomerResourseConfigs.properties.createdAt.label}
+          {CustomerResourceConfigs.properties.createdAt.label}
         </Table.Td>
         <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       </Table.Tr>
       <Table.Tr>
         <Table.Td>
-          {CustomerResourseConfigs.properties.updatedAt.label}
+          {CustomerResourceConfigs.properties.updatedAt.label}
         </Table.Td>
         <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CustomerResourseConfigs.properties.code.label}</Table.Td>
+        <Table.Td>{CustomerResourceConfigs.properties.code.label}</Table.Td>
         <Table.Td>{entity.code}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CustomerResourseConfigs.properties.name.label}</Table.Td>
+        <Table.Td>{CustomerResourceConfigs.properties.name.label}</Table.Td>
         <Table.Td>{entity.name}</Table.Td>
       </Table.Tr>
       <Table.Tr>
         <Table.Td>
-          {CustomerResourseConfigs.properties.description.label}
+          {CustomerResourceConfigs.properties.description.label}
         </Table.Td>
         <Table.Td maw={300}>{entity.description}</Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CustomerResourseConfigs.properties.color.label}</Table.Td>
+        <Table.Td>{CustomerResourceConfigs.properties.color.label}</Table.Td>
         <Table.Td>
           <Group gap="xs">
             <ColorSwatch color={entity.color} />
@@ -94,7 +96,7 @@ function CustomerResourseManage() {
         </Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td>{CustomerResourseConfigs.properties.status.label}</Table.Td>
+        <Table.Td>{CustomerResourceConfigs.properties.status.label}</Table.Td>
         <Table.Td>
           <EnableStatusBadge status={entity.status} />
         </Table.Td>
@@ -103,7 +105,14 @@ function CustomerResourseManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={CustomerResourseConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={CustomerResourceConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={CustomerResourceConfigs.resourceUrl}
+          resourceKey={CustomerResourceConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -111,7 +120,9 @@ function CustomerResourseManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
-          properties={CustomerResourseConfigs.properties}
+          resourceUrl={CustomerResourceConfigs.resourceUrl}
+          resourceKey={CustomerResourceConfigs.resourceKey}
+          properties={CustomerResourceConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}
@@ -126,4 +137,4 @@ function CustomerResourseManage() {
   );
 }
 
-export default CustomerResourseManage;
+export default CustomerResourceManage;

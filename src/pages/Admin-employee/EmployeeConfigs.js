@@ -2,6 +2,8 @@ import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import { Configs } from "~/types";
 import * as PageConfigs from "~/pages/PageConfig";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class EmployeeConfigs extends Configs {
   static managerPath = ManagerPath.EMPLOYEE;
@@ -11,7 +13,11 @@ class EmployeeConfigs extends Configs {
   static updateTitle = "Cập nhật nhân viên";
   static manageTitle = "Quản lý nhân viên";
 
-  static manageTitleLinks = [{ link: ManagerPath.EMPLOYEE, label: "Quản lý nhân viên" }];
+  static EMPLOYEE_ROLE_ID = 2;
+
+  static manageTitleLinks = [
+    { link: ManagerPath.EMPLOYEE, label: "Quản lý nhân viên" },
+  ];
 
   static _rawProperties = {
     ...PageConfigs.getProperties(true),
@@ -163,8 +169,60 @@ class EmployeeConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    user: {
+      username: "",
+      password: "",
+      fullname: "",
+      email: "",
+      phone: "",
+      gender: "M" | "F",
+      address: {
+        line: "",
+        provinceId: null,
+        districtId: null,
+      },
+      avatar: "",
+      status: "1",
+      roles: [String(EmployeeConfigs.EMPLOYEE_ROLE_ID)],
+    },
+    officeId: null,
+    departmentId: null,
+    jobTypeId: null,
+    jobLevelId: null,
+    jobTitleId: null,
+  };
+  static createUpdateFormSchema = z.object({
+    user: z.object({
+      username: z
+        .string()
+        .min(
+          2,
+          MessageUtils.min(
+            EmployeeConfigs.properties["user.username"].label,
+            2,
+          ),
+        ),
+      password: z.string(),
+      fullname: z.string(),
+      email: z.string(),
+      phone: z.string(),
+      gender: z.string(),
+      address: z.object({
+        line: z.string(),
+        provinceId: z.string(),
+        districtId: z.string(),
+      }),
+      avatar: z.string(),
+      status: z.string(),
+      roles: z.array(z.string()).nonempty(),
+    }),
+    officeId: z.string(),
+    departmentId: z.string(),
+    jobTypeId: z.string(),
+    jobLevelId: z.string(),
+    jobTitleId: z.string(),
+  });
 }
 
 export default EmployeeConfigs;

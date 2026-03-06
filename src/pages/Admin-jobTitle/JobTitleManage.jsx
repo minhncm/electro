@@ -11,6 +11,8 @@ import JobTitleConfigs from "~/pages/Admin-jobTitle/JobTitleConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function JobTitleManage() {
   useResetManagePageState();
@@ -60,7 +62,14 @@ function JobTitleManage() {
 
   return (
     <Stack>
-      <ManageHeader title={JobTitleConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={JobTitleConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={JobTitleConfigs.resourceUrl}
+          resourceKey={JobTitleConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -69,6 +78,8 @@ function JobTitleManage() {
         <ManageTable
           listResponse={listResponse}
           properties={JobTitleConfigs.properties}
+          resourceUrl={JobTitleConfigs.resourceUrl}
+          resourceKey={JobTitleConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}

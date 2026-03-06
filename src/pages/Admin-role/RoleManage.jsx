@@ -11,6 +11,8 @@ import RoleBagdeStatus from "~/components/RoleBagdeStatus";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function RoleManage() {
   useResetManagePageState();
@@ -70,7 +72,14 @@ function RoleManage() {
 
   return (
     <Stack>
-      <ManageHeader title={RoleConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={RoleConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={RoleConfigs.resourceUrl}
+          resourceKey={RoleConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -79,6 +88,8 @@ function RoleManage() {
         <ManageTable
           listResponse={listResponse}
           properties={RoleConfigs.properties}
+          resourceUrl={RoleConfigs.resourceUrl}
+          resourceKey={RoleConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}

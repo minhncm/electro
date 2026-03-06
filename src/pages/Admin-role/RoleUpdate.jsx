@@ -1,4 +1,5 @@
 import {
+  Button,
   Divider,
   Grid,
   Group,
@@ -10,33 +11,57 @@ import {
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import RoleConfigs from "./RoleConfigs";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
-import Button from "~/components/common/Button";
+import { useParams } from "react-router-dom";
+import useRoleUpdateViewModel from "./RoleUpdate.vm";
 
 function RoleUpdate() {
+  const { id } = useParams();
+  const { form, role, statusSelectList, handleFormSubmit } =
+    useRoleUpdateViewModel(id);
+
+  if (!role) return null;
+
   return (
-    <Stack sx={{ maxWidth: 800 }}>
+    <Stack maw={800}>
       <CreateUpdateTitle
         managerPath={RoleConfigs.managerPath}
         title={RoleConfigs.updateTitle}
       />
 
-      <DefaultPropertyPanel />
+      <DefaultPropertyPanel
+        id={role.id}
+        createdAt={role.createdAt}
+        updatedAt={role.updatedAt}
+      />
 
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <Paper shadow="xs">
           <Stack gap={0}>
             <Grid p="sm">
               <Grid.Col span={6}>
-                <TextInput required label={RoleConfigs.properties.code.label} />
+                <TextInput
+                  key={form.key("code")}
+                  required
+                  label={RoleConfigs.properties.code.label}
+                  {...form.getInputProps("code")}
+                />
               </Grid.Col>
               <Grid.Col span={6}>
-                <TextInput required label={RoleConfigs.properties.name.label} />
+                <TextInput
+                  key={form.key("name")}
+                  required
+                  label={RoleConfigs.properties.name.label}
+                  {...form.getInputProps("name")}
+                />
               </Grid.Col>
               <Grid.Col span={6}>
                 <Select
+                  key={form.key("status")}
                   required
                   label={RoleConfigs.properties.status.label}
                   placeholder="--"
+                  {...form.getInputProps("status")}
+                  data={statusSelectList}
                 />
               </Grid.Col>
             </Grid>
@@ -44,8 +69,10 @@ function RoleUpdate() {
             <Divider mt="xs" />
 
             <Group justify="space-between" p="sm">
-              <Button variant="default">Mặc định</Button>
-              <Button type="submit">Thêm</Button>
+              <Button variant="default" onClick={form.reset}>
+                Mặc định
+              </Button>
+              <Button type="submit">Cập nhật</Button>
             </Group>
           </Stack>
         </Paper>

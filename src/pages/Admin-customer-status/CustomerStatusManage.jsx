@@ -18,6 +18,8 @@ import CustomerStatusConfigs from "~/pages/Admin-customer-status/CustomerStatusC
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function CustomerStatusManage() {
   useResetManagePageState();
@@ -31,14 +33,10 @@ function CustomerStatusManage() {
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.code}
-        </Highlight>
+        <Highlight size="sm">{entity.code}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
         <Group gap="xs">
@@ -99,7 +97,14 @@ function CustomerStatusManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={CustomerStatusConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={CustomerStatusConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={CustomerStatusConfigs.resourceUrl}
+          resourceKey={CustomerStatusConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -107,6 +112,8 @@ function CustomerStatusManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={CustomerStatusConfigs.resourceUrl}
+          resourceKey={CustomerStatusConfigs.resourceKey}
           properties={CustomerStatusConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

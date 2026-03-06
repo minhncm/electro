@@ -170,3 +170,14 @@ export const initialListSelectList = [
     label: "50",
   },
 ];
+
+export const statusSelectList = [
+  {
+    value: "1",
+    label: "Có hiệu lực",
+  },
+  {
+    value: "2",
+    label: "Vô hiệu lực",
+  },
+];

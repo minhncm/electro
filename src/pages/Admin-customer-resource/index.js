@@ -1,2 +1,2 @@
-import CustomerResourseManage from "~/pages/Admin-customer-resource/CustomerResourseManage";
+import CustomerResourseManage from "~/pages/Admin-customer-resource/CustomerResourceManage";
 export default CustomerResourseManage;

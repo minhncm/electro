@@ -18,6 +18,8 @@ import CustomerGroupConfigs from "~/pages/Admin-customer-group/CustomerGroupConf
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function CustomerGroupManage() {
   useResetManagePageState();
@@ -94,7 +96,14 @@ function CustomerGroupManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={CustomerGroupConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={CustomerGroupConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={CustomerGroupConfigs.resourceUrl}
+          resourceKey={CustomerGroupConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -102,6 +111,8 @@ function CustomerGroupManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={CustomerGroupConfigs.resourceUrl}
+          resourceKey={CustomerGroupConfigs.resourceKey}
           properties={CustomerGroupConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

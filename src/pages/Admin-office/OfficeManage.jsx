@@ -11,6 +11,8 @@ import ActiveStatusBadge from "~/components/ActiveStatusBadge";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
 
 function OfficeManage() {
   useResetManagePageState();
@@ -23,19 +25,13 @@ function OfficeManage() {
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.address.line || ""}
-        </Highlight>
+        <Highlight size="sm">{entity.address.line || ""}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.address.province?.name || ""}
-        </Highlight>
+        <Highlight size="sm">{entity.address.province?.name || ""}</Highlight>
       </Table.Td>
       <Table.Td>
         <ActiveStatusBadge status={entity.status} />
@@ -100,7 +96,14 @@ function OfficeManage() {
 
   return (
     <Stack>
-      <ManageHeader title={OfficeConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={OfficeConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={OfficeConfigs.resourceUrl}
+          resourceKey={OfficeConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -108,6 +111,8 @@ function OfficeManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={OfficeConfigs.resourceUrl}
+          resourceKey={OfficeConfigs.resourceKey}
           properties={OfficeConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

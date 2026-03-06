@@ -11,12 +11,15 @@ import JobTypeConfigs from "~/pages/Admin-jobType/JobTypeConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function JobTypeManage() {
   useResetManagePageState();
 
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(JobTypeConfigs.resourceUrl, JobTypeConfigs.resourceKey);
+
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -60,7 +63,14 @@ function JobTypeManage() {
 
   return (
     <Stack>
-      <ManageHeader title={JobTypeConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={JobTypeConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={JobTypeConfigs.resourceUrl}
+          resourceKey={JobTypeConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -69,6 +79,8 @@ function JobTypeManage() {
         <ManageTable
           listResponse={listResponse}
           properties={JobTypeConfigs.properties}
+          resourceUrl={JobTypeConfigs.resourceUrl}
+          resourceKey={JobTypeConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}

@@ -3,6 +3,8 @@ import ResourceUrl from "~/constants/ResourceURL";
 import { Configs } from "~/types";
 import UserConfigs from "~/pages/Admin-user/UserConfigs";
 import * as PageConfigs from "~/pages/PageConfig";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class RoleConfigs extends Configs {
   static managerPath = ManagerPath.ROLE;
@@ -31,8 +33,18 @@ class RoleConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    name: "",
+    code: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    name: z.string(),
+    code: z
+      .string()
+      .min(2, MessageUtils.min(RoleConfigs.properties.name.label, 2)),
+    status: z.string(),
+  });
 }
 
 export default RoleConfigs;

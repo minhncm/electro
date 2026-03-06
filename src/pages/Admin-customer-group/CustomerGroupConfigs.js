@@ -1,8 +1,10 @@
+import z from "zod";
 import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
-import { Configs } from "~/types";
-import * as PageConfigs from "~/pages/PageConfig";
 import CustomerConfigs from "~/pages/Admin-customer/CustomerConfigs";
+import * as PageConfigs from "~/pages/PageConfig";
+import { Configs } from "~/types";
+import MessageUtils from "~/utils/MessageUtils";
 
 class CustomerGroupConfigs extends Configs {
   static managerPath = ManagerPath.CUSTOMER_GROUP;
@@ -38,8 +40,22 @@ class CustomerGroupConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    code: "",
+    name: "",
+    description: "",
+    color: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    code: z.string(),
+    name: z
+      .string()
+      .min(2, MessageUtils.min(CustomerGroupConfigs.properties.name.label, 2)),
+    description: z.string(),
+    color: z.string(),
+    status: z.string(),
+  });
 }
 
 export default CustomerGroupConfigs;

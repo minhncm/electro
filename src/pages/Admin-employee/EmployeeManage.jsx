@@ -13,6 +13,8 @@ import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import EmployeeConfigs from "~/pages/Admin-employee/EmployeeConfigs";
 import DateUtils from "~/utils/DateUtils";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function EmployeeManage() {
   useResetManagePageState();
@@ -240,7 +242,14 @@ function EmployeeManage() {
 
   return (
     <Stack>
-      <ManageHeader title={EmployeeConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={EmployeeConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={EmployeeConfigs.resourceUrl}
+          resourceKey={EmployeeConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -249,6 +258,8 @@ function EmployeeManage() {
         <ManageTable
           listResponse={listResponse}
           properties={EmployeeConfigs.properties}
+          resourceUrl={EmployeeConfigs.resourceUrl}
+          resourceKey={EmployeeConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}

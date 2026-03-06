@@ -3,8 +3,10 @@ import ResourceUrl from "~/constants/ResourceURL";
 import { Configs } from "~/types";
 import * as PageConfigs from "~/pages/PageConfig";
 import CustomerConfigs from "~/pages/Admin-customer/CustomerConfigs";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
-class CustomerResourseConfigs extends Configs {
+class CustomerResourceConfigs extends Configs {
   static managerPath = ManagerPath.CUSTOMER_RESOURCE;
   static resourceUrl = ResourceUrl.CUSTOMER_RESOURCE;
   static resourceKey = "customer-resources";
@@ -38,8 +40,25 @@ class CustomerResourseConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    code: "",
+    name: "",
+    description: "",
+    color: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    code: z.string(),
+    name: z
+      .string()
+      .min(
+        2,
+        MessageUtils.min(CustomerResourceConfigs.properties.name.label, 2),
+      ),
+    description: z.string(),
+    color: z.string(),
+    status: z.string(),
+  });
 }
 
-export default CustomerResourseConfigs;
+export default CustomerResourceConfigs;

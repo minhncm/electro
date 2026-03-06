@@ -3,6 +3,8 @@ import ResourceUrl from "~/constants/ResourceURL";
 import { Configs } from "~/types";
 import EmployeeConfigs from "~/pages/Admin-employee/EmployeeConfigs";
 import * as PageConfigs from "~/pages/PageConfig";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class DepartmentConfigs extends Configs {
   static managerPath = ManagerPath.DEPARTMENT;
@@ -27,8 +29,16 @@ class DepartmentConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    name: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    name: z
+      .string()
+      .min(2, MessageUtils.min(DepartmentConfigs.properties.name.label, 2)),
+    status: z.string(),
+  });
 }
 
 export default DepartmentConfigs;

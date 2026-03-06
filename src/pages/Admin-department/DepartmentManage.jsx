@@ -11,12 +11,17 @@ import ActiveStatusBadge from "~/components/ActiveStatusBadge";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function DepartmentManage() {
   useResetManagePageState();
 
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(DepartmentConfigs.resourceUrl, DepartmentConfigs.resourceKey);
+
+  console.log(listResponse);
+
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -62,7 +67,14 @@ function DepartmentManage() {
 
   return (
     <Stack>
-      <ManageHeader title={DepartmentConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={DepartmentConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={DepartmentConfigs.resourceUrl}
+          resourceKey={DepartmentConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
 
@@ -72,6 +84,8 @@ function DepartmentManage() {
         <ManageTable
           listResponse={listResponse}
           properties={DepartmentConfigs.properties}
+          resourceUrl={DepartmentConfigs.resourceUrl}
+          resourceKey={DepartmentConfigs.resourceKey}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
           )}
