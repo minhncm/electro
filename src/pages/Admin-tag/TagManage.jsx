@@ -11,6 +11,8 @@ import TagConfigs from "~/pages/Admin-tag/TagConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function TagManage() {
   useResetManagePageState();
@@ -23,14 +25,10 @@ function TagManage() {
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.slug}
-        </Highlight>
+        <Highlight size="sm">{entity.slug}</Highlight>
       </Table.Td>
       <Table.Td>
         <EnableStatusBadge status={entity.status} />
@@ -70,7 +68,14 @@ function TagManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={TagConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={TagConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={TagConfigs.resourceUrl}
+          resourceKey={TagConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -78,6 +83,8 @@ function TagManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={TagConfigs.resourceUrl}
+          resourceKey={TagConfigs.resourceKey}
           properties={TagConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

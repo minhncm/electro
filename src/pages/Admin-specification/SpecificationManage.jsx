@@ -11,6 +11,8 @@ import SpecificationConfigs from "~/pages/Admin-specification/SpecificationConfi
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function SpecificationManage() {
   useResetManagePageState();
@@ -26,14 +28,10 @@ function SpecificationManage() {
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.code}
-        </Highlight>
+        <Highlight size="sm">{entity.code}</Highlight>
       </Table.Td>
       <Table.Td>
         <EnableStatusBadge status={entity.status} />
@@ -77,7 +75,14 @@ function SpecificationManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={SpecificationConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={SpecificationConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={SpecificationConfigs.resourceUrl}
+          resourceKey={SpecificationConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -85,6 +90,8 @@ function SpecificationManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={SpecificationConfigs.resourceUrl}
+          resourceKey={SpecificationConfigs.resourceKey}
           properties={SpecificationConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

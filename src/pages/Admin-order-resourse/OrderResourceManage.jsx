@@ -18,6 +18,8 @@ import OrderResourceConfigs from "~/pages/Admin-order-resourse/OrderResourceConf
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function OrderResourceManage() {
   useResetManagePageState();
@@ -27,6 +29,7 @@ function OrderResourceManage() {
       OrderResourceConfigs.resourceUrl,
       OrderResourceConfigs.resourceKey,
     );
+
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
@@ -110,7 +113,14 @@ function OrderResourceManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={OrderResourceConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={OrderResourceConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={OrderResourceConfigs.resourceUrl}
+          resourceKey={OrderResourceConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -118,6 +128,8 @@ function OrderResourceManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={OrderResourceConfigs.resourceUrl}
+          resourceKey={OrderResourceConfigs.resourceKey}
           properties={OrderResourceConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

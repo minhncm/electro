@@ -11,6 +11,8 @@ import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import BrandConfigs from "~/pages/Admin-brand/BrandConfigs";
 import DateUtils from "~/utils/DateUtils";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function BrandManage() {
   useResetManagePageState();
@@ -70,7 +72,14 @@ function BrandManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={BrandConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={"Quản lý địa chỉ"} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={BrandConfigs.resourceUrl}
+          resourceKey={BrandConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -78,6 +87,8 @@ function BrandManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={BrandConfigs.resourceUrl}
+          resourceKey={BrandConfigs.resourceKey}
           properties={BrandConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

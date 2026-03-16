@@ -11,6 +11,8 @@ import GuaranteeConfigs from "~/pages/Admin-guarantee/GuaranteeConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function GuaranteeManage() {
   useResetManagePageState();
@@ -63,7 +65,14 @@ function GuaranteeManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={GuaranteeConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={GuaranteeConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={GuaranteeConfigs.resourceUrl}
+          resourceKey={GuaranteeConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -71,6 +80,8 @@ function GuaranteeManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={GuaranteeConfigs.resourceUrl}
+          resourceKey={GuaranteeConfigs.resourceKey}
           properties={GuaranteeConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

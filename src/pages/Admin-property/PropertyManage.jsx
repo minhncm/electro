@@ -11,6 +11,8 @@ import PropertyConfigs from "~/pages/Admin-property/PropertyConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function PropertyManage() {
   useResetManagePageState();
@@ -74,7 +76,14 @@ function PropertyManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={PropertyConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={PropertyConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={PropertyConfigs.resourceUrl}
+          resourceKey={PropertyConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -82,6 +91,8 @@ function PropertyManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={PropertyConfigs.resourceUrl}
+          resourceKey={PropertyConfigs.resourceKey}
           properties={PropertyConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

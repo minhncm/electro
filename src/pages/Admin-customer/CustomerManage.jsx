@@ -19,14 +19,14 @@ import DateUtils from "~/utils/DateUtils";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function CustomerManage() {
   useResetManagePageState();
 
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(CustomerConfigs.resourceUrl, CustomerConfigs.resourceKey);
-
-  console.log(listResponse);
 
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
@@ -196,7 +196,14 @@ function CustomerManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={CustomerConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={"Quản lý địa chỉ"} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={CustomerConfigs.resourceUrl}
+          resourceKey={CustomerConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -204,6 +211,8 @@ function CustomerManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={CustomerConfigs.resourceUrl}
+          resourceKey={CustomerConfigs.resourceKey}
           properties={CustomerConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

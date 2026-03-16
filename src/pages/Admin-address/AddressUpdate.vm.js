@@ -81,11 +81,11 @@ function useAddressUpdateViewModel(id) {
     if (!MiscUtils.isEqual(formValues, prevFormValues)) {
       const data = {
         line: formValues.line || null,
-        province: formValues.provinceId || null,
-        district: formValues.districtId || null,
-        ward: formValues.wardId || null,
+        province: Number(formValues.provinceId) || null,
+        district: Number(formValues.districtId) || null,
+        ward: Number(formValues.wardId) || null,
       };
-      console.log(data);
+      
       updateApi.mutate(data);
     }
   });

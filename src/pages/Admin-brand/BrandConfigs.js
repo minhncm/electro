@@ -3,6 +3,8 @@ import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import ProductConfigs from "~/pages/Admin-product/ProductConfigs";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class BrandConfigs extends Configs {
   static managerPath = ManagerPath.BRAND;
@@ -35,8 +37,20 @@ class BrandConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    name: "",
+    code: "",
+    description: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    name: z
+      .string()
+      .min(2, MessageUtils.min(BrandConfigs.properties.name.label, 2)),
+    code: z.string(),
+    description: z.string(),
+    status: z.string(),
+  });
 }
 
 export default BrandConfigs;

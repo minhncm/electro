@@ -3,6 +3,8 @@ import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import { Configs } from "~/types";
 import OrderResourceConfigs from "~/pages/Admin-order-resourse/OrderResourceConfigs";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class OrderCancellationReasonConfigs extends Configs {
   static managerPath = ManagerPath.ORDER_CANCELLATION_REASON;
@@ -31,8 +33,24 @@ class OrderCancellationReasonConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    name: "",
+    note: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    name: z
+      .string()
+      .min(
+        2,
+        MessageUtils.min(
+          OrderCancellationReasonConfigs.properties.name.label,
+          2,
+        ),
+      ),
+    note: z.string(),
+    status: z.string(),
+  });
 }
 
 export default OrderCancellationReasonConfigs;

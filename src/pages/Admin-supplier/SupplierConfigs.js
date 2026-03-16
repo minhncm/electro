@@ -3,6 +3,8 @@ import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import ProductConfigs from "~/pages/Admin-product/ProductConfigs";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class SupplierConfigs extends Configs {
   static managerPath = ManagerPath.SUPPLIER;
@@ -95,8 +97,53 @@ class SupplierConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    displayName: "",
+    code: "",
+    contactFullname: "",
+    contactEmail: "",
+    contactPhone: "",
+    companyName: "",
+    taxCode: "",
+    email: "",
+    phone: "",
+    fax: "",
+    website: "",
+    address: {
+      line: "",
+      provinceId: null,
+      districtId: null,
+    },
+    description: "",
+    note: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    displayName: z
+      .string()
+      .min(
+        2,
+        MessageUtils.min(SupplierConfigs.properties.displayName.label, 2),
+      ),
+    code: z.string(),
+    contactFullname: z.string(),
+    contactEmail: z.string(),
+    contactPhone: z.string(),
+    companyName: z.string(),
+    taxCode: z.string(),
+    email: z.string(),
+    phone: z.string(),
+    fax: z.string(),
+    website: z.string(),
+    address: z.object({
+      line: z.string(),
+      provinceId: z.string().nullable(),
+      districtId: z.string().nullable(),
+    }),
+    description: z.string(),
+    note: z.string(),
+    status: z.string(),
+  });
 }
 
 export default SupplierConfigs;

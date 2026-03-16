@@ -1,4 +1,5 @@
-import { List } from "tabler-icons-react";
+import { Grid, Skeleton, Stack, Text, useMantineTheme } from "@mantine/core";
+import { AlertTriangle, List } from "tabler-icons-react";
 import ClientProductCart from "~/components/ClientProductCard/ClientProductCard";
 import Button from "~/components/common/Button";
 
@@ -83,7 +84,8 @@ const products = {
       productId: 2,
       productName: "Microsoft Surface Pro 9",
       productSlug: "eblackaller1",
-      productThumbnail: "https://media-api-beta.thinkpro.vn/media/core/products/2023/2/3/surface-pro-9-thinkpro-1.png",
+      productThumbnail:
+        "https://media-api-beta.thinkpro.vn/media/core/products/2023/2/3/surface-pro-9-thinkpro-1.png",
       productPriceRange: [1.2e7],
       productVariants: [
         {
@@ -280,7 +282,8 @@ const products = {
       productId: 8,
       productName: "Bàn phím không dây Logitech MX Keys",
       productSlug: "logitech",
-      productThumbnail: "https://media-api-beta.thinkpro.vn/media/core/products/2022/1/15/mx-keys-1.png?w=700&h=700",
+      productThumbnail:
+        "https://media-api-beta.thinkpro.vn/media/core/products/2022/1/15/mx-keys-1.png?w=700&h=700",
       productPriceRange: [8000000.0],
       productVariants: [
         {
@@ -312,7 +315,8 @@ const products = {
       productId: 9,
       productName: "Máy chơi game Xbox S",
       productSlug: "xbox-s",
-      productThumbnail: "https://media-api-beta.thinkpro.vn/media/core/products/2022/3/9/XboxS_05.jpg?w=700&h=700",
+      productThumbnail:
+        "https://media-api-beta.thinkpro.vn/media/core/products/2022/3/9/XboxS_05.jpg?w=700&h=700",
       productPriceRange: [5000000.0],
       productVariants: [
         {
@@ -447,22 +451,85 @@ const products = {
   last: false,
 };
 
+const isLoading = false;
+const isError = false;
+
 function ClientHomeLatestProducts() {
+  const theme = useMantineTheme();
+
+  // const {
+  //   data: products,
+  //   isLoading,
+  //   isError,
+  // } = useGetAllApi(ProductConfigs.resourceUrl, ProductConfigs.resourceKey);
+
+  console.log(products);
+
+  let resultFragment;
+
+  if (isLoading) {
+    resultFragment = (
+      <Stack>
+        {Array(5)
+          .fill(0)
+          .map((_, index) => (
+            <Skeleton key={index} height={50} radius="md" />
+          ))}
+      </Stack>
+    );
+  }
+
+  if (isError) {
+    resultFragment = (
+      <Stack my={theme.spacing.xl} align="center" c={theme.colors.pink[6]}>
+        <AlertTriangle size={125} strokeWidth={1} />
+        <Text size="xl" w={500}>
+          Đã có lỗi xảy ra
+        </Text>
+      </Stack>
+    );
+  }
+
+  if (!products || products.totalElements === 0) {
+    resultFragment = (
+      <Stack my={theme.spacing.xl} align="center" c={theme.colors.pink[6]}>
+        <AlertTriangle size={125} strokeWidth={1} />
+        <Text size="xl" w={500}>
+          Không có sản phẩm
+        </Text>
+      </Stack>
+    );
+  }
+
+  if (products && products.totalElements > 0) {
+    resultFragment = (
+      <Grid>
+        {products.content.map((product, index) => (
+          <Grid.Col key={index} span={3}>
+            <ClientProductCart product={product} />
+          </Grid.Col>
+        ))}
+      </Grid>
+    );
+  }
+
   return (
     <div className="flex flex-col items-stretch gap-4">
       <div className="flex flex-wrap items-center justify-between">
-        <h2 className="text-[26px] text-[#f76707] leading-[1.35] font-bold">Sản phẩm mới nhất</h2>
-        <Button size="sm" icon={<List size={16} />} to={"/user"} className="bg-soft text-primary hover:bg-[#d0ebffa6]">
+        <h2 className="text-[26px] text-[#f76707] leading-[1.35] font-bold">
+          Sản phẩm mới nhất
+        </h2>
+        <Button
+          size="sm"
+          icon={<List size={16} />}
+          to={"/user"}
+          className="bg-soft text-primary hover:bg-[#d0ebffa6]"
+        >
           Xem tất cả
         </Button>
       </div>
-      <div className="grid grid-cols-4 m-[-8px]">
-        {products.content.map((product) => (
-          <div key={product.productId} className="p-2 flex-grow-0">
-            <ClientProductCart product={product} />
-          </div>
-        ))}
-      </div>
+
+      {resultFragment}
     </div>
   );
 }

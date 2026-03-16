@@ -34,7 +34,8 @@ function EmployeeUpdate() {
     handleFormSubmit,
   } = useEmployeeUpdateViewModel(id);
 
-  
+  if (!employee) return null;
+
   return (
     <Stack maw={800}>
       <CreateUpdateTitle
@@ -221,7 +222,7 @@ function EmployeeUpdate() {
 
             <Group justify="space-between" p="sm">
               <Button variant="default">Mặc định</Button>
-              <Button type="submit">Thêm</Button>
+              <Button type="submit">Cập nhật</Button>
             </Group>
           </Stack>
         </Paper>

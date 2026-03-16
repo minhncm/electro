@@ -2,14 +2,16 @@ import { Configs } from "~/types";
 import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class WarehouseConfigs extends Configs {
-  static managerPath = ManagerPath.PROPERTY;
-  static resourceUrl = ResourceUrl.PROPERTY;
-  static resourceKey = "properties";
-  static createTitle = "Thêm thuộc tính sản phẩm";
-  static updateTitle = "Cập nhật thuộc tính sản phẩm";
-  static manageTitle = "Quản lý thuộc tính sản phẩm";
+  static managerPath = ManagerPath.WAREHOUSE;
+  static resourceUrl = ResourceUrl.WAREHOUSE;
+  static resourceKey = "warehouses";
+  static createTitle = "Thêm nhà kho";
+  static updateTitle = "Cập nhật nhà kho";
+  static manageTitle = "Quản lý nhà kho";
 
   static manageTitleLinks = [
     {
@@ -83,8 +85,28 @@ class WarehouseConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    code: "",
+    name: "",
+    address: {
+      line: "",
+      provinceId: null,
+      districtId: null,
+    },
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    code: z.string(),
+    name: z
+      .string()
+      .min(2, MessageUtils.min(WarehouseConfigs.properties.name.label, 2)),
+    address: z.object({
+      line: z.string(),
+      provinceId: z.string(),
+      districtId: z.string(),
+    }),
+    status: z.string(),
+  });
 }
 
 export default WarehouseConfigs;

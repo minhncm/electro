@@ -11,6 +11,8 @@ import DocketReasonConfigs from "~/pages/Admin-docket-reason/DocketReasonConfigs
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function DocketReasonManage() {
   useResetManagePageState();
@@ -62,7 +64,14 @@ function DocketReasonManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={DocketReasonConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={DocketReasonConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={DocketReasonConfigs.resourceUrl}
+          resourceKey={DocketReasonConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -70,6 +79,8 @@ function DocketReasonManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={DocketReasonConfigs.resourceUrl}
+          resourceKey={DocketReasonConfigs.resourceKey}
           properties={DocketReasonConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

@@ -1,37 +1,34 @@
 import { Avatar, Highlight, Stack, Table } from "@mantine/core";
-import React from "react";
 import { QuestionMark } from "tabler-icons-react";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import FilterPanel from "~/components/FilterPanel";
 import ManageHeader from "~/components/ManageHeader";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
 import ManageMain from "~/components/ManageMain/ManageMain";
 import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
-import CategoryConfigs from "~/pages/Admin-category/CategoryConfigs";
-import DateUtils from "~/utils/DateUtils";
-import BrandConfigs from "../Admin-brand/BrandConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
+import CategoryConfigs from "~/pages/Admin-category/CategoryConfigs";
 import * as PageConfigs from "~/pages/PageConfig";
+import DateUtils from "~/utils/DateUtils";
 
 function CategoryManage() {
+  useResetManagePageState();
+
   const { isLoading, data: listResponse = PageConfigs.initialListResponse } =
-    useGetAllApi(BrandConfigs.resourceUrl, BrandConfigs.resourceKey);
-  console.log(listResponse);
+    useGetAllApi(CategoryConfigs.resourceUrl, CategoryConfigs.resourceKey);
 
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.slug}
-        </Highlight>
+        <Highlight size="sm">{entity.slug}</Highlight>
       </Table.Td>
       <Table.Td>
         <Avatar
@@ -115,7 +112,14 @@ function CategoryManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={CategoryConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={"Quản lý địa chỉ"} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={CategoryConfigs.resourceUrl}
+          resourceKey={CategoryConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -123,6 +127,8 @@ function CategoryManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={CategoryConfigs.resourceUrl}
+          resourceKey={CategoryConfigs.resourceKey}
           properties={CategoryConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />
@@ -133,7 +139,7 @@ function CategoryManage() {
         ></ManageTable>
       </ManageMain>
 
-      <ManagePagination />
+      <ManagePagination listResponse={listResponse} />
     </Stack>
   );
 }

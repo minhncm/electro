@@ -3,6 +3,8 @@ import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import WarehouseConfigs from "~/pages/Admin-warehouse/WarehouseConfigs";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class DocketReasonConfigs extends Configs {
   static managerPath = ManagerPath.DOCKET_REASON;
@@ -15,7 +17,7 @@ class DocketReasonConfigs extends Configs {
   static manageTitleLinks = WarehouseConfigs.manageTitleLinks;
 
   static _rawProperties = {
-    ...PageConfigs.getProperties(true, true),
+    ...PageConfigs.getProperties(true, true, true),
     name: {
       label: "Tên lý do phiếu NXK",
       isShowInTable: true,
@@ -27,8 +29,16 @@ class DocketReasonConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    name: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    name: z
+      .string()
+      .min(2, MessageUtils.min(DocketReasonConfigs.properties.name.label, 2)),
+    status: z.string(),
+  });
 }
 
 export default DocketReasonConfigs;

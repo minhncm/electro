@@ -91,7 +91,6 @@ function useUserCreateViewModel() {
       status: values.status,
       roleIds: values.roles.map((roleId) => Number(roleId)),
     };
-    console.log(data);
 
     createApi.mutate(data);
   });

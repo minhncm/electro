@@ -2,6 +2,8 @@ import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import { Configs } from "~/types";
 import * as PageConfigs from "~/pages/PageConfig";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class CustomerConfigs extends Configs {
   static managerPath = ManagerPath.CUSTOMER;
@@ -10,6 +12,8 @@ class CustomerConfigs extends Configs {
   static createTitle = "Thêm người dùng";
   static updateTitle = "Cập nhật người dùng";
   static manageTitle = "Quản lý người dùng";
+
+  static CUSTOMER_ROLE_ID = 3;
 
   static manageTitleLinks = [
     {
@@ -122,8 +126,56 @@ class CustomerConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    user: {
+      username: "",
+      password: "",
+      fullname: "",
+      email: "",
+      phone: "",
+      gender: "M" | "F",
+      address: {
+        line: "",
+        districtId: null,
+        provinceId: null,
+      },
+      avatar: "",
+      status: "1",
+      roles: [String(CustomerConfigs.CUSTOMER_ROLE_ID)],
+    },
+    customerGroupId: null,
+    customerResourceId: null,
+    customerStatusId: null,
+  };
+  static createUpdateFormSchema = z.object({
+    user: z.object({
+      username: z
+        .string()
+        .min(
+          2,
+          MessageUtils.min(
+            CustomerConfigs.properties["user.username"].label,
+            2,
+          ),
+        ),
+      password: z.string(),
+      fullname: z.string(),
+      email: z.string(),
+      phone: z.string(),
+      gender: z.string(),
+      address: z.object({
+        line: z.string(),
+        districtId: z.string(),
+        provinceId: z.string(),
+      }),
+      avatar: z.string(),
+      status: z.string(),
+      roles: z.array(z.string()).nonempty(),
+    }),
+    customerGroupId: z.string(),
+    customerResourceId: z.string(),
+    customerStatusId: z.string(),
+  });
 }
 
 export default CustomerConfigs;

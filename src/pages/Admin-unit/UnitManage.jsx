@@ -11,6 +11,8 @@ import UnitConfigs from "~/pages/Admin-unit/UnitConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function UnitManage() {
   useResetManagePageState();
@@ -61,7 +63,14 @@ function UnitManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={UnitConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={UnitConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={UnitConfigs.resourceUrl}
+          resourceKey={UnitConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -69,6 +78,8 @@ function UnitManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={UnitConfigs.resourceUrl}
+          resourceKey={UnitConfigs.resourceKey}
           properties={UnitConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

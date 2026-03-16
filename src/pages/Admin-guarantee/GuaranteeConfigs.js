@@ -3,6 +3,8 @@ import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import ProductConfigs from "~/pages/Admin-product/ProductConfigs";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class GuaranteeConfigs extends Configs {
   static managerPath = ManagerPath.GUARANTEE;
@@ -31,8 +33,18 @@ class GuaranteeConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    name: "",
+    description: "",
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    name: z
+      .string()
+      .min(2, MessageUtils.min(GuaranteeConfigs.properties.name.label, 2)),
+    description: z.string(),
+    status: z.string(),
+  });
 }
 
 export default GuaranteeConfigs;

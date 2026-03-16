@@ -11,26 +11,25 @@ import WarehouseConfigs from "~/pages/Admin-warehouse/WarehouseConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function WarehouseManage() {
   useResetManagePageState();
 
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(WarehouseConfigs.resourceUrl, WarehouseConfigs.resourceKey);
+
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.code}
-        </Highlight>
+        <Highlight size="sm">{entity.code}</Highlight>
       </Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
         <EnableStatusBadge status={entity.status} />
@@ -86,7 +85,14 @@ function WarehouseManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={WarehouseConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={WarehouseConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={WarehouseConfigs.resourceUrl}
+          resourceKey={WarehouseConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -94,6 +100,8 @@ function WarehouseManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={WarehouseConfigs.resourceUrl}
+          resourceKey={WarehouseConfigs.resourceKey}
           properties={WarehouseConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

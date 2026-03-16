@@ -23,6 +23,8 @@ import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import ProductConfigs from "~/pages/Admin-product/ProductConfigs";
 import DateUtils from "~/utils/DateUtils";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function ProductManage() {
   useResetManagePageState();
@@ -284,7 +286,14 @@ function ProductManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={ProductConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={ProductConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={ProductConfigs.resourceUrl}
+          resourceKey={ProductConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -292,6 +301,8 @@ function ProductManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={ProductConfigs.resourceUrl}
+          resourceKey={ProductConfigs.resourceKey}
           properties={ProductConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

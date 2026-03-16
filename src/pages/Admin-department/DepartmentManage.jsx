@@ -20,17 +20,13 @@ function DepartmentManage() {
   const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
     useGetAllApi(DepartmentConfigs.resourceUrl, DepartmentConfigs.resourceKey);
 
-  console.log(listResponse);
-
   const ShowedPropertiesFragment = ({ entity }) => (
     <>
       <Table.Td>{entity.id}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
       <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
       <Table.Td>
-        <Highlight highlightColor="blue" size="sm">
-          {entity.name}
-        </Highlight>
+        <Highlight size="sm">{entity.name}</Highlight>
       </Table.Td>
       <Table.Td>
         <ActiveStatusBadge status={entity.status} />

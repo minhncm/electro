@@ -3,6 +3,8 @@ import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import ProductConfigs from "~/pages/Admin-product/ProductConfigs";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class CategoryConfigs extends Configs {
   static managerPath = ManagerPath.CATEGORY;
@@ -47,8 +49,24 @@ class CategoryConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    name: "",
+    slug: "",
+    description: "",
+    thumbnail: "",
+    status: "1",
+    parentCategoryId: null,
+  };
+  static createUpdateFormSchema = z.object({
+    name: z
+      .string()
+      .min(2, MessageUtils.min(CategoryConfigs.properties.name.label, 2)),
+    slug: z.string(),
+    description: z.string(),
+    thumbnail: z.string(),
+    status: z.string(),
+    parentCategoryId: z.string().nullable(),
+  });
 }
 
 export default CategoryConfigs;

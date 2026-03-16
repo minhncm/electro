@@ -11,6 +11,8 @@ import DestinationConfigs from "~/pages/Admin-destination/DestinationConfigs";
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function DestinationManage() {
   useResetManagePageState();
@@ -96,7 +98,14 @@ function DestinationManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={DestinationConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={DestinationConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={DestinationConfigs.resourceUrl}
+          resourceKey={DestinationConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -104,6 +113,8 @@ function DestinationManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={DestinationConfigs.resourceUrl}
+          resourceKey={DestinationConfigs.resourceKey}
           properties={DestinationConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

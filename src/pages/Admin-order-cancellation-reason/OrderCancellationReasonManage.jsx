@@ -11,6 +11,8 @@ import OrderCancellationReasonConfigs from "~/pages/Admin-order-cancellation-rea
 import useGetAllApi from "~/hooks/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
 
 function OrderCancellationReasonManage() {
   useResetManagePageState();
@@ -78,7 +80,14 @@ function OrderCancellationReasonManage() {
   );
   return (
     <Stack>
-      <ManageHeader title={OrderCancellationReasonConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={OrderCancellationReasonConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={OrderCancellationReasonConfigs.resourceUrl}
+          resourceKey={OrderCancellationReasonConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />
@@ -86,6 +95,8 @@ function OrderCancellationReasonManage() {
       <ManageMain listResponse={listResponse} isLoading={isLoading}>
         <ManageTable
           listResponse={listResponse}
+          resourceUrl={OrderCancellationReasonConfigs.resourceUrl}
+          resourceKey={OrderCancellationReasonConfigs.resourceKey}
           properties={OrderCancellationReasonConfigs.properties}
           showedPropertiesFragment={(entity) => (
             <ShowedPropertiesFragment entity={entity} />

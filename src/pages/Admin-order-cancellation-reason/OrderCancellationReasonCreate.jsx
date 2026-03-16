@@ -1,9 +1,22 @@
-import { Button, Divider, Grid, Group, Paper, Select, Stack, Textarea, TextInput } from "@mantine/core";
+import {
+  Button,
+  Divider,
+  Grid,
+  Group,
+  Paper,
+  Select,
+  Stack,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
 import OrderCancellationReasonConfigs from "~/pages/Admin-order-cancellation-reason/OrderCancellationReasonConfigs";
+import useOrderCancellationReasonCreateViewModel from "./OrderCancellationReasonCreate.vm";
 
 function OrderCancellationReasonCreate() {
+  const { form, statusSelectList, handleFormSubmit } =
+    useOrderCancellationReasonCreateViewModel();
   return (
     <Stack maw={800}>
       <CreateUpdateTitle
@@ -11,24 +24,42 @@ function OrderCancellationReasonCreate() {
         title={OrderCancellationReasonConfigs.createTitle}
       />
       <DefaultPropertyPanel />
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <Paper shadow="xs">
           <Stack gap={0}>
             <Grid p="sm">
               <Grid.Col>
-                <TextInput required label={OrderCancellationReasonConfigs.properties.name.label} />
+                <TextInput
+                  key={form.key("name")}
+                  required
+                  label={OrderCancellationReasonConfigs.properties.name.label}
+                  {...form.getInputProps("name")}
+                />
               </Grid.Col>
               <Grid.Col>
-                <Textarea label={OrderCancellationReasonConfigs.properties.note.label} />
+                <Textarea
+                  key={form.key("note")}
+                  label={OrderCancellationReasonConfigs.properties.note.label}
+                  {...form.getInputProps("note")}
+                />
               </Grid.Col>
               <Grid.Col span={6}>
-                <Select required label={OrderCancellationReasonConfigs.properties.status.label} placeholder="--" />
+                <Select
+                  key={form.key("status")}
+                  required
+                  label={OrderCancellationReasonConfigs.properties.status.label}
+                  placeholder="--"
+                  {...form.getInputProps("status")}
+                  data={statusSelectList}
+                />
               </Grid.Col>
             </Grid>
 
             <Divider mt="xs" />
             <Group justify="space-between" p="sm">
-              <Button variant="default">Mặc định</Button>
+              <Button variant="default" onClick={form.reset}>
+                Mặc định
+              </Button>
               <Button type="submit">Thêm</Button>
             </Group>
           </Stack>

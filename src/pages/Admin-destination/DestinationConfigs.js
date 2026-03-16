@@ -3,6 +3,7 @@ import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import { Configs } from "~/types";
 import WarehouseConfigs from "~/pages/Admin-warehouse/WarehouseConfigs";
+import z from "zod";
 
 class DestinationConfigs extends Configs {
   static managerPath = ManagerPath.DESTINATION;
@@ -55,8 +56,28 @@ class DestinationConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    contactFullname: "",
+    contactEmail: "",
+    contactPhone: "",
+    address: {
+      line: "",
+      provinceId: null,
+      districtId: null,
+    },
+    status: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    contactFullname: z.string(),
+    contactEmail: z.string(),
+    contactPhone: z.string(),
+    address: z.object({
+      line: z.string(),
+      provinceId: z.string(),
+      districtId: z.string(),
+    }),
+    status: z.string(),
+  });
 }
 
 export default DestinationConfigs;
