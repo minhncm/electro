@@ -23,7 +23,7 @@ public class Destination extends BaseEntity {
     @Column(name = "contact_phone")
     private String contactPhone;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 

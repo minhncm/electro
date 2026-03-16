@@ -10,5 +10,5 @@ import lombok.EqualsAndHashCode;
 public class OfficeResponse extends BaseResponse {
     private String name;
     private AddressResponse address;
-    private String status;
+    private Integer status;
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "employee")
 public class Employee extends BaseEntity {
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

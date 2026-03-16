@@ -8,5 +8,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class JobLevelResponse extends BaseResponse {
     private String name;
-    private String status;
+    private Integer status;
 }

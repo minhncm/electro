@@ -6,7 +6,7 @@ import lombok.Data;
 public class CustomerResourceRequest {
     private String code;
     private String name;
-    private String Description;
+    private String description;
     private String color;
     private Integer status;
 }

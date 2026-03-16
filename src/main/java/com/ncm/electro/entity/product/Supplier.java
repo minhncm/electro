@@ -48,7 +48,7 @@ public class Supplier extends BaseEntity {
     @Column(name = "website")
     private String website;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 

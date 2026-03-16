@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 public class CustomerStatusResponse extends BaseResponse {
     private String code;
     private String name;
-    private String Description;
+    private String description;
     private String color;
     private Integer status;
 }

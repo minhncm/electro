@@ -45,7 +45,7 @@ public class User extends BaseEntity {
     @Column(name = "gender", nullable = false, columnDefinition = "CHAR")
     private String gender;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
@@ -69,10 +69,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Cart> carts = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Employee employee;
 
     @OneToMany(mappedBy = "user")
