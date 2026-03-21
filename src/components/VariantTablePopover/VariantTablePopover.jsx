@@ -1,4 +1,12 @@
-import { Button, CloseButton, Group, Popover, Table, Text, useMantineTheme } from "@mantine/core";
+import {
+  Button,
+  CloseButton,
+  Group,
+  Popover,
+  Table,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
 import { useState } from "react";
 import MiscUtils from "~/utils/MiscUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
@@ -23,7 +31,12 @@ function VariantTablePopover({ variants, productProperties }) {
       shadow="md"
     >
       <Popover.Target>
-        <Button size="xs" color="teal" compact onClick={() => setOpened((o) => !o)}>
+        <Button
+          size="xs"
+          color="teal"
+          compact
+          onClick={() => setOpened((o) => !o)}
+        >
           {variants.length + " phiên bản"}
         </Button>
       </Popover.Target>
@@ -34,13 +47,25 @@ function VariantTablePopover({ variants, productProperties }) {
           <CloseButton onClick={() => setOpened(false)} />
         </Group>
 
-        <Table horizontalSpacing="sm" verticalSpacing="sm" highlightOnHover striped>
+        <Table
+          horizontalSpacing="sm"
+          verticalSpacing="sm"
+          highlightOnHover
+          striped
+        >
           <Table.Thead>
             <Table.Tr>
               <Table.Th>#</Table.Th>
               {productProperties &&
                 productProperties.content.map((property, index) => (
-                  <Table.Th key={index} color={theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 5 : 7]}>
+                  <Table.Th
+                    key={index}
+                    color={
+                      theme.colors[theme.primaryColor][
+                        theme.colorScheme === "dark" ? 5 : 7
+                      ]
+                    }
+                  >
                     {property.name}
                   </Table.Th>
                 ))}

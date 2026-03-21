@@ -34,12 +34,6 @@ function InventoryManage() {
   const handleTransactionsAnchor = (productName, transactions) => {
     modals.openModal({
       size: 1200,
-      overlayColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[9]
-          : theme.colors.gray[2],
-      overlayOpacity: 0.55,
-      overlayBlur: 3,
       title: (
         <strong>
           Lịch sử nhập xuất của sản phẩm &quot;{productName}&quot;
@@ -74,8 +68,8 @@ function InventoryManage() {
       <Table.Td>{entity.product.supplier?.displayName}</Table.Td>
       <Table.Td>{entity.inventory}</Table.Td>
       <Table.Td>{entity.waitingForDelivery}</Table.Td>
-      <Table.Td>{entity.canBeSold}</Table.Td>
-      <Table.Td>{entity.areComing}</Table.Td>
+      <Table.Td>{entity.available}</Table.Td>
+      <Table.Td>{entity.incoming}</Table.Td>
       <Table.Td>
         <ActionIcon
           color="blue"

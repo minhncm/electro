@@ -23,57 +23,22 @@ import {
 import Button from "../common/Button";
 import Tooltip from "../common/Tooltip";
 import Badge from "../common/Bagde";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "../common/DropdownMenu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "../common/DropdownMenu";
 import Popover from "../common/Popover";
 import CategoryHeader from "./CategoryHeader";
-
-const categories = {
-  content: [
-    {
-      categoryName: "Laptop",
-      categorySlug: "laptop",
-      categoryChildren: [],
-    },
-    {
-      categoryName: "Loa",
-      categorySlug: "loa",
-      categoryChildren: [],
-    },
-    {
-      categoryName: "Bàn phím",
-      categorySlug: "ban-phim",
-      categoryChildren: [],
-    },
-    {
-      categoryName: "Máy chơi game",
-      categorySlug: "may-choi-game",
-      categoryChildren: [],
-    },
-    {
-      categoryName: "Chuột",
-      categorySlug: "chuot",
-      categoryChildren: [],
-    },
-    {
-      categoryName: "CPU",
-      categorySlug: "cpu",
-      categoryChildren: [],
-    },
-    {
-      categoryName: "PC",
-      categorySlug: "pc",
-      categoryChildren: [],
-    },
-    {
-      categoryName: "Balo",
-      categorySlug: "balo",
-      categoryChildren: [],
-    },
-  ],
-  totalElements: 8,
-};
+import useGetAllApi from "~/hooks/use-get-all-api";
+import ResourceUrl from "~/constants/ResourceURL";
 
 function ClientHeader() {
+  const { data: categories } = useGetAllApi(ResourceUrl.CLIENT_CATEGORY);
+
+  if (!categories) return null;
+
   const user = true;
   return (
     <header className="bg-header mb-8 shadow-[0px_3px_8px_-7px]">
@@ -144,38 +109,78 @@ function ClientHeader() {
                 <DropdownMenuContent>
                   {user && (
                     <>
-                      <DropdownMenuItem component={Link} to={"/user"} icon={<User size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"/user"}
+                        icon={<User size={14} />}
+                      >
                         Tài khoản
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"/user/setting"} icon={<Settings size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"/user/setting"}
+                        icon={<Settings size={14} />}
+                      >
                         Thiết đặt
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"/user/review"} icon={<Star size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"/user/review"}
+                        icon={<Star size={14} />}
+                      >
                         Đáng giá sản phẩm
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"/user/wishlist"} icon={<Heart size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"/user/wishlist"}
+                        icon={<Heart size={14} />}
+                      >
                         Sản phẩm yêu thích
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"/user/reward"} icon={<Award size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"/user/reward"}
+                        icon={<Award size={14} />}
+                      >
                         Điểm thưởng
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"/user/preorder"} icon={<Alarm size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"/user/preorder"}
+                        icon={<Alarm size={14} />}
+                      >
                         Đặt trước sản phẩm
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"/user/chat"} icon={<MessageCircle size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"/user/chat"}
+                        icon={<MessageCircle size={14} />}
+                      >
                         Yêu cầu tư vấn
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"/user"} icon={<Logout size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"/user"}
+                        icon={<Logout size={14} />}
+                      >
                         Đăng xuất
                       </DropdownMenuItem>
                     </>
                   )}
                   {!user && (
                     <>
-                      <DropdownMenuItem component={Link} to={"user/"} icon={<Login size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"user/"}
+                        icon={<Login size={14} />}
+                      >
                         Đăng nhập
                       </DropdownMenuItem>
-                      <DropdownMenuItem component={Link} to={"user/"} icon={<Fingerprint size={14} />}>
+                      <DropdownMenuItem
+                        component={Link}
+                        to={"user/"}
+                        icon={<Fingerprint size={14} />}
+                      >
                         Đăng ký
                       </DropdownMenuItem>
                     </>
@@ -206,18 +211,28 @@ function ClientHeader() {
                 Sản phẩm mới
               </Button>
 
-              <Button variant="text" size="sm" className="text-c-green hover:bg-c-green-hover">
+              <Button
+                variant="text"
+                size="sm"
+                className="text-c-green hover:bg-c-green-hover"
+              >
                 Sản phẩm xu hướng
               </Button>
 
-              <Button variant="text" size="sm" className="text-c-pink hover:bg-c-pink-hover">
+              <Button
+                variant="text"
+                size="sm"
+                className="text-c-pink hover:bg-c-pink-hover"
+              >
                 Khuyến mãi
               </Button>
             </div>
 
             <div className="flex flex-row flex-wrap items-center justify-start gap-2.5">
               <Badge>HOT</Badge>
-              <span className="text-sm text-[#868e96]">Miễn phí giao hàng cho đơn hàng trên 1 triệu đồng</span>
+              <span className="text-sm text-[#868e96]">
+                Miễn phí giao hàng cho đơn hàng trên 1 triệu đồng
+              </span>
             </div>
           </div>
         </div>

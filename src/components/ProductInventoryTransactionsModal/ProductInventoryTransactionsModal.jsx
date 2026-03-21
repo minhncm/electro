@@ -25,7 +25,9 @@ function ProductInventoryTransactionsModal({ transactions }) {
             <Table.Td>
               <DocketTypeBadge type={transaction.docket.type} />
             </Table.Td>
-            <Table.Td>{DateUtils.formatterDate(transaction.docket.createdAt)}</Table.Td>
+            <Table.Td>
+              {DateUtils.formatterDate(transaction.docket.createdAt)}
+            </Table.Td>
             <Table.Td>{transaction.docket.reason.name}</Table.Td>
             <Table.Td>{transaction.docket.purchaseOrder?.code}</Table.Td>
             <Table.Td>{transaction.docket.order?.code}</Table.Td>

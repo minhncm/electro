@@ -463,8 +463,6 @@ function ClientHomeLatestProducts() {
   //   isError,
   // } = useGetAllApi(ProductConfigs.resourceUrl, ProductConfigs.resourceKey);
 
-  console.log(products);
-
   let resultFragment;
 
   if (isLoading) {
