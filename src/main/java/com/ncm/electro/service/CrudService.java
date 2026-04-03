@@ -4,7 +4,7 @@ import com.ncm.electro.constant.FieldName;
 import com.ncm.electro.dto.ListResponse;
 import com.ncm.electro.exception.ResourceNotFoundException;
 import com.ncm.electro.mapper.GenericMapper;
-import com.ncm.electro.utils.SearchUtil;
+import com.ncm.electro.specification.SearchSpecification;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,7 +50,7 @@ public interface CrudService<ID, I, O> {
                                            GenericMapper<E, I, O> mapper) {
         Specification<E> sortable = RSQLJPASupport.toSort(sort);
         Specification<E> filterable = RSQLJPASupport.toSpecification(filter);
-        Specification<E> searchable = SearchUtil.parse(search, searchFields);
+        Specification<E> searchable = SearchSpecification.parse(search, searchFields);
         Pageable pageable = all ? Pageable.unpaged() : PageRequest.of(page - 1, size);
         Page<E> entities = repository.findAll(sortable.and(filterable).and(searchable), pageable);
         List<O> responses = mapper.entityToResponse(entities.getContent());

@@ -20,7 +20,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Column(name = "rating_score", nullable = false, columnDefinition = "TINYINT")
+    @Column(name = "rating_score", nullable = false)
     private Integer ratingScore;
 
     @Lob

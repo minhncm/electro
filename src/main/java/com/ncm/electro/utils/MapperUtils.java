@@ -9,7 +9,10 @@ import com.ncm.electro.entity.customer.CustomerGroup;
 import com.ncm.electro.entity.customer.CustomerResource;
 import com.ncm.electro.entity.customer.CustomerStatus;
 import com.ncm.electro.entity.employee.*;
+import com.ncm.electro.entity.inventory.Docket;
+import com.ncm.electro.entity.order.Order;
 import com.ncm.electro.entity.product.Category;
+import com.ncm.electro.entity.product.Variant;
 import com.ncm.electro.exception.ResourceNotFoundException;
 import com.ncm.electro.repository.address.DistrictRepository;
 import com.ncm.electro.repository.address.ProvinceRepository;
@@ -63,5 +66,6 @@ public abstract class MapperUtils {
     public abstract CustomerResource mapToCustomerResource(Long id);
     public abstract CustomerStatus mapToCustomerStatus(Long id);
     public abstract Category mapToCategory(Long id);
+    public abstract Variant mapToVariant(Long id);
 
 }

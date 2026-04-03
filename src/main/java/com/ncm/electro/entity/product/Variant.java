@@ -8,13 +8,9 @@ import com.ncm.electro.utils.JsonNodeConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import tools.jackson.databind.JsonNode;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 @Getter

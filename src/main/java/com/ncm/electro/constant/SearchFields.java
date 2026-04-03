@@ -359,4 +359,11 @@ public final class SearchFields {
             "code",
             "formula"
     );
+
+    public static final List<String> CLIENT_PRODUCT = List.of(
+            "name",
+            "slug",
+            "category.name",
+            "brand.name"
+    );
 }
