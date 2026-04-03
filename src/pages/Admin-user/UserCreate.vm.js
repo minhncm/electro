@@ -1,12 +1,12 @@
 import { useForm } from "@mantine/form";
 import UserConfigs from "./UserConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import ProvinceConfigs from "../Admin-province/ProvinceConfigs";
 import DistrictConfigs from "../Admin-district/DistrictConfigs";
 import { useState } from "react";
 import RoleConfigs from "../Admin-role/RoleConfigs";
-import useCreateApi from "~/hooks/use-create-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
 
 function useUserCreateViewModel() {
   const form = useForm({

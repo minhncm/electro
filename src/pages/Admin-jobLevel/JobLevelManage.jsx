@@ -8,7 +8,7 @@ import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import EnableStatusBadge from "~/components/EnableStatusBadge";
 import JobLevelConfigs from "~/pages/Admin-jobLevel/JobLevelConfigs";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";

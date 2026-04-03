@@ -1,8 +1,8 @@
 import { useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useState } from "react";
-import useCreateApi from "~/hooks/use-create-api";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import CustomerGroupConfigs from "../Admin-customer-group/CustomerGroupConfigs";
 import CustomerResourceConfigs from "../Admin-customer-resource/CustomerResourceConfigs";
 import CustomerStatusConfigs from "../Admin-customer-status/CustomerStatusConfigs";

@@ -1,9 +1,9 @@
 import { useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
-import useUpdateApi from "~/hooks/use-update-api";
+import useUpdateApi from "~/hooks/admin/use-update-api";
 import DepartmentConfigs from "./DepartmentConfigs";
 import { useState } from "react";
-import useGetByIdApi from "~/hooks/use-get-by-id-api";
+import useGetByIdApi from "~/hooks/admin/use-get-by-id-api";
 import MiscUtils from "~/utils/MiscUtils";
 
 function useDepartmentUpdateViewModel(id) {

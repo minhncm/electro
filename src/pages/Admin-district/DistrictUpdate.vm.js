@@ -2,11 +2,11 @@ import { useForm } from "@mantine/form";
 import DistrictConfigs from "./DistrictConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useState } from "react";
-import useUpdateApi from "~/hooks/use-update-api";
-import useGetByIdApi from "~/hooks/use-get-by-id-api";
+import useUpdateApi from "~/hooks/admin/use-update-api";
+import useGetByIdApi from "~/hooks/admin/use-get-by-id-api";
 import MiscUtils from "~/utils/MiscUtils";
 import ProvinceConfigs from "../Admin-province/ProvinceConfigs";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 
 function useDistrictUpdateViewModel(id) {
   const form = useForm({

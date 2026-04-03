@@ -8,7 +8,7 @@ import OfficeConfigs from "./OfficeConfigs";
 import ManagePagination from "~/components/ManagePagination";
 import DateUtils from "~/utils/DateUtils";
 import ActiveStatusBadge from "~/components/ActiveStatusBadge";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";

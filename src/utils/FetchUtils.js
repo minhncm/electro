@@ -41,6 +41,7 @@ httpRequest.interceptors.response.use(
 );
 
 class FetchUtils {
+
   static async getAll(url, params = {}) {
     return await httpRequest.get(url, { params });
   }

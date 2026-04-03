@@ -18,7 +18,7 @@ import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import VariantTablePopover from "~/components/VariantTablePopover";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import ProductConfigs from "~/pages/Admin-product/ProductConfigs";

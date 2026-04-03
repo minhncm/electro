@@ -8,7 +8,7 @@ import ManageTable from "~/components/ManageTable";
 import SearchPanel from "~/components/SearchPanel";
 import DateUtils from "~/utils/DateUtils";
 import GuaranteeConfigs from "~/pages/Admin-guarantee/GuaranteeConfigs";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
 import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";

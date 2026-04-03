@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
-import Container from "~/components/Container/Container";
-import ElectroLogo from "~/components/ElectroLogo/ElectroLogo";
-import TextInput from "~/components/common/TextInput";
+import { TextInput } from "@mantine/core";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Alarm,
   Award,
@@ -20,22 +19,32 @@ import {
   User,
   UserCircle,
 } from "tabler-icons-react";
-import Button from "../common/Button";
-import Tooltip from "../common/Tooltip";
+import Container from "~/components/Container/Container";
+import ElectroLogo from "~/components/ElectroLogo/ElectroLogo";
+import { useGetAllCategories } from "~/hooks/client/use-category-api";
 import Badge from "../common/Bagde";
+import Button from "../common/Button";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "../common/DropdownMenu";
 import Popover from "../common/Popover";
+import Tooltip from "../common/Tooltip";
 import CategoryHeader from "./CategoryHeader";
-import useGetAllApi from "~/hooks/use-get-all-api";
-import ResourceUrl from "~/constants/ResourceURL";
 
 function ClientHeader() {
-  const { data: categories } = useGetAllApi(ResourceUrl.CLIENT_CATEGORY);
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+
+  const { data: categories } = useGetAllCategories();
+
+  const handleSearchInput = (event) => {
+    if (event.key === "Enter" && search.trim() !== "") {
+      navigate("/search?q=" + search.trim());
+    }
+  };
 
   if (!categories) return null;
 
@@ -50,10 +59,14 @@ function ClientHeader() {
             </Link>
 
             <TextInput
-              icon={<Search size={16} />}
+              leftSection={<Search size={16} />}
               placeholder="Bạn tìm gì..."
-              width={600}
-              className="bg-surface focus:border-primary"
+              w={600}
+              size="md"
+              radius="md"
+              value={search || ""}
+              onChange={(event) => setSearch(event.currentTarget.value)}
+              onKeyDown={handleSearchInput}
             />
 
             <div className="flex flex-wrap items-center justify-start gap-[10px]">

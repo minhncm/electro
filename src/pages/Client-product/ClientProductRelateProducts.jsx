@@ -1,4 +1,5 @@
 import { Grid, Group, Stack, Title } from "@mantine/core";
+import React from "react";
 import { CircleSquare } from "tabler-icons-react";
 import ClientProductCart from "~/components/ClientProductCard/ClientProductCard";
 
@@ -10,8 +11,8 @@ function ClientproductRelatedProducts({ product }) {
         <Title order={2}>Sản phẩm liên quan</Title>
       </Group>
       <Grid>
-        {product.productRelatedProducts.map((product) => (
-          <Grid.Col key={product.productId} span={3}>
+        {product.relateProducts.map((product) => (
+          <Grid.Col key={product.id} span={3}>
             <ClientProductCart product={product} />
           </Grid.Col>
         ))}
@@ -20,4 +21,4 @@ function ClientproductRelatedProducts({ product }) {
   );
 }
 
-export default ClientproductRelatedProducts;
+export default React.memo(ClientproductRelatedProducts);

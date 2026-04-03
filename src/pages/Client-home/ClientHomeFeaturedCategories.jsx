@@ -1,58 +1,12 @@
 import { Link } from "react-router-dom";
 import { List } from "tabler-icons-react";
 import Button from "~/components/common/Button";
-import ResourceUrl from "~/constants/ResourceURL";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import { useGetAllCategories } from "~/hooks/client/use-category-api";
 import { categorySlugIconMap } from "~/pages/PageConfig";
 
-// const categories = {
-//   content: [
-//     {
-//       categoryName: "Laptop",
-//       categorySlug: "laptop",
-//       categoryChildren: [],
-//     },
-//     {
-//       categoryName: "Loa",
-//       categorySlug: "loa",
-//       categoryChildren: [],
-//     },
-//     {
-//       categoryName: "Bàn phím",
-//       categorySlug: "ban-phim",
-//       categoryChildren: [],
-//     },
-//     {
-//       categoryName: "Máy chơi game",
-//       categorySlug: "may-choi-game",
-//       categoryChildren: [],
-//     },
-//     {
-//       categoryName: "Chuột",
-//       categorySlug: "chuot",
-//       categoryChildren: [],
-//     },
-//     {
-//       categoryName: "CPU",
-//       categorySlug: "cpu",
-//       categoryChildren: [],
-//     },
-//     {
-//       categoryName: "PC",
-//       categorySlug: "pc",
-//       categoryChildren: [],
-//     },
-//     {
-//       categoryName: "Balo",
-//       categorySlug: "balo",
-//       categoryChildren: [],
-//     },
-//   ],
-//   totalElements: 8,
-// };
-
 function ClientHomeFeaturedCategories() {
-  const { data: categories } = useGetAllApi(ResourceUrl.CLIENT_CATEGORY);
+  const { data: categories } = useGetAllCategories();
+  console.log(222);
 
   if (!categories) return null;
 

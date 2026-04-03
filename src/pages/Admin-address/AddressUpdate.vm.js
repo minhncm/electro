@@ -3,10 +3,10 @@ import AddressConfigs from "~/pages/Admin-address/AddressConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useState } from "react";
 import ProvinceConfigs from "~/pages/Admin-province/ProvinceConfigs";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import DistrictConfigs from "~/pages/Admin-district/DistrictConfigs";
-import useUpdateApi from "~/hooks/use-update-api";
-import useGetByIdApi from "~/hooks/use-get-by-id-api";
+import useUpdateApi from "~/hooks/admin/use-update-api";
+import useGetByIdApi from "~/hooks/admin/use-get-by-id-api";
 import MiscUtils from "~/utils/MiscUtils";
 
 function useAddressUpdateViewModel(id) {
@@ -85,7 +85,7 @@ function useAddressUpdateViewModel(id) {
         district: Number(formValues.districtId) || null,
         ward: Number(formValues.wardId) || null,
       };
-      
+
       updateApi.mutate(data);
     }
   });

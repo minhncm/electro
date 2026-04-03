@@ -2,9 +2,9 @@ import { useForm } from "@mantine/form";
 import CategoryConfigs from "./CategoryConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
 import * as PageConfigs from "~/pages/PageConfig";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import { useState } from "react";
-import useCreateApi from "~/hooks/use-create-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
 
 function useCategoryCreateViewModel() {
   const form = useForm({
@@ -41,7 +41,7 @@ function useCategoryCreateViewModel() {
       description: values.description,
       thumbnail: values.thumbnail,
       status: Number(values.status),
-      parentCategoryId: Number(values.parentCategoryId),
+      parentCategoryId: Number(values.parentCategoryId) || null,
     };
 
     createApi.mutate(data);

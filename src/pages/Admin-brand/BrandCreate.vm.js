@@ -2,7 +2,7 @@ import { useForm } from "@mantine/form";
 import BrandConfigs from "./BrandConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
 import * as PageConfigs from "~/pages/PageConfig";
-import useCreateApi from "~/hooks/use-create-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
 
 function useBrandCreateViewModel() {
   const form = useForm({

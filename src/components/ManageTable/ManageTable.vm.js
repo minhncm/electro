@@ -1,7 +1,7 @@
 import { Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import EntityDetailTable from "~/components/EntityDetailTable";
-import useDeleteByIdApi from "~/hooks/use-delete-by-id-api";
+import useDeleteByIdApi from "~/hooks/admin/use-delete-by-id-api";
 import useAppStore from "~/stores/use-app-store";
 
 function useManageTableViewModel({

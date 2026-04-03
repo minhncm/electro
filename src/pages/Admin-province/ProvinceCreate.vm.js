@@ -1,7 +1,7 @@
 import { useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
 import ProvinceConfigs from "~/pages/Admin-province/ProvinceConfigs";
-import useCreateApi from "~/hooks/use-create-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
 
 function useProvinceCreateViewModel() {
   const form = useForm({

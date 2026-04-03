@@ -2,9 +2,9 @@ import { useForm } from "@mantine/form";
 import ProvinceConfigs from "./ProvinceConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useState } from "react";
-import useGetByIdApi from "~/hooks/use-get-by-id-api";
+import useGetByIdApi from "~/hooks/admin/use-get-by-id-api";
 import MiscUtils from "~/utils/MiscUtils";
-import useUpdateApi from "~/hooks/use-update-api";
+import useUpdateApi from "~/hooks/admin/use-update-api";
 
 function useProvinceUpdateViewModel(id) {
   const form = useForm({

@@ -1,6 +1,6 @@
 import { useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
-import useCreateApi from "~/hooks/use-create-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
 import * as PageConfigs from "~/pages/PageConfig";
 import UnitConfigs from "./UnitConfigs";
 

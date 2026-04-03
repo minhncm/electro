@@ -40,20 +40,22 @@ function ClientProductIntro({ product }) {
           <Anchor component={Link} to={"/"}>
             Trang chủ
           </Anchor>
-          {product.productCategory &&
-            MiscUtils.makeCaterogyBreadcrumbs(product.productCategory).map((category) => (
-              <Anchor component={Link} to={`/category/${category.categorySlug}`}>
-                {category.categoryName}
-              </Anchor>
-            ))}
-          <Text c="dimmed">{product.productName}</Text>
+          {product.category &&
+            MiscUtils.makeCaterogyBreadcrumbs(product.category).map(
+              (category) => (
+                <Anchor component={Link} to={`/category/${category.slug}`}>
+                  {category.name}
+                </Anchor>
+              ),
+            )}
+          <Text c="dimmed">{product.name}</Text>
         </Breadcrumbs>
 
         <Grid gutter="lg">
           <Grid.Col span={6}>
-            {product.productImages.length > 0 ? (
+            {product.images.length > 0 ? (
               <ClientCarousel>
-                {product.productImages.map((image) => (
+                {product.images.map((image) => (
                   <Image
                     key={image.id}
                     radius="md"
@@ -83,62 +85,79 @@ function ClientProductIntro({ product }) {
           <Grid.Col span={6}>
             <Stack gap="lg">
               <Stack gap={2} align="flex-start">
-                {!product.productSaleable && (
+                {!product.saleable && (
                   <Badge color="red" variant="filled" mb={5}>
                     Hết hàng
                   </Badge>
                 )}
-                {product.productBrand && (
+                {product.brand && (
                   <Group gap={5}>
                     <Text size="sm">Thương hiệu: </Text>
-                    <Anchor size="sm" component={Link} to={`/brand/${product.productBrand.brandId}`}>
-                      {product.productBrand.brandName}
+                    <Anchor
+                      size="sm"
+                      component={Link}
+                      to={`/brand/${product.brand.id}`}
+                    >
+                      {product.brand.name}
                     </Anchor>
                   </Group>
                 )}
                 <Text style={{ fontSize: 26 }} fw={500}>
-                  {product.productName}
+                  {product.name}
                 </Text>
 
                 <Group mt={7.5} gap="lg">
                   <Group gap="xs">
-                    <ReviewStar score={product.productAverageRatingScore} />
-                    <Text size="sm">{product.productCountReviews} đánh giá</Text>
+                    <ReviewStar score={product.averageRatingScore} />
+                    <Text size="sm">{product.countReviews} đánh giá</Text>
                   </Group>
 
                   {/* TODO: Doanh số sản phẩm */}
-                  {/*<Group spacing={5}>*/}
-                  {/*  <ShoppingCart size={18} strokeWidth={1.5} color={theme.colors.teal[7]}/>*/}
-                  {/*  <Text size="sm" color="teal">120 đã mua</Text>*/}
-                  {/*</Group>*/}
+                  <Group spacing={5}>
+                    <ShoppingCart
+                      size={18}
+                      strokeWidth={1.5}
+                      color={theme.colors.teal[7]}
+                    />
+                    <Text size="sm" color="teal">
+                      120 đã mua
+                    </Text>
+                  </Group>
                 </Group>
               </Stack>
 
-              {product.productShortDescription && <Text c="dimmed">{product.productShortDescription}</Text>}
+              {product.shortDescription && (
+                <Text c="dimmed">{product.shortDescription}</Text>
+              )}
 
               <Box
                 style={{
-                  backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[0],
+                  backgroundColor:
+                    theme.colorScheme === "dark"
+                      ? theme.colors.dark[5]
+                      : theme.colors.gray[0],
                   borderRadius: theme.radius.md,
                   padding: "16px 20px",
                 }}
               >
                 <Group>
-                  <Text style={{ fontSize: 24 }} fw={700} c="pink">
+                  <Text fs={24} fw={700} c="pink">
                     {MiscUtils.toVND(
                       MiscUtils.calculateDiscountedPrice(
-                        product.productVariants[selectedVariantIndex]?.variantPrice,
-                        product.productPromotion ? product.productPromotion.promotionPercent : 0
-                      )
+                        product.variants[selectedVariantIndex]?.price,
+                        product.promotion ? product.promotion.percent : 0,
+                      ),
                     )}
                   </Text>
-                  {product.productPromotion && (
+                  {product.promotion && (
                     <>
                       <Text style={{ textDecoration: "line-through" }}>
-                        {MiscUtils.toVND(product.productVariants[selectedVariantIndex]?.variantPrice)}
+                        {MiscUtils.toVND(
+                          product.variants[selectedVariantIndex]?.price,
+                        )}
                       </Text>
                       <Badge color="pink" size="lg" variant="filled">
-                        -{product.productPromotion.promotionPercent}%
+                        -{product.promotion.percent}%
                       </Badge>
                     </>
                   )}
@@ -147,12 +166,12 @@ function ClientProductIntro({ product }) {
 
               <Stack gap="xs">
                 <Text fw={500}>Phiên bản</Text>
-                {product.productVariants.length > 0 ? (
-                  product.productVariants.some((variant) => variant.variantProperties) ? (
+                {product.variants.length > 0 ? (
+                  product.variants.some((variant) => variant.properties) ? (
                     <Group>
-                      {product.productVariants.map((variant, index) => (
+                      {product.variants.map((variant, index) => (
                         <UnstyledButton
-                          key={variant.variantId}
+                          key={variant.id}
                           style={{
                             borderRadius: theme.radius.md,
                             padding: "7.5px 15px",
@@ -162,8 +181,8 @@ function ClientProductIntro({ product }) {
                                   ? theme.colors.blue[9]
                                   : theme.colors.dark[3]
                                 : index === selectedVariantIndex
-                                ? theme.colors.blue[4]
-                                : theme.colors.gray[2]
+                                  ? theme.colors.blue[4]
+                                  : theme.colors.gray[2]
                             }`,
                             backgroundColor:
                               index === selectedVariantIndex
@@ -171,14 +190,17 @@ function ClientProductIntro({ product }) {
                                   ? rgba(theme.colors.blue[9], 0.25)
                                   : theme.colors.blue[0]
                                 : "unset",
-                            opacity: variant.variantInventory === 0 ? 0.5 : "unset",
+                            opacity: variant.inventory === 0 ? 0.5 : "unset",
                           }}
                           onClick={() => handleSelectedVariantButton(index)}
-                          disabled={selectedVariantIndex === index || variant.variantInventory === 0}
+                          disabled={
+                            selectedVariantIndex === index ||
+                            variant.inventory === 0
+                          }
                         >
                           <Stack gap={2.5}>
                             <SimpleGrid cols={2} spacing={2.5}>
-                              {variant.variantProperties?.content.map((property) => (
+                              {variant.properties?.content.map((property) => (
                                 <React.Fragment key={property.id}>
                                   <Text size="sm">{property.name}</Text>
                                   <Text size="sm" ta="right" fw={500}>
@@ -188,15 +210,17 @@ function ClientProductIntro({ product }) {
                               ))}
                             </SimpleGrid>
                             <Text size="xs" c="dimmed">
-                              Tồn kho: {variant.variantInventory}
+                              Tồn kho: {variant.inventory}
                             </Text>
                             <Text size="xs" c="dimmed">
                               Gía:{" "}
                               {MiscUtils.toVND(
                                 MiscUtils.calculateDiscountedPrice(
-                                  variant.variantPrice,
-                                  product.productPromotion ? product.productPromotion.promotionPercent : 0
-                                )
+                                  variant.price,
+                                  product.promotion
+                                    ? product.promotion.percent
+                                    : 0,
+                                ),
                               )}
                             </Text>
                           </Stack>
@@ -215,7 +239,7 @@ function ClientProductIntro({ product }) {
                 )}
               </Stack>
 
-              {product.productSaleable && (
+              {product.saleable && (
                 <Stack gap="xs">
                   <Text fw={500}> Số lượng</Text>
                   <Group gap={5}>
@@ -226,7 +250,7 @@ function ClientProductIntro({ product }) {
                       hideControls
                       value={quantity}
                       onChange={(value) => setQuantity(value || 1)}
-                      max={product.productVariants[selectedVariantIndex].variantInventory}
+                      max={product.variants[selectedVariantIndex].inventory}
                       min={1}
                       w={54}
                       styles={{ input: { textAlign: "center" } }}
@@ -239,16 +263,32 @@ function ClientProductIntro({ product }) {
               )}
 
               <Group mt={theme.spacing.md}>
-                {!product.productSaleable ? (
-                  <Button radius="md" size="lg" color="teal" leftSection={<BellPlus />}>
+                {!product.saleable ? (
+                  <Button
+                    radius="md"
+                    size="lg"
+                    color="teal"
+                    leftSection={<BellPlus />}
+                  >
                     Đặt trước
                   </Button>
                 ) : (
-                  <Button radius="md" size="lg" color="pink" leftSection={<ShoppingCart />}>
+                  <Button
+                    radius="md"
+                    size="lg"
+                    color="pink"
+                    leftSection={<ShoppingCart />}
+                  >
                     Chọn mua
                   </Button>
                 )}
-                <Button radius="md" size="lg" color="pink" variant="outline" leftSection={<Heart />}>
+                <Button
+                  radius="md"
+                  size="lg"
+                  color="pink"
+                  variant="outline"
+                  leftSection={<Heart />}
+                >
                   Yêu thích
                 </Button>
               </Group>

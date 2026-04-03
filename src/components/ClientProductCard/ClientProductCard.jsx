@@ -16,7 +16,7 @@ import { BellPlus, HeartPlus, ShoppingCart } from "tabler-icons-react";
 import DefaultImage from "~/images/image_default.png";
 import MiscUtils from "~/utils/MiscUtils";
 
-function ClientProductCart({ product, search }) {
+function ClientProductCard({ product, search }) {
   const theme = useMantineTheme();
 
   const [opened, handler] = useDisclosure(false);
@@ -26,7 +26,7 @@ function ClientProductCart({ product, search }) {
       shadow="sm"
       p="lg"
       component={Link}
-      to={`/product/${product.productSlug}`}
+      to={`/product/${product.slug}`}
       h="100%"
       onMouseEnter={handler.open}
       onMouseLeave={handler.close}
@@ -35,11 +35,24 @@ function ClientProductCart({ product, search }) {
         <Box pos="relative">
           <Image
             radius="md"
-            src={product.productThumbnail}
+            src={product.thumbnail}
             fallbackSrc={DefaultImage}
-            alt={product.productName}
+            alt={product.name}
             style={{ aspectRatio: "1/1" }}
           />
+          {!product.saleable && (
+            <Badge
+              component="span"
+              size="xs"
+              color="red"
+              variant="filled"
+              pos="absolute"
+              top={theme.spacing.xs}
+              right={theme.spacing.xs}
+            >
+              Hết hàng
+            </Badge>
+          )}
           <Group
             gap="xs"
             pos="absolute"
@@ -61,7 +74,7 @@ function ClientProductCart({ product, search }) {
             >
               <HeartPlus size={18} />
             </ActionIcon>
-            {product.productSaleable ? (
+            {product.saleable ? (
               <ActionIcon
                 color="blue"
                 size="lg"
@@ -86,45 +99,39 @@ function ClientProductCart({ product, search }) {
         </Box>
         <Stack gap={`calc(${theme.spacing.xs} / 2)`}>
           <Group gap="xs">
-            <Text fw={500}>
-              {/* update hightlight */}
+            <Text fw={500} truncate="end">
               <Highlight component="span" highlight={search || ""}>
-                {product.productName}
+                {product.name}
               </Highlight>
-              {!product.productSaleable && (
-                <Badge size="xs" color="red" variant="filled">
-                  Hết hàng
-                </Badge>
-              )}
             </Text>
           </Group>
           <Text fw={500} c="pink">
-            {product.productPriceRange
+            {product.priceRange
               .map((price) => {
-                const p = product.productPromotion
+                const p = product.promotion
                   ? MiscUtils.calculateDiscountedPrice(
                       price,
-                      product.productPromotion.promotionPercent,
+                      product.promotion.promotionPercent,
                     )
                   : price;
                 return MiscUtils.toVND(p);
               })
               .join("-")}
           </Text>
-          {product.productPromotion && (
+          {product.promotion && (
             <Group gap="xs">
               <Text size="sm" style={{ textDecoration: "line-through" }}>
-                {product.productPriceRange
+                {product.priceRange
                   .map((price) => MiscUtils.toVND(price))
                   .join("-")}
               </Text>
               <Badge color="pink" variant="filled">
-                -{product.productPromotion.promotionPercent}
+                -{product.promotion.promotionPercent}
               </Badge>
             </Group>
           )}
           <Text size="sm" c="dimmed">
-            {product.productVariants.length} phiên bản
+            {product.variants.length} phiên bản
           </Text>
         </Stack>
       </Stack>
@@ -132,4 +139,4 @@ function ClientProductCart({ product, search }) {
   );
 }
 
-export default ClientProductCart;
+export default ClientProductCard;

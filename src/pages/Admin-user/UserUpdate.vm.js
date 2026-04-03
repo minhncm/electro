@@ -2,12 +2,12 @@ import { useForm } from "@mantine/form";
 import UserConfigs from "./UserConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useState } from "react";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import ProvinceConfigs from "../Admin-province/ProvinceConfigs";
 import DistrictConfigs from "../Admin-district/DistrictConfigs";
 import RoleConfigs from "../Admin-role/RoleConfigs";
-import useUpdateApi from "~/hooks/use-update-api";
-import useGetByIdApi from "~/hooks/use-get-by-id-api";
+import useUpdateApi from "~/hooks/admin/use-update-api";
+import useGetByIdApi from "~/hooks/admin/use-get-by-id-api";
 import MiscUtils from "~/utils/MiscUtils";
 
 function useUserUpdateViewModel(id) {

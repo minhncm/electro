@@ -1,7 +1,7 @@
 import { useForm } from "@mantine/form";
 import RoleConfigs from "./RoleConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
-import useCreateApi from "~/hooks/use-create-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
 
 function useRoleCreateViewModel() {
   const form = useForm({

@@ -2,7 +2,7 @@ import { useForm } from "@mantine/form";
 import CustomerGroupConfigs from "./CustomerGroupConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
 import * as PageConfigs from "~/pages/PageConfig";
-import useCreateApi from "~/hooks/use-create-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
 
 function useCustomerGroupCreateViewModel() {
   const form = useForm({

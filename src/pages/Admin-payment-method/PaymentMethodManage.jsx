@@ -12,7 +12,7 @@ import {
 import * as PageConfigs from "~/pages/PageConfig";
 import { AlertCircle } from "tabler-icons-react";
 import PaymentMethodStatusBadge from "~/components/PaymentMethodStatusBadge";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import PaymentMethodConfigs from "./PaymentMethodConfigs";
 

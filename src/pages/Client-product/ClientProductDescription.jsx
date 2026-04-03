@@ -8,7 +8,7 @@ function ClientProductDescription({ product }) {
         <Receipt />
         <Title order={2}>Mô tả sản phẩm</Title>
       </Group>
-      <Text>{product.productDescription}</Text>
+      <Text>{product.description}</Text>
     </Stack>
   );
 }

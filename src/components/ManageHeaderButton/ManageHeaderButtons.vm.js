@@ -1,6 +1,6 @@
 import { Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
-import useDeleteByIdsApi from "~/hooks/use-delete-by-ids-api";
+import useDeleteByIdsApi from "~/hooks/admin/use-delete-by-ids-api";
 import useAppStore from "~/stores/use-app-store";
 import NotifyUtils from "~/utils/NotifyUtils";
 

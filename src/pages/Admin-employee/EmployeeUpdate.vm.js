@@ -1,9 +1,9 @@
 import { useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useState } from "react";
-import useGetAllApi from "~/hooks/use-get-all-api";
-import useGetByIdApi from "~/hooks/use-get-by-id-api";
-import useUpdateApi from "~/hooks/use-update-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
+import useGetByIdApi from "~/hooks/admin/use-get-by-id-api";
+import useUpdateApi from "~/hooks/admin/use-update-api";
 import MiscUtils from "~/utils/MiscUtils";
 import DepartmentConfigs from "../Admin-department/DepartmentConfigs";
 import DistrictConfigs from "../Admin-district/DistrictConfigs";

@@ -20,7 +20,7 @@ import DateUtils from "~/utils/DateUtils";
 import MiscUtils from "~/utils/MiscUtils";
 import OrderConfigs from "../Admin-order/OrderConfigs";
 import WaybillConfigs from "./WaybillConfigs";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 
 function WaybillManage() {

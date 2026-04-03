@@ -2,11 +2,11 @@ import _ from "lodash";
 
 class MiscUtils {
   static makeCaterogyBreadcrumbs = (category) => {
-    if (!category.categoryParent) {
+    if (!category.parent) {
       return [category];
     }
 
-    return [...this.makeCaterogyBreadcrumbs(category.categoryParent), category];
+    return [...this.makeCaterogyBreadcrumbs(category.parent), category];
   };
 
   static parserPrice = (value) => (value || "").replace(/(\.)/g, "");
@@ -33,49 +33,54 @@ class MiscUtils {
   static calculateDiscountedPrice = (price, discount) =>
     (price * (100 - discount)) / 100;
 
-  static generatePriceOptions = (filterPriceQuartiles) => {
-    const start = filterPriceQuartiles[0];
-    const end = filterPriceQuartiles[1];
+  static generatePriceOptions = (priceRange) => {
+    let { min, max } = priceRange;
+    const range = max - min;
 
-    let step = 100_000;
+    const step =
+      range >= 40_000_000
+        ? 10_000_000
+        : range >= 10_000_000
+          ? 5_000_000
+          : range >= 1_000_000
+            ? 1_000_000
+            : 100_000;
 
-    if (end - start >= 10_000_000) {
-      step = 10_000_000;
-    }
+    min = Math.round(min / step) * step;
+    max = Math.round(max / step) * step;
 
     const prices = [];
 
-    for (let i = start; i <= end; i += step) {
+    for (let i = min === 0 ? step : min; i <= max; i += step) {
       prices.push(i);
     }
 
-    const priceOptions = [];
-
+    const option = [];
     for (let i = 0; i <= prices.length; i++) {
-      if (i === 0) {
-        priceOptions.push(["0", String(prices[0])]);
-      } else if (i === prices.length) {
-        priceOptions.push([String(prices[prices.length - 1]), "max"]);
-      } else {
-        priceOptions.push([String(prices[i - 1]), String(prices[i])]);
-      }
+      if (i === 0) option.push(["0", String(prices[i])]);
+      else if (i === prices.length)
+        option.push([String(prices[prices.length - 1]), "max"]);
+      else option.push([String(prices[i - 1]), String(prices[i])]);
     }
 
-    return priceOptions;
+    return option;
   };
 
   static readablePriceOption = (priceOption) => {
-    const replaceMillion = (price) => price.replace(/000000$/, " tr");
+    const replaceMillion = (price) => {
+      if (price % 1_000_000 === 0) return `${price / 1_000_000} tr`;
+      if (price % 100_000 === 0) return `${price / 1_000_000} tr`;
+      if (price % 1_000 === 0) return `${price / 1_000}k`;
+    };
+    const [from, to] = priceOption;
 
-    if (priceOption[0] === "0") {
-      return "Dưới " + replaceMillion(priceOption[1]);
-    } else if (priceOption[1] === "max") {
-      return "Trên " + replaceMillion(priceOption[0]);
+    if (from === "0") {
+      return "Dưới " + replaceMillion(to);
+    } else if (to === "max") {
+      return "Trên " + replaceMillion(from);
     }
 
-    return (
-      replaceMillion(priceOption[0]) + " đến " + replaceMillion(priceOption[1])
-    );
+    return replaceMillion(from) + " đến " + replaceMillion(to);
   };
 
   static isEqual = (first, second) => _.isEqual(first, second);

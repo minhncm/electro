@@ -1,11 +1,11 @@
 import { useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useState } from "react";
-import useGetAllApi from "~/hooks/use-get-all-api";
-import useUpdateApi from "~/hooks/use-update-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
+import useUpdateApi from "~/hooks/admin/use-update-api";
 import * as PageConfigs from "~/pages/PageConfig";
 import CategoryConfigs from "./CategoryConfigs";
-import useGetByIdApi from "~/hooks/use-get-by-id-api";
+import useGetByIdApi from "~/hooks/admin/use-get-by-id-api";
 import MiscUtils from "~/utils/MiscUtils";
 
 function useCategoryUpdateViewModel(id) {
@@ -37,7 +37,9 @@ function useCategoryUpdateViewModel(id) {
         description: category.description,
         thumbnail: category.thumbnail,
         status: String(category.status),
-        parentCategoryId: String(category.parentCategoryId),
+        parentCategoryId: category.parentCategory
+          ? String(category.parentCategory.id)
+          : null,
       };
       form.setValues(formValues);
       setPrevFormValues(formValues);
@@ -69,7 +71,7 @@ function useCategoryUpdateViewModel(id) {
         description: values.description,
         thumbnail: values.thumbnail,
         status: Number(values.status),
-        parentCategoryId: Number(values.parentCategoryId),
+        parentCategoryId: Number(values.parentCategoryId) || null,
       };
       updateApi.mutate(data);
     }

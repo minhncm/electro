@@ -1,21 +1,13 @@
-import {
-  ActionIcon,
-  Anchor,
-  Group,
-  Stack,
-  Table,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { ActionIcon, Anchor, Group, Stack, Table, Title } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import { Hash, Plus } from "tabler-icons-react";
 import ManageMain from "~/components/ManageMain/ManageMain";
 import ManagePagination from "~/components/ManagePagination";
 import ProductInventoryTransactionsModal from "~/components/ProductInventoryTransactionsModal";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
-import * as PageConfigs from "~/pages/PageConfig";
 import InventoryConfigs from "~/pages/Admin-inventory/InventoryConfigs";
+import * as PageConfigs from "~/pages/PageConfig";
 
 function InventoryManage() {
   useResetManagePageState();
@@ -26,9 +18,6 @@ function InventoryManage() {
       InventoryConfigs.productInventoryResourceKey,
     );
 
-  console.log(listResponse);
-
-  const theme = useMantineTheme();
   const modals = useModals();
 
   const handleTransactionsAnchor = (productName, transactions) => {

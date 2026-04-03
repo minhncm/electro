@@ -1,9 +1,9 @@
 import { useForm } from "@mantine/form";
 import EmployeeConfigs from "./EmployeeConfigs";
 import { zodResolver } from "mantine-form-zod-resolver";
-import useCreateApi from "~/hooks/use-create-api";
+import useCreateApi from "~/hooks/admin/use-create-api";
 import { useState } from "react";
-import useGetAllApi from "~/hooks/use-get-all-api";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import ProvinceConfigs from "../Admin-province/ProvinceConfigs";
 import DistrictConfigs from "../Admin-district/DistrictConfigs";
 import OfficeConfigs from "../Admin-office/OfficeConfigs";

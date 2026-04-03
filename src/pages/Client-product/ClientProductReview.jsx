@@ -1,39 +1,42 @@
-import { Alert, Avatar, Badge, Box, Card, Group, Pagination, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import {
+  Alert,
+  Avatar,
+  Badge,
+  Box,
+  Card,
+  Group,
+  Pagination,
+  Stack,
+  Text,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
+import { useState } from "react";
 import { AlertCircle, Edit, Messages } from "tabler-icons-react";
 import ReviewStar from "~/components/ReviewStar";
+import { useGetReviewsByProductSlug } from "~/hooks/client/use-product-api";
 
-const reviews = {
-  content: [
-    {
-      reviewId: 1,
-      reviewCreatedAt: "2021-10-03T14:16:01Z",
-      reviewUpdatedAt: "2021-11-17T17:55:52Z",
-      reviewUser: {
-        userId: 4,
-        userUsername: "dtreat3",
-        userFullname: "Danila Treat",
-      },
-      reviewRatingScore: 4,
-      reviewContent:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere felis sed justo finibus, eget maximus diam rhoncus. Integer posuere tempor magna, ut dictum massa suscipit vel. Sed quis placerat neque. Etiam urna sapien, accumsan nec nulla in, condimentum venenatis ex.",
-      reviewReply: null,
-      reviewStatus: 2,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 1,
-  totalPages: 1,
-  last: true,
-};
-
-function ClientProductReview() {
+function ClientProductReview({ productSlug }) {
   const theme = useMantineTheme();
+
+  const [activePage, setActivePage] = useState(1);
+
+  const { data: reviews } = useGetReviewsByProductSlug(productSlug, {
+    page: activePage,
+    size: 5,
+    filter: "status==2",
+  });
+
   let reviewsContentFrament;
 
   if (reviews && reviews.totalElements === 0)
     reviewsContentFrament = (
-      <Alert icon={<AlertCircle size={16} />} title="Thông báo" color="cyan" radius="md">
+      <Alert
+        icon={<AlertCircle size={16} />}
+        title="Thông báo"
+        color="cyan"
+        radius="md"
+      >
         Sản phẩm hiện không có đánh giá nào
       </Alert>
     );
@@ -43,23 +46,26 @@ function ClientProductReview() {
       <Stack>
         <Stack>
           {reviews.content.map((review) => (
-            <Card key={review.reviewId} radius="md" shadow="sm" p="lg">
+            <Card key={review.id} radius="md" shadow="sm" p="lg">
               <Stack>
                 <Group gap="lg">
                   <Group gap="xs">
                     <Avatar color="cyan" size="sm" radius="sm">
-                      {review.reviewUser.userFullname.charAt(0)}
+                      {review.user.fullname.charAt(0)}
                     </Avatar>
                     <Text size="sm" c="dimmed">
-                      {review.reviewUser.userFullname}
+                      {review.user.fullname}
                     </Text>
-                    <ReviewStar score={review.reviewRatingScore} />
+                    <ReviewStar score={review.ratingScore} />
                   </Group>
-                  <Text size="sm">{review.reviewContent}</Text>
-                  {review.reviewReply && (
+                  <Text size="sm">{review.content}</Text>
+                  {review.reply && (
                     <Box
                       style={{
-                        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[0],
+                        backgroundColor:
+                          theme.colorScheme === "dark"
+                            ? theme.colors.dark[5]
+                            : theme.colors.gray[0],
                         borderRadius: theme.radius.md,
                         padding: "16px 20px",
                       }}
@@ -71,7 +77,7 @@ function ClientProductReview() {
                             Phản hồi từ cửa hàng
                           </Text>
                         </Group>
-                        <Text size="sm">{review.reviewReply}</Text>
+                        <Text size="sm">{review.reply}</Text>
                       </Stack>
                     </Box>
                   )}
@@ -81,7 +87,11 @@ function ClientProductReview() {
           ))}
         </Stack>
         <Group justify="space-between" mt="lg">
-          <Pagination value={1} total={reviews.totalPages} />
+          <Pagination
+            value={activePage}
+            total={reviews.totalPages}
+            onChange={(page) => page !== activePage && setActivePage(page)}
+          />
 
           <Text>
             <Text component="span" fw={500}>
@@ -104,8 +114,8 @@ function ClientProductReview() {
             {reviews.totalElements}
           </Badge>
         )}
-        {reviewsContentFrament}
       </Group>
+      {reviewsContentFrament}
     </Stack>
   );
 }

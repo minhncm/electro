@@ -1,4 +1,11 @@
-import { Box, Group, Stack, Table, Title, useMantineTheme } from "@mantine/core";
+import {
+  Box,
+  Group,
+  Stack,
+  Table,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { Apps } from "tabler-icons-react";
 
 function ClientProductSpecification({ product }) {
@@ -24,7 +31,7 @@ function ClientProductSpecification({ product }) {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {product.productSpecifications?.content.map((specification) => (
+            {product.specifications?.content.map((specification) => (
               <Table.Tr key={specification.id}>
                 <Table.Td>{specification.name}</Table.Td>
                 <Table.Td>{specification.value}</Table.Td>

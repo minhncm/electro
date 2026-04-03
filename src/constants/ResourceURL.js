@@ -63,6 +63,9 @@ const ResourceUrl = {
 
   //client
   CLIENT_CATEGORY: ApplicationPath.CLIENT_API_PATH + "/categories",
+  CLIENT_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/products",
+  CLIENT_REVIEW: ApplicationPath.CLIENT_API_PATH + "/reviews",
+  CLIENT_REVIEW_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/reviews/products",
 };
 
 export default ResourceUrl;
