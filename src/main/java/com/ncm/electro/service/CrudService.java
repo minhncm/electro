@@ -1,5 +1,7 @@
 package com.ncm.electro.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ncm.electro.constant.FieldName;
 import com.ncm.electro.dto.ListResponse;
 import com.ncm.electro.exception.ResourceNotFoundException;
@@ -12,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 

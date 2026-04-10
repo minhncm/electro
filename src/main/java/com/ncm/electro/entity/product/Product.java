@@ -1,5 +1,6 @@
 package com.ncm.electro.entity.product;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ncm.electro.entity.BaseEntity;
 import com.ncm.electro.entity.client.Preorder;
 import com.ncm.electro.entity.client.Wish;
@@ -11,7 +12,6 @@ import com.ncm.electro.utils.JsonNodeConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import tools.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
 import java.util.HashSet;

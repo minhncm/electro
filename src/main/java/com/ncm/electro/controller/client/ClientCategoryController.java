@@ -19,7 +19,6 @@ public class ClientCategoryController {
     private final ClientCategoryService clientCategoryService;
     @GetMapping()
     public ResponseEntity<CollectionWrapper<ClientCategoryResponse>> getAllCategories(){
-        System.out.println("\n\n\n\n 111 \n\n\n\n");
         return ResponseEntity.status(HttpStatus.OK).body(clientCategoryService.findAll());
     }
 

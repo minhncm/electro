@@ -12,38 +12,45 @@ public class InventoryUtils {
     public static Map<String, Integer> calculateInventoryIndices(List<DocketVariant> transactions) {
         int inventory = 0;
         int waitingForDelivery = 0;
-        int canBeSell;
-        int areComing = 0;
+        int available;
+        int incoming = 0;
+        int soldQuantity = 0;
 
         for (DocketVariant transaction : transactions) {
-            if (transaction.getDocket().getType().equals(InventoryConstants.IMPORT)
-                    && transaction.getDocket().getStatus().equals(InventoryConstants.COMPLETED)) {
-                inventory += transaction.getQuantity();
+            var type = transaction.getDocket().getType();
+            var status = transaction.getDocket().getStatus();
+            int quantity = transaction.getQuantity();
+
+            if (type.equals(InventoryConstants.IMPORT)
+                    && status.equals(InventoryConstants.COMPLETED)) {
+                inventory += quantity;
             }
 
-            if (transaction.getDocket().getType().equals(InventoryConstants.EXPORT)
-                    && transaction.getDocket().getStatus().equals(InventoryConstants.COMPLETED)) {
-                inventory -= transaction.getQuantity();
+            if (type.equals(InventoryConstants.EXPORT)
+                    && status.equals(InventoryConstants.COMPLETED)) {
+                inventory -= quantity;
+                soldQuantity += quantity;
             }
 
-            if(transaction.getDocket().getType().equals(InventoryConstants.IMPORT)
-                    && List.of(InventoryConstants.NEW, InventoryConstants.PROCESSING).contains(transaction.getDocket().getStatus())) {
-                areComing += transaction.getQuantity();
+            if(type.equals(InventoryConstants.IMPORT)
+                    && List.of(InventoryConstants.NEW, InventoryConstants.PROCESSING).contains(status)) {
+                incoming += quantity;
             }
 
-            if(transaction.getDocket().getType().equals(InventoryConstants.EXPORT)
-                    && List.of(InventoryConstants.NEW, InventoryConstants.PROCESSING).contains(transaction.getDocket().getStatus())) {
-                waitingForDelivery += transaction.getQuantity();
+            if(type.equals(InventoryConstants.EXPORT)
+                    && List.of(InventoryConstants.NEW, InventoryConstants.PROCESSING).contains(status)) {
+                waitingForDelivery += quantity;
             }
         }
-        canBeSell = inventory - waitingForDelivery;
+        available = inventory - waitingForDelivery;
 
         Map<String, Integer> indices = new HashMap<>();
 
         indices.put("inventory", inventory);
         indices.put("waitingForDelivery", waitingForDelivery);
-        indices.put("available", canBeSell);
-        indices.put("incoming", areComing);
+        indices.put("available", available);
+        indices.put("incoming", incoming);
+        indices.put("soldQuantity", soldQuantity);
 
         return indices;
     }

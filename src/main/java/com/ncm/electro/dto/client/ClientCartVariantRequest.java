@@ -1,2 +1,9 @@
-package com.ncm.electro.dto.client;public class ClientCartVariantRequest {
+package com.ncm.electro.dto.client;
+
+import lombok.Data;
+
+@Data
+public class ClientCartVariantRequest {
+    private Long variantId;
+    private Integer quantity;
 }

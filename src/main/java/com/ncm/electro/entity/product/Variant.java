@@ -1,5 +1,6 @@
 package com.ncm.electro.entity.product;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ncm.electro.entity.BaseEntity;
 import com.ncm.electro.entity.cart.CartVariant;
 import com.ncm.electro.entity.inventory.*;
@@ -8,9 +9,10 @@ import com.ncm.electro.utils.JsonNodeConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import tools.jackson.databind.JsonNode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -49,7 +51,7 @@ public class Variant extends BaseEntity {
     private Set<CountVariant> countVariants = new HashSet<>();
 
     @OneToMany(mappedBy = "variant")
-    private Set<DocketVariant> docketVariants = new HashSet<>();
+    private List<DocketVariant> docketVariants = new ArrayList<>();
 
     @OneToMany(mappedBy = "variant")
     private Set<OrderVariant> orderVariants = new HashSet<>();

@@ -1,9 +1,9 @@
 package com.ncm.electro.dto.product;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ncm.electro.dto.genaral.ImageRequest;
 import jakarta.annotation.Nullable;
 import lombok.Data;
-import tools.jackson.databind.JsonNode;
 
 import java.util.List;
 import java.util.Set;

@@ -1,5 +1,6 @@
 package com.ncm.electro.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ncm.electro.constant.AppConstants;
 import com.ncm.electro.dto.ListResponse;
 import com.ncm.electro.service.CrudService;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import tools.jackson.databind.JsonNode;
 
 import java.util.List;
 

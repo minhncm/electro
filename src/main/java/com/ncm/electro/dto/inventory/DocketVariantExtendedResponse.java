@@ -1,9 +1,9 @@
 package com.ncm.electro.dto.inventory;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ncm.electro.dto.BaseResponse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import tools.jackson.databind.JsonNode;
 
 @Data
 public class DocketVariantExtendedResponse {

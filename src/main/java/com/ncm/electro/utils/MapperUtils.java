@@ -5,6 +5,7 @@ import com.ncm.electro.entity.address.District;
 import com.ncm.electro.entity.address.Province;
 import com.ncm.electro.entity.address.Ward;
 import com.ncm.electro.entity.authentication.Role;
+import com.ncm.electro.entity.authentication.User;
 import com.ncm.electro.entity.customer.CustomerGroup;
 import com.ncm.electro.entity.customer.CustomerResource;
 import com.ncm.electro.entity.customer.CustomerStatus;
@@ -67,5 +68,6 @@ public abstract class MapperUtils {
     public abstract CustomerStatus mapToCustomerStatus(Long id);
     public abstract Category mapToCategory(Long id);
     public abstract Variant mapToVariant(Long id);
+    public abstract User mapToUser(Long id);
 
 }

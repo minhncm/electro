@@ -50,8 +50,6 @@ public class ClientProductMapper {
                         .properties(variant.getProperties())
                         .build())
                 .toList());
-
-        // promotion, saleable
         return clientListedProductResponse;
     }
 

@@ -1,8 +1,8 @@
 package com.ncm.electro.dto.product;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.annotation.Nullable;
 import lombok.Data;
-import tools.jackson.databind.JsonNode;
 
 @Data
 public class VariantRequest {

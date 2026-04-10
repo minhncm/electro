@@ -1,9 +1,9 @@
 package com.ncm.electro.dto.client;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.Data;
-import tools.jackson.databind.JsonNode;
 
 import java.util.List;
 

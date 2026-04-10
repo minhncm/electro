@@ -1,11 +1,11 @@
 package com.ncm.electro.dto.client;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ncm.electro.dto.genaral.ImageResponse;
 import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import tools.jackson.databind.JsonNode;
 
 import java.util.List;
 
@@ -26,6 +26,7 @@ public class ClientProductResponse {
     private JsonNode specifications;
     private List<ClientVariantResponse> variants;
     private boolean saleable;
+    private int soldQuantity;
     private int averageRatingScore;
     private int countReviews;
     private List<ClientListedProductResponse> relateProducts;

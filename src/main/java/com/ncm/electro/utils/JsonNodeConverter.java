@@ -1,12 +1,12 @@
 package com.ncm.electro.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.exc.JsonNodeException;
 
 @Slf4j
 @Converter(autoApply = true)
@@ -28,7 +28,7 @@ public class JsonNodeConverter implements AttributeConverter<JsonNode, String> {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readTree(jsonNodeString);
-        } catch (JsonNodeException e) {
+        } catch (JsonProcessingException e) {
             log.error("Error parsing jsonNodeString", e);
         }
         return null;

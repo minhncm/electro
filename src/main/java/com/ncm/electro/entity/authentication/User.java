@@ -14,7 +14,9 @@ import com.ncm.electro.entity.order.Order;
 import com.ncm.electro.entity.review.Review;
 import com.ncm.electro.entity.reward.RewardLog;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "user")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends BaseEntity {
     @Column(name = "username", nullable = false)
     private String username;

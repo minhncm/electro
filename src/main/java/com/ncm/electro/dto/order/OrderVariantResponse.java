@@ -1,11 +1,10 @@
 package com.ncm.electro.dto.order;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ncm.electro.dto.BaseResponse;
-import com.ncm.electro.dto.inventory.DocketVariantResponse;
 import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import tools.jackson.databind.JsonNode;
 
 import java.math.BigDecimal;
 

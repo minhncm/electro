@@ -10,7 +10,7 @@ import com.ncm.electro.entity.product.Product;
 import com.ncm.electro.entity.promotion.Promotion;
 import com.ncm.electro.exception.ResourceNotFoundException;
 import com.ncm.electro.mapper.client.ClientProductMapper;
-import com.ncm.electro.mapper.promotion.PromotionMapper;
+import com.ncm.electro.mapper.client.ClientPromotionMapper;
 import com.ncm.electro.repository.inventory.DocketVariantRepository;
 import com.ncm.electro.repository.product.ProductRepository;
 import com.ncm.electro.repository.promotion.PromotionRepository;
@@ -36,7 +36,7 @@ public class ClientProductServiceImpl implements ClientProductService{
     private final ClientProductMapper clientProductMapper;
     private final DocketVariantRepository docketVariantRepository;
     private final PromotionRepository promotionRepository;
-    private final PromotionMapper promotionMapper;
+    private final ClientPromotionMapper clientPromotionMapper;
     private final ReviewRepository reviewRepository;
 
     @Override
@@ -58,7 +58,7 @@ public class ClientProductServiceImpl implements ClientProductService{
 
             List<Promotion> promotions = promotionRepository.findActivePromotionByProductId(product.getId());
             clientListedProductResponse.setPromotion(
-                    promotionMapper.entityToClientResponse(!promotions.isEmpty() ? promotions.getFirst() : null));
+                    clientPromotionMapper.entityToResponse(!promotions.isEmpty() ? promotions.getFirst() : null));
 
             clientListedProductResponses.add(clientListedProductResponse);
         }
@@ -79,6 +79,9 @@ public class ClientProductServiceImpl implements ClientProductService{
         clientProductResponse.setSaleable(InventoryUtils.
                 calculateInventoryIndices(docketVariantRepository.findByProductId(product.getId()))
                 .get("available") > 0);
+        clientProductResponse.setSoldQuantity(InventoryUtils.
+                calculateInventoryIndices(docketVariantRepository.findByProductId(product.getId()))
+                .get("soldQuantity"));
         clientProductResponse.setVariants(product.getVariants().stream()
                 .map(variant -> new ClientProductResponse.ClientVariantResponse()
                     .setId(variant.getId())
@@ -95,7 +98,7 @@ public class ClientProductServiceImpl implements ClientProductService{
 
         List<Promotion> promotions = promotionRepository.findActivePromotionByProductId(product.getId());
         clientProductResponse.setPromotions(
-                promotionMapper.entityToClientResponse(!promotions.isEmpty() ? promotions.getFirst() : null));
+                clientPromotionMapper.entityToResponse(!promotions.isEmpty() ? promotions.getFirst() : null));
 
         return clientProductResponse;
     }

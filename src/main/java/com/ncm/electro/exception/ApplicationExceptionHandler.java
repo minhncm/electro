@@ -18,7 +18,19 @@ public class ApplicationExceptionHandler {
                 HttpStatus.NOT_FOUND.value(),
                 Instant.now(),
                 ex.getMessage(),
-                request.getDescription(false));
+                request.getDescription(false)
+        );
+    }
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(InsufficientInventoryException.class)
+    public ErrorMessage insufficientInventoryExceptionHandler(InsufficientInventoryException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
     }
 
 }
