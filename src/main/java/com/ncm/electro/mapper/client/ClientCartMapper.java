@@ -9,6 +9,7 @@ import com.ncm.electro.entity.general.Image;
 import com.ncm.electro.entity.product.Product;
 import com.ncm.electro.entity.product.Variant;
 import com.ncm.electro.entity.promotion.Promotion;
+import com.ncm.electro.mapper.GenericMapper;
 import com.ncm.electro.utils.InventoryUtils;
 import com.ncm.electro.utils.MapperUtils;
 import org.mapstruct.Mapper;
@@ -21,10 +22,9 @@ import java.util.List;
 import java.util.Set;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {ClientCartVariantMapper.class})
-public abstract class ClientCartMapper {
+public abstract class ClientCartMapper implements GenericMapper<Cart, ClientCartRequest, ClientCartResponse> {
     @Autowired
     protected ClientPromotionMapper clientPromotionMapper;
-    public abstract ClientCartResponse entityToResponse(Cart cart);
 
     @Mapping(target = "inventory", expression = "java(mapInventory(variant))")
     protected abstract ClientCartVariantResponse.ClientVariantResponse entityToResponse(Variant variant);
@@ -63,9 +63,5 @@ public abstract class ClientCartMapper {
     @Mapping(target = "cartVariants", ignore = true)
     public abstract Cart requestToEntity(ClientCartRequest request);
 
-    public Cart partialUpdate(Cart entity, ClientCartRequest request) {
-
-        return null;
-    }
 
 }
