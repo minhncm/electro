@@ -3,6 +3,7 @@ package com.ncm.electro.mapper.client;
 import com.ncm.electro.dto.client.ClientBrandResponse;
 import com.ncm.electro.dto.client.ClientListedProductResponse;
 import com.ncm.electro.dto.client.ClientProductResponse;
+import com.ncm.electro.dto.client.ClientPromotionResponse;
 import com.ncm.electro.entity.general.Image;
 import com.ncm.electro.entity.product.Product;
 import com.ncm.electro.entity.product.Variant;
@@ -15,13 +16,16 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+//TODO refactor
 @Component
 @RequiredArgsConstructor
 public class ClientProductMapper {
     private final ImageMapper imageMapper;
     private final ClientCategoryMapper clientCategoryMapper;
-    public ClientListedProductResponse entityToListedResponse(Product product) {
+    public ClientListedProductResponse entityToListedResponse
+            (Product product, Map<String, Integer> inventoryIndices, ClientPromotionResponse promotionResponse) {
         ClientListedProductResponse clientListedProductResponse = ClientListedProductResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -50,6 +54,9 @@ public class ClientProductMapper {
                         .properties(variant.getProperties())
                         .build())
                 .toList());
+        clientListedProductResponse.setSaleable(inventoryIndices.get("available") > 0);
+
+        clientListedProductResponse.setPromotion(promotionResponse);
         return clientListedProductResponse;
     }
 

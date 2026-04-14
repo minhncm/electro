@@ -4,6 +4,7 @@ import com.ncm.electro.constant.FieldName;
 import com.ncm.electro.dto.ListResponse;
 import com.ncm.electro.dto.client.ClientListedProductResponse;
 import com.ncm.electro.dto.client.ClientProductResponse;
+import com.ncm.electro.dto.client.ClientPromotionResponse;
 import com.ncm.electro.entity.BaseEntity;
 import com.ncm.electro.entity.inventory.DocketVariant;
 import com.ncm.electro.entity.product.Product;
@@ -50,15 +51,14 @@ public class ClientProductServiceImpl implements ClientProductService{
 
         List<ClientListedProductResponse> clientListedProductResponses = new ArrayList<>();
         for (Product product : products) {
-            ClientListedProductResponse clientListedProductResponse = clientProductMapper.entityToListedResponse(product);
-
             List<DocketVariant> transactions = docketVariantRepository.findByProductId(product.getId());
             Map<String, Integer> inventoryIndices = InventoryUtils.calculateInventoryIndices(transactions);
-            clientListedProductResponse.setSaleable(inventoryIndices.get("available") > 0);
 
             List<Promotion> promotions = promotionRepository.findActivePromotionByProductId(product.getId());
-            clientListedProductResponse.setPromotion(
-                    clientPromotionMapper.entityToResponse(!promotions.isEmpty() ? promotions.getFirst() : null));
+            ClientPromotionResponse clientPromotionResponse =
+                    clientPromotionMapper.entityToResponse(!promotions.isEmpty() ? promotions.getFirst() : null);
+
+            ClientListedProductResponse clientListedProductResponse = clientProductMapper.entityToListedResponse(product, inventoryIndices, clientPromotionResponse);
 
             clientListedProductResponses.add(clientListedProductResponse);
         }
@@ -118,11 +118,14 @@ public class ClientProductServiceImpl implements ClientProductService{
 
         List<ClientListedProductResponse> relateProductResponses = new ArrayList<>();
         for(Product relateProduct: relateProducts) {
-            ClientListedProductResponse relateProductResponse = clientProductMapper.entityToListedResponse(relateProduct);
+            Map<String, Integer> inventoryIndices = InventoryUtils
+                    .calculateInventoryIndices(docketVariantRepository.findByProductId(product.getId()));
 
-            relateProductResponse.setSaleable(InventoryUtils
-                    .calculateInventoryIndices(docketVariantRepository.findByProductId(product.getId()))
-                    .get("available") > 0);
+            List<Promotion> promotions = promotionRepository.findActivePromotionByProductId(product.getId());
+            ClientPromotionResponse clientPromotionResponse =
+                    clientPromotionMapper.entityToResponse(!promotions.isEmpty() ? promotions.getFirst() : null);
+
+            ClientListedProductResponse relateProductResponse = clientProductMapper.entityToListedResponse(relateProduct, inventoryIndices, clientPromotionResponse);
 
             relateProductResponses.add(relateProductResponse);
         }

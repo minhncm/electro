@@ -29,6 +29,4 @@ public class ClientOrderController {
     public ResponseEntity<ClientOrderResponse> getOrder(@PathVariable String code) {
         return ResponseEntity.status(HttpStatus.OK).body(clientOrderService.findByCode(code));
     }
-
-
 }

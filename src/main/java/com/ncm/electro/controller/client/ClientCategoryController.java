@@ -28,7 +28,7 @@ public class ClientCategoryController {
     }
 
     @GetMapping("/{slug}/filters")
-    public ResponseEntity<ClientFilterResponse> getBrandsByCategorySlug(@PathVariable String slug) {
+    public ResponseEntity<ClientFilterResponse> getFilterBySlug(@PathVariable String slug) {
         return ResponseEntity.status(HttpStatus.OK).body(clientCategoryService.findFilterBySlug(slug));
     }
 }
