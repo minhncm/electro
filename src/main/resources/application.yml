@@ -23,4 +23,9 @@ spring:
       enabled: true
       poll-interval: 1000
       quiet-period: 400
+jwt:
+  access-key: NNeD/wMEwa+XqRdj+uQ/YUodsw7JjmMjuzLhwyO+JSo=
+  refresh-key: y3ZiVQV/AIAeyLwf0wTIx/8ZdCsrhgn9OmD/qtlIfqg=
+  expiration-hour: 1
+  expiration-day: 7
 

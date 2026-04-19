@@ -5,4 +5,5 @@ public final class FieldName {
     public static final String ID = "id";
     public static final String SLUG = "slug";
     public static final String ORDER_CODE = "order_code";
+    public static final String USERNAME = "username";
 }

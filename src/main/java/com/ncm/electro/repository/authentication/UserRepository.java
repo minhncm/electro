@@ -8,9 +8,13 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     @Override
     @EntityGraph(attributePaths = {"roles", "address.province", "address.district", "address.ward",})
     Page<User> findAll(Specification<User> specification, Pageable pageable);
+
+    Optional<User> findByUsername(String username);
 }

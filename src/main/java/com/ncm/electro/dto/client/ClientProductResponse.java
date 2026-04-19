@@ -31,7 +31,7 @@ public class ClientProductResponse {
     private int countReviews;
     private List<ClientListedProductResponse> relateProducts;
     @Nullable
-    private ClientPromotionResponse promotions;
+    private ClientPromotionResponse promotion;
 
     @Data
     @Accessors(chain = true)

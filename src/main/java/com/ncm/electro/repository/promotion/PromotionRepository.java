@@ -12,4 +12,8 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long>, Jpa
     @Query("SELECT pr FROM Promotion pr join pr.products p WHERE p.id = :productId AND pr.status = 1 " +
             "AND CURRENT_DATE BETWEEN pr.startDate AND pr.endDate")
     List<Promotion> findActivePromotionByProductId(Long productId);
+
+    @Query("SELECT pr FROM Promotion pr join pr.products p WHERE p.id IN :productId AND pr.status = 1 " +
+            "AND CURRENT_DATE BETWEEN pr.startDate AND pr.endDate")
+    List<Promotion> findActivePromotionByProductId(List<Long> productId);
 }

@@ -16,5 +16,12 @@ public interface DocketVariantRepository extends JpaRepository<DocketVariant, Do
             "ORDER BY dv.docket.id desc")
     List<DocketVariant> findByProductId(Long productId);
 
+    @Query(value = "SELECT dv " +
+            "FROM DocketVariant dv " +
+            "JOIN dv.variant v " +
+            "WHERE v.product.id IN :productIds " +
+            "ORDER BY dv.docket.id desc")
+    List<DocketVariant> findByProductId(List<Long> productIds);
+
     List<DocketVariant> findByVariantId(Long variantId);
 }
