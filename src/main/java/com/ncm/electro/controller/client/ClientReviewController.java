@@ -10,6 +10,7 @@ import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,20 +30,25 @@ public class ClientReviewController {
         return ResponseEntity.status(HttpStatus.OK).body(clientReviewService.findAllByProductSlug(slug, page, size, sort, filter));
     }
 
-    //TODO: doi param username sau khi lam auth
     @GetMapping
     public ResponseEntity<ListResponse<ClientReviewResponse>> getAllReviewsByUser(
-            @RequestParam(name = "username") String username,
+            Authentication authentication,
             @RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
             @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
             @RequestParam(name = "sort", defaultValue = AppConstants.DEFAULT_SORT) String sort,
             @RequestParam @Nullable String filter) {
+        String username = authentication.getName();
         return ResponseEntity.status(HttpStatus.OK).body(clientReviewService.finaAllByUsername(username, page, size, sort, filter));
     }
 
     @PostMapping
     public ResponseEntity<ClientReviewResponse> createReview(@RequestBody ClientReviewRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body(clientReviewService.save(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientReviewService.createReview(request));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientReviewResponse> updateReview(@PathVariable Long id, @RequestBody ClientReviewRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(clientReviewService.updateReview(id, request));
     }
 
     @DeleteMapping

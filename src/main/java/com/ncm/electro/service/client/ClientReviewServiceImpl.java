@@ -1,10 +1,12 @@
 package com.ncm.electro.service.client;
 
+import com.ncm.electro.constant.FieldName;
 import com.ncm.electro.dto.ListResponse;
 import com.ncm.electro.dto.client.ClientReviewByProductResponse;
 import com.ncm.electro.dto.client.ClientReviewRequest;
 import com.ncm.electro.dto.client.ClientReviewResponse;
 import com.ncm.electro.entity.review.Review;
+import com.ncm.electro.exception.ResourceNotFoundException;
 import com.ncm.electro.mapper.client.ClientReviewMapper;
 import com.ncm.electro.repository.order.OrderRepository;
 import com.ncm.electro.repository.review.ReviewRepository;
@@ -50,11 +52,20 @@ public class ClientReviewServiceImpl implements ClientReviewService{
     }
 
     @Override
-    public ClientReviewResponse save(ClientReviewRequest request) {
+    public ClientReviewResponse createReview(ClientReviewRequest request) {
         Review review = clientReviewMapper.requestToEntity(request);
         if(!orderRepository.existsDeliveredAndPaidByProductId(request.getProductId())) {
             throw new RuntimeException("Not allowed");
         }
+        reviewRepository.save(review);
+        return clientReviewMapper.entityToResponse(review);
+    }
+
+    @Override
+    public ClientReviewResponse updateReview(Long id, ClientReviewRequest request) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(Review.class.getSimpleName(), FieldName.ID, id));
+        review = clientReviewMapper.partialUpdate(review, request);
         reviewRepository.save(review);
         return clientReviewMapper.entityToResponse(review);
     }

@@ -7,6 +7,7 @@ import com.ncm.electro.service.client.ClientCartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +18,9 @@ import java.util.List;
 public class ClientCartController {
     private final ClientCartService clientCartService;
 
-    //TODO: thay doi param thanh authentication
     @GetMapping
-    public ResponseEntity<ClientCartResponse> getCart(@RequestParam String username) {
+    public ResponseEntity<ClientCartResponse> getCart(Authentication authentication) {
+        String username = authentication.getName();
         return ResponseEntity.status(HttpStatus.OK).body(clientCartService.findByUsername(username));
     }
 

@@ -33,4 +33,15 @@ public class ApplicationExceptionHandler {
         );
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(DuplicatedWishException.class)
+    public ErrorMessage duplicateWishExceptionHandler(DuplicatedWishException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.CONFLICT.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
+
 }

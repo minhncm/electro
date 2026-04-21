@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,18 +33,17 @@ public class WebSecurityConfig {
             "/api/auth/**",
             "/client-api/products/**",
             "/client-api/categories/**",
-            "/client-api/reviews/products/{slug}"};
+            "/client-api/reviews/products/{slug}"
+    };
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 
+
+    //TODO: Hiện tại chỉ xác thực bằng username, password, về sau nếu mở rộng xác thực nhiều cách thì sẽ config lại AuthenticationManager
     @Bean
-    public AuthenticationManager authenticationManager(
-            UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder ) throws Exception {
-        var authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder);
-        return new ProviderManager(authProvider);
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+            throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
     @Bean

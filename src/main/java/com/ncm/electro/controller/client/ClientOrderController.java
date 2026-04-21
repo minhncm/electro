@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class ClientOrderController {
     private final ClientOrderService clientOrderService;
     @GetMapping
-    public ResponseEntity<ListResponse<ClientSimpleOrderResponse>> getAllOrders(
+    public ResponseEntity<ListResponse<ClientSimpleOrderResponse>> getAllOrdersByUsername(
+            Authentication authentication,
             @RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
             @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
             @RequestParam(name = "sort", defaultValue = AppConstants.DEFAULT_SORT) String sort,
-            @RequestParam(name = "filter") @Nullable String filter) {
-        return ResponseEntity.status(HttpStatus.OK).body(clientOrderService.findAll(page, size, sort, filter));
+            @RequestParam(name = "filter", required = false) @Nullable String filter) {
+        String username = authentication.getName();
+        return ResponseEntity.status(HttpStatus.OK).body(clientOrderService.findAllByUsername(username, page, size, sort, filter));
     }
 
     @GetMapping("/{code}")

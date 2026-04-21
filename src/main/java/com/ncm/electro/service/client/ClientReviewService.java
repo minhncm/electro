@@ -10,6 +10,7 @@ import java.util.List;
 public interface ClientReviewService {
     ListResponse<ClientReviewByProductResponse> findAllByProductSlug(String slug, int page, int size, String sort, String filter);
     ListResponse<ClientReviewResponse> finaAllByUsername(String username, int page, int size, String sort, String filter);
-    ClientReviewResponse save(ClientReviewRequest request);
+    ClientReviewResponse createReview(ClientReviewRequest request);
+    ClientReviewResponse updateReview(Long id, ClientReviewRequest request);
     void deleteAllByIds(List<Long> ids);
 }
