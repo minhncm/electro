@@ -1,63 +1,24 @@
-import { Card, ColorSwatch, Grid, Group, Pagination, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import {
+  Card,
+  ColorSwatch,
+  Grid,
+  Group,
+  Pagination,
+  Stack,
+  Text,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import ClientUserNavbar from "~/components/ClientUserNavbar/ClientUserNavbar";
 import Container from "~/components/Container/Container";
 import ClientReviewCard from "./ClientReviewCard";
 import { Marquee } from "tabler-icons-react";
-
-const reviews = {
-  content: [
-    {
-      reviewId: 2,
-      reviewCreatedAt: "2025-10-29T14:32:50Z",
-      reviewUpdatedAt: "2025-10-29T14:32:50Z",
-      reviewProduct: {
-        productId: 6,
-        productName: "Loa Harman Kardon Onyx Studio 7",
-        productSlug: "harman",
-        productThumbnail:
-          "https://media-api-beta.thinkpro.vn/media/core/products/2022/11/18/Loa-Harman-Kardon-Onyx-Studio-7-thinkpro-01.jpeg?w=700&h=700",
-        productPriceRange: [1.1e7],
-        productVariants: [
-          {
-            variantId: 8,
-            variantPrice: 1.1e7,
-            variantProperties: {
-              content: [
-                {
-                  id: 1,
-                  code: "size",
-                  name: "Kích cỡ",
-                  value: "L",
-                },
-                {
-                  id: 2,
-                  code: "color",
-                  name: "Màu sắc",
-                  value: "Đỏ",
-                },
-              ],
-              totalElements: 2,
-            },
-          },
-        ],
-        productSaleable: false,
-        productPromotion: null,
-      },
-      reviewRatingScore: 5,
-      reviewContent: "ok giao nhanh, hàng chất lượng",
-      reviewReply: null,
-      reviewStatus: 2,
-    },
-  ],
-  page: 1,
-  size: 5,
-  totalElements: 1,
-  totalPages: 1,
-  last: true,
-};
+import { useGetAllReviewsByUser } from "~/hooks/client/use-review-api";
 
 function ClientReview() {
   const theme = useMantineTheme();
+
+  const { data: reviews } = useGetAllReviewsByUser();
 
   let reviewContentFragment;
 
@@ -77,7 +38,7 @@ function ClientReview() {
       <>
         <Stack gap="xs">
           {reviews.content.map((review) => (
-            <ClientReviewCard key={review.reviewId} review={review} />
+            <ClientReviewCard key={review.id} review={review} />
           ))}
         </Stack>
 
@@ -113,7 +74,10 @@ function ClientReview() {
                   withBorder
                   style={{
                     maxWidth: "fit-content",
-                    borderColor: theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2],
+                    borderColor:
+                      theme.colorScheme === "dark"
+                        ? theme.colors.dark[4]
+                        : theme.colors.gray[2],
                   }}
                 >
                   <Group gap="lg">

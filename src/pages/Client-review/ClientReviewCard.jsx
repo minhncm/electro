@@ -1,24 +1,39 @@
-import { Anchor, Blockquote, Button, Card, Group, Image, rgba, Stack, Text, useMantineTheme } from "@mantine/core";
+import {
+  Anchor,
+  Blockquote,
+  Button,
+  Card,
+  Group,
+  Image,
+  rgba,
+  Stack,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
 import { Link } from "react-router-dom";
 import { Trash } from "tabler-icons-react";
 import ReviewBadge from "~/components/ReviewBadge/ReviewBadge";
 import ReviewStar from "~/components/ReviewStar";
+import { useDeleteReviews } from "~/hooks/client/use-review-api";
 import onModalDelete from "~/utils/ModalsUtil";
 
 function ClientReviewCard({ review }) {
   const theme = useMantineTheme();
   const cardStyle = {
     backgroundColor:
-      review.reviewStatus === 1
+      review.status === 1
         ? theme.colorScheme === "dark"
           ? theme.colors.dark[5]
           : theme.colors.gray[0]
         : theme.colorScheme === "dark"
-        ? rgba(theme.colors[review.reviewStatus === 2 ? "teal" : "pink"][8], 0.25)
-        : rgba(theme.colors[review.reviewStatus === 2 ? "teal" : "pink"][1], 0.5),
+          ? rgba(theme.colors[review.status === 2 ? "teal" : "pink"][8], 0.25)
+          : rgba(theme.colors[review.status === 2 ? "teal" : "pink"][1], 0.5),
   };
-  const handleDeleteReviewButton = () => {
-    const onConfirm = () => alert("Comfirm");
+
+  const deleteApi = useDeleteReviews();
+
+  const handleDeleteReviewButton = (id) => {
+    const onConfirm = () => deleteApi.mutate([id]);
     onModalDelete("Xóa đánh giá ở sản phẩm này", onConfirm);
   };
   return (
@@ -31,21 +46,26 @@ function ClientReviewCard({ review }) {
                 radius="md"
                 w={22}
                 h={22}
-                src={review.reviewProduct.productThumbnail || undefined}
-                alt={review.reviewProduct.productName}
+                src={review.product.thumbnail || undefined}
+                alt={review.product.name}
               />
-              <Anchor component={Link} to={`/product/${review.reviewProduct.productSlug}`} fw={500} size="sm">
-                {review.reviewProduct.productName}
+              <Anchor
+                component={Link}
+                to={`/product/${review.product.slug}`}
+                fw={500}
+                size="sm"
+              >
+                {review.product.name}
               </Anchor>
             </Group>
 
             <Text size="sm" c="dimmed">
-              {review.reviewCreatedAt}
+              {review.createdAt}
             </Text>
 
-            <ReviewStar score={review.reviewRatingScore} />
+            <ReviewStar score={review.ratingScore} />
 
-            <ReviewBadge status={review.reviewStatus} />
+            <ReviewBadge status={review.status} />
           </Group>
 
           <Button
@@ -53,26 +73,28 @@ function ClientReviewCard({ review }) {
             color="red"
             size="xs"
             leftSection={<Trash size={18} strokeWidth={1.5} />}
-            onClick={handleDeleteReviewButton}
+            onClick={() => handleDeleteReviewButton(review.id)}
           >
             Xóa
           </Button>
         </Group>
 
         <Blockquote
-          color={review.reviewStatus === 1 ? "gray" : review.reviewStatus === 2 ? "teal" : "pink"}
+          color={
+            review.status === 1 ? "gray" : review.status === 2 ? "teal" : "pink"
+          }
           style={{ fontSize: theme.fontSizes.sm }}
         >
-          {review.reviewContent}
+          {review.content}
         </Blockquote>
 
-        {review.reviewReply && (
+        {review.reply && (
           <Card p="sm" radius="md" style={cardStyle}>
             <Stack gap="xs">
               <Text size="sm" fw={500}>
                 Phản hồi từ khách hàng
               </Text>
-              <Text size="sm">{review.reviewReply}</Text>
+              <Text size="sm">{review.reply}</Text>
             </Stack>
           </Card>
         )}
