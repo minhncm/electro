@@ -10,23 +10,11 @@ const httpRequest = axios.create({
   withCredentials: true,
 });
 
-const getToken = (isAdmin) => {
-  const key = isAdmin ? "electro-admin-auth-store" : "electro-auth-store";
-  return JSON.parse(localStorage.getItem(key) || "{}").state?.jwtToken;
-};
-
 httpRequest.interceptors.request.use(
   (config) => {
-    // if (config.auth) {
-    //   const token = getToken(config.isAdmin); // them khi call api coi quyen admin
-    //   if (token) {
-    //     config.headers.Authorization = `Bearer ${token}`;
-    //   }
-    // }
     return config;
   },
   (error) => {
-    console.log(error);
     return Promise.reject(error);
   },
 );
@@ -41,7 +29,6 @@ httpRequest.interceptors.response.use(
 );
 
 class FetchUtils {
-
   static async getAll(url, params = {}) {
     return await httpRequest.get(url, { params });
   }
@@ -50,12 +37,20 @@ class FetchUtils {
     return await httpRequest.get(url + "/" + enityId);
   }
 
-  static async create(url, data) {
+  static async get(url) {
+    return await httpRequest.get(url);
+  }
+
+  static async post(url, data) {
     return await httpRequest.post(url, data);
   }
 
-  static async update(url, entityId, data) {
+  static async putById(url, entityId, data) {
     return await httpRequest.put(url + "/" + entityId, data);
+  }
+
+  static async put(url, data) {
+    return await httpRequest.put(url, data);
   }
 
   static async deleteById(url, entityId) {

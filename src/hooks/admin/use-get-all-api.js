@@ -34,6 +34,7 @@ function useGetAllApi(
     if (query.isSuccess && query.data && successCallBack) {
       successCallBack(query.data);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.isSuccess, query.data]);
 
   return query;

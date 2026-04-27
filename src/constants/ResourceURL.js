@@ -66,6 +66,13 @@ const ResourceUrl = {
   CLIENT_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/products",
   CLIENT_REVIEW: ApplicationPath.CLIENT_API_PATH + "/reviews",
   CLIENT_REVIEW_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/reviews/products",
+  CLIENT_USER_INFO: ApplicationPath.CLIENT_API_PATH + "/users/info",
+  CLIENT_CART: ApplicationPath.CLIENT_API_PATH + "/carts",
+
+  // AUTHENTICATION
+  AUTH_ME: ApplicationPath.API_PATH + "/auth/me",
+  LOGIN: ApplicationPath.API_PATH + "/auth/login",
+  LOGOUT: ApplicationPath.API_PATH + "/auth/logout",
 };
 
 export default ResourceUrl;

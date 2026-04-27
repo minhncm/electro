@@ -1,4 +1,4 @@
-import { TextInput } from "@mantine/core";
+import { LoadingOverlay, TextInput } from "@mantine/core";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -21,6 +21,7 @@ import {
 } from "tabler-icons-react";
 import Container from "~/components/Container/Container";
 import ElectroLogo from "~/components/ElectroLogo/ElectroLogo";
+import { useLogoutApi } from "~/hooks/client/use-auth-api";
 import { useGetAllCategories } from "~/hooks/client/use-category-api";
 import Badge from "../common/Bagde";
 import Button from "../common/Button";
@@ -33,22 +34,29 @@ import {
 import Popover from "../common/Popover";
 import Tooltip from "../common/Tooltip";
 import CategoryHeader from "./CategoryHeader";
+import useAuthStore from "~/stores/use-auth-store";
 
 function ClientHeader() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
   const { data: categories } = useGetAllCategories();
+  const { user } = useAuthStore();
 
   const handleSearchInput = (event) => {
     if (event.key === "Enter" && search.trim() !== "") {
+      setSearch("");
       navigate("/search?q=" + search.trim());
     }
   };
 
-  if (!categories) return null;
+  const logoutApi = useLogoutApi();
+  const handleLogout = () => {
+    logoutApi.mutate();
+  };
 
-  const user = true;
+  if (!categories) return <LoadingOverlay />;
+
   return (
     <header className="bg-header mb-8 shadow-[0px_3px_8px_-7px]">
       <Container>
@@ -172,8 +180,7 @@ function ClientHeader() {
                         Yêu cầu tư vấn
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        component={Link}
-                        to={"/user"}
+                        onClick={handleLogout}
                         icon={<Logout size={14} />}
                       >
                         Đăng xuất
@@ -184,14 +191,14 @@ function ClientHeader() {
                     <>
                       <DropdownMenuItem
                         component={Link}
-                        to={"user/"}
+                        to={"/signin"}
                         icon={<Login size={14} />}
                       >
                         Đăng nhập
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         component={Link}
-                        to={"user/"}
+                        to={"/signup"}
                         icon={<Fingerprint size={14} />}
                       >
                         Đăng ký

@@ -4,7 +4,7 @@ import NotifyUtils from "~/utils/NotifyUtils";
 
 function useCreateApi(resourceUrl) {
   return useMutation({
-    mutationFn: (data) => FetchUtils.create(resourceUrl, data),
+    mutationFn: (data) => FetchUtils.post(resourceUrl, data),
     onSuccess: () => NotifyUtils.simpleSuccess("Tạo thành công"),
     onError: () => NotifyUtils.simpleFailed("Tạo không thành công"),
   });

@@ -111,16 +111,14 @@ function ClientProductIntro({ product }) {
                     <ReviewStar score={product.averageRatingScore} />
                     <Text size="sm">{product.countReviews} đánh giá</Text>
                   </Group>
-
-                  {/* TODO: Doanh số sản phẩm */}
                   <Group spacing={5}>
                     <ShoppingCart
                       size={18}
                       strokeWidth={1.5}
                       color={theme.colors.teal[7]}
                     />
-                    <Text size="sm" color="teal">
-                      120 đã mua
+                    <Text size="sm" c="teal">
+                      {product.soldQuantity} đã mua
                     </Text>
                   </Group>
                 </Group>

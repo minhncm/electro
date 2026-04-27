@@ -6,7 +6,6 @@ import { categorySlugIconMap } from "~/pages/PageConfig";
 
 function ClientHomeFeaturedCategories() {
   const { data: categories } = useGetAllCategories();
-  console.log(222);
 
   if (!categories) return null;
 

@@ -36,7 +36,7 @@ export const DropdownMenuItem = ({
   const isLink = Comp === Link;
   return (
     <DropdownMenuPrimitive.Item asChild {...props}>
-      <Comp
+      <Comp 
         {...(isLink ? { to } : {})}
         className={clsx(
           "flex items-center text-sm px-3 py-2.5 leading-[14px] cursor-pointer select-none outline-none hover:bg-[#f8f9fa] transition-colors",

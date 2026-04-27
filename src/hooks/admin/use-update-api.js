@@ -5,7 +5,7 @@ import NotifyUtils from "~/utils/NotifyUtils";
 
 function useUpdateApi(resourceUrl, resourceKey, entityId) {
   return useMutation({
-    mutationFn: (data) => FetchUtils.update(resourceUrl, entityId, data),
+    mutationFn: (data) => FetchUtils.putById(resourceUrl, entityId, data),
     onSuccess: () => {
       NotifyUtils.simpleSuccess("Cập nhật thành công");
       queryClient.invalidateQueries({

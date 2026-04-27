@@ -9,47 +9,14 @@ import {
 import Container from "~/components/Container/Container";
 import ClientCartItem from "./ClientCartItem";
 import Button from "~/components/common/Button";
-
-const carts = {
-  cartId: 3,
-  cartItems: [
-    {
-      cartItemVariant: {
-        variantId: 1,
-        variantProduct: {
-          productId: 1,
-          productName: "Dell XPS 13 9315",
-          productSlug: "ealdus0",
-          productThumbnail:
-            "https://media-api-beta.thinkpro.vn/media/core/products/2022/5/9/xps%2013%20plus%209320%201.png?w=700&h=700",
-          productPromotion: null,
-        },
-        variantPrice: 5500000.0,
-        variantProperties: {
-          content: [
-            {
-              id: 1,
-              code: "size",
-              name: "Kích cỡ",
-              value: "S",
-            },
-            {
-              id: 2,
-              code: "color",
-              name: "Màu sắc",
-              value: "Đỏ",
-            },
-          ],
-          totalElements: 2,
-        },
-        variantInventory: 2,
-      },
-      cartItemQuantity: 1,
-    },
-  ],
-};
+import { useCartApi } from "~/hooks/client/use-cart-api";
+import { LoadingOverlay } from "@mantine/core";
 
 function ClientCart() {
+  const { data: cart } = useCartApi();
+
+  if (!cart) return <LoadingOverlay />;
+
   return (
     <main>
       <Container>
@@ -98,13 +65,7 @@ function ClientCart() {
                         </tr>
                       </thead>
                       <tbody>
-                        {carts.cartItems.map((cartItem) => (
-                          <ClientCartItem
-                            key={cartItem.cartItemVariant.variantId}
-                            cartItem={cartItem}
-                          />
-                        ))}
-                        {carts.cartItems.length === 0 && (
+                        {cart.cartVariants?.length === 0 && (
                           <tr>
                             <td
                               colSpan={5}
@@ -119,6 +80,13 @@ function ClientCart() {
                             </td>
                           </tr>
                         )}
+                        {cart.cartVariants?.map((cartItem) => (
+                          <ClientCartItem
+                            key={cartItem.variant.id}
+                            cartItem={cartItem}
+                            cartId={cart.id}
+                          />
+                        ))}
                       </tbody>
                     </table>
                   </div>

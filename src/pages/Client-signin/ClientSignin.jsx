@@ -15,13 +15,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AlertCircle } from "tabler-icons-react";
 import Container from "~/components/Container/Container";
+import useClientSigninViewModel from "./ClientSignin.vm";
 
 function ClientSignin() {
   const theme = useMantineTheme();
-  const user = true;
-  const [openedAlert, setOpenedAlert] = useState(false);
-  const [counter, setCounter] = useState(3);
-  const navigate = useNavigate();
 
   const cardStyle = {
     wrapper: {
@@ -40,20 +37,27 @@ function ClientSignin() {
     },
   };
 
-  useEffect(() => {
-    if (openedAlert && user && counter > 0) {
-      setTimeout(() => setCounter(counter - 1), 1000);
-    }
+  const [counter, setCounter] = useState(3);
+  const navigate = useNavigate();
+  const { form, isSuccessLogin, handleFormSubmit } = useClientSigninViewModel();
 
-    if (counter === 0) {
-      navigate("/");
+  useEffect(() => {
+    if (!isSuccessLogin) return;
+
+    if (counter > 0) {
+      const timer = setTimeout(
+        () => setCounter((counter) => counter - 1),
+        1000,
+      );
+      return () => clearTimeout(timer);
     }
-  }, [openedAlert, user, counter, navigate]);
+    navigate("/");
+  }, [isSuccessLogin, counter, navigate]);
 
   return (
     <main>
       <Container>
-        <Transition>
+        <Transition mounted={isSuccessLogin} transition="fade" duration={500}>
           {(styles) => (
             <Alert
               style={styles}
@@ -74,22 +78,26 @@ function ClientSignin() {
               Đăng nhập
             </Title>
 
-            <form>
+            <form onSubmit={handleFormSubmit}>
               <TextInput
+                key={form.key("username")}
                 required
                 radius="md"
                 label="Tên tài khoản"
                 placeholder="Nhập tên tài khoản của bạn"
                 size="md"
+                {...form.getInputProps("username")}
               />
 
               <PasswordInput
+                key={form.key("password")}
                 required
                 label="Mật khẩu"
                 radius="md"
                 placeholder="Nhập mật khẩu của bạn"
                 mt="md"
                 size="md"
+                {...form.getInputProps("password")}
               />
 
               <Box mt={5}>
