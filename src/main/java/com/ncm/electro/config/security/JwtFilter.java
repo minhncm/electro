@@ -5,6 +5,7 @@ import com.ncm.electro.service.authentication.AuthUserDetailService;
 import com.ncm.electro.service.jwt.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +17,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
-
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 @RequiredArgsConstructor
@@ -29,13 +27,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String authHeader = request.getHeader(AUTHORIZATION);
-        if(!StringUtils.hasText(authHeader) || !authHeader.startsWith("Bearer ")) {
+
+        String token = getTokenFromRequest(request);
+        if(token == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = authHeader.substring(7);
         String username = jwtService.extraUsername(token, TokenType.ACCESS_TOKEN);
 
         if(StringUtils.hasText(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -51,5 +49,17 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String getTokenFromRequest(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies == null) return null;
+
+        for (Cookie cookie : cookies) {
+            if ("accessToken".equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
 }

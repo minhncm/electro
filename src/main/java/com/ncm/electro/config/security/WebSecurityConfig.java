@@ -33,7 +33,7 @@ public class WebSecurityConfig {
             "/api/auth/**",
             "/client-api/products/**",
             "/client-api/categories/**",
-            "/client-api/reviews/products/{slug}"
+            "/client-api/reviews/products/*"
     };
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
@@ -55,7 +55,6 @@ public class WebSecurityConfig {
                     auth.requestMatchers(WHITE_LIST).permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

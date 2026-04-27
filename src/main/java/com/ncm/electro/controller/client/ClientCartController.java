@@ -34,7 +34,8 @@ public class ClientCartController {
         return ResponseEntity.status(HttpStatus.OK).body(clientCartService.updateCartItem(request));
     }
 
-    public ResponseEntity<Void> deleteCartItems(@RequestParam List<ClientCartVariantKeyRequest> idRequests) {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteCartItems(@RequestBody List<ClientCartVariantKeyRequest> idRequests) {
         clientCartService.deleteCartItems(idRequests);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
