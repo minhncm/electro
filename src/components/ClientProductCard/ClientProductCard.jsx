@@ -13,13 +13,37 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
 import { BellPlus, HeartPlus, ShoppingCart } from "tabler-icons-react";
+import { useAddCartItem } from "~/hooks/client/use-cart-api";
+import { useAddWishItem } from "~/hooks/client/use-wish-api";
 import DefaultImage from "~/images/image_default.png";
+import useAuthStore from "~/stores/use-auth-store";
 import MiscUtils from "~/utils/MiscUtils";
 
 function ClientProductCard({ product, search }) {
   const theme = useMantineTheme();
 
+  const { user } = useAuthStore();
+  const addWishItemApi = useAddWishItem();
+  const addCartItemApi = useAddCartItem();
+
   const [opened, handler] = useDisclosure(false);
+
+  const handleAddWishItem = (event) => {
+    event.preventDefault();
+    addWishItemApi.mutate({
+      userId: user.id,
+      productId: product.id,
+    });
+  };
+
+  const handleAddCartItem = (event) => {
+    event.preventDefault();
+    addCartItemApi.mutate({
+      userId: user.id,
+      cartItems: [{ variantId: product.variants[0].id, quantity: 1 }],
+      status: 1,
+    });
+  };
   return (
     <Card
       radius="md"
@@ -71,6 +95,7 @@ function ClientProductCard({ product, search }) {
               radius="xl"
               variant="filled"
               title="Thêm vào danh sách yêu thích"
+              onClick={(e) => handleAddWishItem(e)}
             >
               <HeartPlus size={18} />
             </ActionIcon>
@@ -81,6 +106,7 @@ function ClientProductCard({ product, search }) {
                 radius="xl"
                 variant="filled"
                 title="Thêm vào giỏ hàng"
+                onClick={(e) => handleAddCartItem(e)}
               >
                 <ShoppingCart size={18} />
               </ActionIcon>

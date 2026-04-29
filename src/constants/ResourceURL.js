@@ -68,6 +68,7 @@ const ResourceUrl = {
   CLIENT_REVIEW_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/reviews/products",
   CLIENT_USER_INFO: ApplicationPath.CLIENT_API_PATH + "/users/info",
   CLIENT_CART: ApplicationPath.CLIENT_API_PATH + "/carts",
+  CLIENT_WISH: ApplicationPath.CLIENT_API_PATH + "/wishes",
 
   // AUTHENTICATION
   AUTH_ME: ApplicationPath.API_PATH + "/auth/me",

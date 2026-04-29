@@ -1,24 +1,27 @@
-import { Avatar, Button, Card, Divider, Grid, Group, Stack, Text, ThemeIcon, Title } from "@mantine/core";
+import {
+  Avatar,
+  Button,
+  Card,
+  Divider,
+  Grid,
+  Group,
+  LoadingOverlay,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
+} from "@mantine/core";
 import { Link } from "react-router-dom";
 import { Home, Lock, Mail, Mars, Phone } from "tabler-icons-react";
 import ClientUserNavbar from "~/components/ClientUserNavbar/ClientUserNavbar";
 import Container from "~/components/Container/Container";
-
-const user = {
-  fullname: "Nguyễn Công Minh",
-  username: "ncm",
-  gender: "M",
-  address: {
-    line: "Thôn Phú Mỹ",
-    ward: "Xã Quế Xuân 2",
-    district: "Huyện Quế Sơn",
-    province: "Tỉnh Quảng Nam",
-  },
-  phone: "0702772847",
-  email: "ncm071205@gmail.com",
-};
+import { useGetUser } from "~/hooks/client/use-user-api";
 
 function ClientUser() {
+  const { data: user } = useGetUser();
+
+  if (!user) return <LoadingOverlay />;
+
   return (
     <main>
       <Container>
@@ -48,7 +51,12 @@ function ClientUser() {
                             <Text c="dimmed">@{user.username}</Text>
                           </Stack>
                         </Group>
-                        <Button component={Link} to="/user/setting/personal" variant="outline" radius="md">
+                        <Button
+                          component={Link}
+                          to="/user/setting/personal"
+                          variant="outline"
+                          radius="md"
+                        >
                           Cập nhật
                         </Button>
                       </Group>
@@ -72,7 +80,12 @@ function ClientUser() {
                         <Stack gap={0}>
                           <Text fw={500}>Địa chỉ</Text>
                           <Text>
-                            {[user.address.line, user.address.ward, user.address.district, user.address.province]
+                            {[
+                              user.address.line,
+                              user.address.ward.name,
+                              user.address.district.name,
+                              user.address.province.name,
+                            ]
                               .filter(Boolean)
                               .join(", ")}
                           </Text>
@@ -97,7 +110,12 @@ function ClientUser() {
                             <Text>{user.phone}</Text>
                           </Stack>
                         </Group>
-                        <Button component={Link} to="/user/setting/phone" variant="outline" radius="md">
+                        <Button
+                          component={Link}
+                          to="/user/setting/phone"
+                          variant="outline"
+                          radius="md"
+                        >
                           Cập nhật
                         </Button>
                       </Group>
@@ -112,7 +130,12 @@ function ClientUser() {
                             <Text>{user.email}</Text>
                           </Stack>
                         </Group>
-                        <Button component={Link} to="/user/setting/email" variant="outline" radius="md">
+                        <Button
+                          component={Link}
+                          to="/user/setting/email"
+                          variant="outline"
+                          radius="md"
+                        >
                           Cập nhật
                         </Button>
                       </Group>
@@ -130,7 +153,12 @@ function ClientUser() {
                             <Text fw={500}>Đổi mật khẩu</Text>
                           </Stack>
                         </Group>
-                        <Button component={Link} to="/user/setting/password" variant="outline" radius="md">
+                        <Button
+                          component={Link}
+                          to="/user/setting/password"
+                          variant="outline"
+                          radius="md"
+                        >
                           Cập nhật
                         </Button>
                       </Group>

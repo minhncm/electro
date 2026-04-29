@@ -11,6 +11,7 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ArrowsDownUp, ChartCandle, Marquee } from "tabler-icons-react";
 import ClientProductCart from "~/components/ClientProductCard";
@@ -21,13 +22,15 @@ function ClientSearch() {
   const theme = useMantineTheme();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("q");
-
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState("latest");
+  const [saleable, setSaleable] = useState(false);
   const { data: products } = useGetAllProducts({
-    page: 1,
+    page,
     size: 12,
-    sort: "latest",
+    sort,
     search: searchQuery,
-    saleable: true,
+    saleable,
   });
 
   let resultFragment;
@@ -54,10 +57,14 @@ function ClientSearch() {
           ))}
         </Grid>
         <Group justify="space-between" mt="lg">
-          <Pagination value={1} total={products.totalPages} />
+          <Pagination
+            value={page}
+            total={products.totalPages}
+            onChange={(value) => setPage(value)}
+          />
           <Text>
             <Text component="span" fw={500}>
-              Trang 1
+              Trang {page}
             </Text>
             <span> / {products.totalPages}</span>
           </Text>
@@ -86,7 +93,7 @@ function ClientSearch() {
                 <Text fw={500} mr={theme.spacing.xs}>
                   Sắp xếp theo
                 </Text>
-                <RadioGroup>
+                <RadioGroup onChange={(value) => setSort(value)}>
                   <Group>
                     <Radio value="" label="Mới nhất" />
                     <Radio value="lowest-price" label="Giá thấp → cao" />
@@ -102,7 +109,10 @@ function ClientSearch() {
               <Text fw={500} mr={theme.spacing.xs}>
                 Lọc theo
               </Text>
-              <Checkbox label="Chỉ tính còn hàng" />
+              <Checkbox
+                label="Chỉ tính còn hàng"
+                onChange={(e) => setSaleable(e.target.checked)}
+              />
             </Group>
 
             {resultFragment}

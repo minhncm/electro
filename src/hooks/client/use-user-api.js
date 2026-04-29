@@ -6,6 +6,5 @@ export const useGetUser = () => {
   return useQuery({
     queryKey: ["client-api", "getCurrentUser"],
     queryFn: () => FetchUtils.get(ResourceUrl.CLIENT_USER_INFO),
-    retry: false,
   });
 };
