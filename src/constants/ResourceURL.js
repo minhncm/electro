@@ -4,6 +4,7 @@ const ResourceUrl = {
   ADDRESS: ApplicationPath.API_PATH + "/addresses",
   PROVINCE: ApplicationPath.API_PATH + "/provinces",
   DISTRICT: ApplicationPath.API_PATH + "/districts",
+  WARD: ApplicationPath.API_PATH + "/wards",
 
   USER: ApplicationPath.API_PATH + "/users",
   ROLE: ApplicationPath.API_PATH + "/roles",
@@ -67,6 +68,10 @@ const ResourceUrl = {
   CLIENT_REVIEW: ApplicationPath.CLIENT_API_PATH + "/reviews",
   CLIENT_REVIEW_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/reviews/products",
   CLIENT_USER_INFO: ApplicationPath.CLIENT_API_PATH + "/users/info",
+  CLIENT_USER_PERSONAL: ApplicationPath.CLIENT_API_PATH + "/users/personal",
+  CLIENT_USER_PHONE: ApplicationPath.CLIENT_API_PATH + "/users/phone",
+  CLIENT_USER_EMAIL: ApplicationPath.CLIENT_API_PATH + "/users/email",
+  CLIENT_USER_PASSWORD: ApplicationPath.CLIENT_API_PATH + "/users/password",
   CLIENT_CART: ApplicationPath.CLIENT_API_PATH + "/carts",
   CLIENT_WISH: ApplicationPath.CLIENT_API_PATH + "/wishes",
 

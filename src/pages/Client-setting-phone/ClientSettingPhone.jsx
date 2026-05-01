@@ -1,8 +1,10 @@
 import { Button, Card, Grid, Stack, TextInput, Title } from "@mantine/core";
 import ClientUserNavbar from "~/components/ClientUserNavbar/ClientUserNavbar";
 import Container from "~/components/Container/Container";
+import useClientSettingPhoneViewModel from "./useClientSettingPhone.vm";
 
 function ClientSettingPhone() {
+  const { form, handleFormSubmit } = useClientSettingPhoneViewModel();
   return (
     <main>
       <Container>
@@ -17,13 +19,15 @@ function ClientSettingPhone() {
                 <Title order={2}>Cập nhật số điện thoai</Title>
                 <Grid>
                   <Grid.Col span={6}>
-                    <form>
+                    <form onSubmit={handleFormSubmit}>
                       <Stack>
                         <TextInput
+                          key={form.key("phone")}
                           required
                           radius="md"
                           label="Số điện thoại"
                           placeholder="Nhập số điện thoại của bạn"
+                          {...form.getInputProps("phone")}
                         />
                         <Button radius="md" type="submit">
                           Cập nhật

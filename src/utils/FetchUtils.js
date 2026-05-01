@@ -53,6 +53,10 @@ class FetchUtils {
     return await httpRequest.put(url, data);
   }
 
+  static async patch(url, data) {
+    return await httpRequest.patch(url, data);
+  }
+
   static async deleteById(url, entityId) {
     return await httpRequest.delete(url + "/" + entityId);
   }

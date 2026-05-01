@@ -1,8 +1,10 @@
 import { Button, Card, Grid, Stack, TextInput, Title } from "@mantine/core";
 import ClientUserNavbar from "~/components/ClientUserNavbar/ClientUserNavbar";
 import Container from "~/components/Container/Container";
+import useClientSettingEmailViewModel from "./useClientSettingEmail.vm";
 
 function ClientSettingEmail() {
+  const { form, handleFormSubmit } = useClientSettingEmailViewModel();
   return (
     <main>
       <Container>
@@ -17,9 +19,16 @@ function ClientSettingEmail() {
                 <Title order={2}>Cập nhật email</Title>
                 <Grid>
                   <Grid.Col span={6}>
-                    <form>
+                    <form onSubmit={handleFormSubmit}>
                       <Stack>
-                        <TextInput required radius="md" label="Email" placeholder="Nhập email của bạn" />
+                        <TextInput
+                          key={form.key("email")}
+                          required
+                          radius="md"
+                          label="Email"
+                          placeholder="Nhập email của bạn"
+                          {...form.getInputProps("email")}
+                        />
                         <Button radius="md" type="submit">
                           Cập nhật
                         </Button>
