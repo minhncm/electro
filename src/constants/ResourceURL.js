@@ -74,6 +74,7 @@ const ResourceUrl = {
   CLIENT_USER_PASSWORD: ApplicationPath.CLIENT_API_PATH + "/users/password",
   CLIENT_CART: ApplicationPath.CLIENT_API_PATH + "/carts",
   CLIENT_WISH: ApplicationPath.CLIENT_API_PATH + "/wishes",
+  CLIENT_ORDER: ApplicationPath.CLIENT_API_PATH + "/orders",
 
   // AUTHENTICATION
   AUTH_ME: ApplicationPath.API_PATH + "/auth/me",

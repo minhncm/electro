@@ -81,6 +81,11 @@ export const paymentMethodIconMap = {
   PAYPAL: BrandPaypal,
 };
 
+export const paymentMethodNameMap = {
+  CASH: "Thanh toán tiền mặt",
+  PAYPAL: "Thanh toán PayPal",
+};
+
 const notificationType = {
   general: "GENERAL",
   error: "ERROR",
