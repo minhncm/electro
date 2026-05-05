@@ -2,6 +2,7 @@ package com.ncm.electro.service.client;
 
 import com.ncm.electro.constant.FieldName;
 import com.ncm.electro.dto.ListResponse;
+import com.ncm.electro.dto.client.ClientOrderRequest;
 import com.ncm.electro.dto.client.ClientOrderResponse;
 import com.ncm.electro.dto.client.ClientSimpleOrderResponse;
 import com.ncm.electro.entity.order.Order;
@@ -38,6 +39,11 @@ public class ClientOrderServiceImpl implements ClientOrderService{
         Order order = orderRepository.findByCode(code)
                 .orElseThrow(() -> new ResourceNotFoundException(Order.class.getSimpleName(), FieldName.ORDER_CODE, code));
         return clientOrderMapper.entityToResponse(order);
+    }
+
+    @Override
+    public ClientOrderResponse createOrder(ClientOrderRequest request) {
+        return null;
     }
 }
 

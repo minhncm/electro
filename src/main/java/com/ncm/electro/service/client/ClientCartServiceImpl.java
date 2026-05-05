@@ -45,7 +45,6 @@ public class ClientCartServiceImpl implements ClientCartService{
     }
 
     @Override
-    @Transactional
     public ClientCartResponse addCartItem(ClientCartRequest request) {
         Cart cart = cartRepository.findByUserId(request.getUserId())
                 .orElseGet(() -> cartRepository.save(clientCartMapper.requestToEntity(request)));
@@ -64,6 +63,7 @@ public class ClientCartServiceImpl implements ClientCartService{
                 existing.setQuantity(existing.getQuantity() + newCartVariant.getQuantity());
                 validateInventory(existing);
             } else {
+
                 validateInventory(newCartVariant);
                 newCartVariant.setCart(cart);
                 cart.getCartVariants().add(newCartVariant);

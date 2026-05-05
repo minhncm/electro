@@ -4,6 +4,7 @@ import com.ncm.electro.entity.product.Variant;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
@@ -25,6 +26,7 @@ public class CartVariant {
     @JoinColumn(name = "variant_id", nullable = false)
     private Variant variant;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 

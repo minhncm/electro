@@ -21,7 +21,7 @@ public class Cart extends BaseEntity {
     @Column(name = "status", nullable = false, columnDefinition = "TINYINT")
     private Integer status; // 1: normal, 2: complete
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartVariant> cartVariants = new HashSet<>();
 
 }

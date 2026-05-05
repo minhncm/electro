@@ -44,4 +44,26 @@ public class ApplicationExceptionHandler {
         );
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(WrongOldPasswordException.class)
+    public ErrorMessage wrongOldPasswordExceptionHandler(WrongOldPasswordException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.UNAUTHORIZED.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ErrorMessage wrongOldPasswordExceptionHandler(InvalidPasswordException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.BAD_REQUEST.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
+
 }

@@ -8,5 +8,13 @@ import java.time.Instant;
 public class ClientWishResponse {
     private Long id;
     private Instant createdAt;
-    private ClientListedProductResponse product;
+    private ClientProductResponse product;
+
+    @Data
+    public static class ClientProductResponse {
+        private Long id;
+        private String name;
+        private String slug;
+        private String thumbnail;
+    }
 }

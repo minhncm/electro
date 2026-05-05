@@ -3,6 +3,6 @@ package com.ncm.electro.dto.client;
 import lombok.Data;
 
 @Data
-public class ClientPhoneSettingRequest {
+public class ClientPhoneSettingUserRequest {
     private String phone;
 }

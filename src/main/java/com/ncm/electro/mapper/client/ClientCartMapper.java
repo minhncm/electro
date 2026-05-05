@@ -12,7 +12,6 @@ import com.ncm.electro.entity.product.Variant;
 import com.ncm.electro.entity.promotion.Promotion;
 import com.ncm.electro.mapper.GenericMapper;
 import com.ncm.electro.utils.InventoryUtils;
-import com.ncm.electro.utils.MapperUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

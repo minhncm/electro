@@ -3,6 +3,6 @@ package com.ncm.electro.dto.client;
 import lombok.Data;
 
 @Data
-public class ClientEmailSettingRequest {
+public class ClientEmailSettingUserRequest {
     private String email;
 }
