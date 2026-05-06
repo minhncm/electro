@@ -1,4 +1,14 @@
 import {
+  Button,
+  Group,
+  Image,
+  LoadingOverlay,
+  Radio,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { Link } from "react-router-dom";
+import {
   BrandPaypal,
   Cash,
   Home,
@@ -7,13 +17,41 @@ import {
   ShoppingCart,
 } from "tabler-icons-react";
 import Container from "~/components/Container/Container";
-import ClientCartItem from "./ClientCartItem";
-import Button from "~/components/common/Button";
+import ApplicationConstant from "~/constants/ApplicationConstant";
 import { useCartApi } from "~/hooks/client/use-cart-api";
-import { LoadingOverlay } from "@mantine/core";
+import useAuthStore from "~/stores/use-auth-store";
+import MiscUtils from "~/utils/MiscUtils";
+import ClientCartItem from "./ClientCartItem";
 
 function ClientCart() {
+  const { user } = useAuthStore();
   const { data: cart } = useCartApi();
+
+  let totalAmount;
+  let taxCost;
+  let totalPay;
+
+  if (cart) {
+    totalAmount = cart.cartVariants
+      .map(
+        (cartItem) =>
+          cartItem.quantity *
+          MiscUtils.calculateDiscountedPrice(
+            cartItem.variant.price,
+            cartItem.variant.product.promotion
+              ? cartItem.variant.product.promotion.percent
+              : 0,
+          ),
+      )
+      .reduce((sum, current) => sum + current, 0);
+
+    taxCost = Number(
+      (totalAmount * ApplicationConstant.DEFAULT_TAX).toFixed(0),
+    );
+
+    totalPay =
+      totalAmount + taxCost + ApplicationConstant.DEFAULT_SHIPPING_COST;
+  }
 
   if (!cart) return <LoadingOverlay />;
 
@@ -106,16 +144,17 @@ function ClientCart() {
                         Giao tới
                       </div>
                       <Button
-                        to="/user/setting/personal"
-                        size="xs"
-                        className="text-primary bg-soft"
+                        component={Link}
+                        to={"/user/setting/personal"}
+                        size="compact-xs"
+                        variant="light"
                       >
                         Thay đổi
                       </Button>
                     </div>
                     <div className="flex flex-col items-stretch gap-[3.5px]">
                       <div className="text-sm font-medium leading-[1.55]">
-                        Nguyễn Công Minh
+                        {user.fullname}
                         <div
                           title="Địa chỉ của người dùng đặt mua"
                           className="inline-flex items-center justify-center w-4 h-4 ml-2.5 
@@ -125,10 +164,17 @@ function ClientCart() {
                         </div>
                       </div>
                       <div className="text-sm leading-[1.55] font-medium">
-                        0702772847
+                        {user.phone}
                       </div>
                       <div className="text-c-muted text-sm leading-[1.55]">
-                        Thôn Phú Mỹ, Xã Quế Xuân 2, Huyện Quế Sơn, Quảng Nam
+                        {[
+                          user.address.line,
+                          user.address.ward.name,
+                          user.address.district.name,
+                          user.address.province.name,
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
                       </div>
                     </div>
                   </div>
@@ -142,18 +188,22 @@ function ClientCart() {
                     <div className="text-c-muted leading-[1.55] font-medium">
                       Hình thức giao hàng
                     </div>
-                    <div className="flex flex-col flex-wrap items-start pt-[5px] gap-3">
-                      <div className="flex items-center">
-                        <input type="radio" checked />
-                        <div className="ml-3">
-                          <img
-                            src="https://file.hstatic.net/200000472237/file/logo_b8515d08a6d14b09bce4e39221712e15.png"
-                            alt=""
-                            className="max-w-[170px] w-full h-auto object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    <Radio.Group defaultValue="ghn">
+                      <Group>
+                        <Radio
+                          value="ghn"
+                          label={
+                            <Group>
+                              <Image
+                                w={150}
+                                src="https://file.hstatic.net/200000472237/file/logo_b8515d08a6d14b09bce4e39221712e15.png"
+                                alt="Giao hàng nhanh"
+                              />
+                            </Group>
+                          }
+                        />
+                      </Group>
+                    </Radio.Group>
                   </div>
                 </div>
                 <div
@@ -164,26 +214,29 @@ function ClientCart() {
                     <div className="text-c-muted leading-[1.55] font-medium">
                       Hình thức thanh toán
                     </div>
-                    <div className="flex flex-col flex-wrap items-start pt-[5px] gap-3">
-                      <div className="flex items-center">
-                        <input type="radio" name="payment-method" checked />
-                        <div className="ml-3">
-                          <div className="flex flex-wrap items-center justify-start gap-2.5">
-                            <Cash size={24} />
-                            <div className="text-sm ">Tiền mặt</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center">
-                        <input type="radio" name="payment-method" />
-                        <div className="ml-3">
-                          <div className="flex flex-wrap items-center justify-start gap-2.5">
-                            <BrandPaypal size={24} />
-                            <div className="text-sm ">Paypal</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
+                    <Radio.Group defaultValue="cash">
+                      <Stack>
+                        <Radio
+                          value="cash"
+                          label={
+                            <Group>
+                              <Cash size={24} />
+                              <Text size="sm">Tiền mặt</Text>
+                            </Group>
+                          }
+                        />
+                        <Radio
+                          value="Paypal"
+                          label={
+                            <Group>
+                              <BrandPaypal size={24} />
+                              <Text size="sm">Paypal</Text>
+                            </Group>
+                          }
+                        />
+                      </Stack>
+                    </Radio.Group>
                   </div>
                 </div>
 
@@ -196,13 +249,15 @@ function ClientCart() {
                       <div className="text-c-muted text-sm leading-[1.55]">
                         Tạm tính
                       </div>
-                      <div className="text-sm">0 ₫</div>
+                      <div className="text-sm">
+                        {MiscUtils.toVND(totalAmount)}
+                      </div>
                     </div>
                     <div className="flex flex-wrap items-center justify-between">
                       <div className="text-c-muted text-sm leading-[1.55]">
                         Thuế(10%)
                       </div>
-                      <div className="text-sm">0 ₫</div>
+                      <div className="text-sm">{MiscUtils.toVND(taxCost)}</div>
                     </div>
                     <div className="flex flex-wrap items-center justify-between">
                       <div className="flex flex-wrap items-center justify-start gap-2.5">
@@ -213,7 +268,9 @@ function ClientCart() {
                           <InfoCircle size={12} />
                         </div>
                       </div>
-                      <div className="text-lg text-primary font-bold">0 ₫</div>
+                      <div className="text-lg text-primary font-bold">
+                        {MiscUtils.toVND(totalPay)}
+                      </div>
                     </div>
                   </div>
                 </div>
