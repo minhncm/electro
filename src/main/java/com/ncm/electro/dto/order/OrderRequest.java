@@ -2,6 +2,7 @@ package com.ncm.electro.dto.order;
 
 import com.ncm.electro.entity.cashbook.PaymentMethodType;
 import com.ncm.electro.entity.order.OrderVariant;
+import com.ncm.electro.entity.order.PaymentStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -27,7 +28,7 @@ public class OrderRequest {
     private BigDecimal shippingCost;
     private BigDecimal totalPay;
     private PaymentMethodType paymentMethodType;
-    private Integer paymentStatus;
+    private PaymentStatus paymentStatus;
     private String paypalOrderId;
     private String paypalOrderStatus;
     private Set<OrderVariantRequest> orderVariants;

@@ -2,7 +2,9 @@ package com.ncm.electro.controller.client;
 
 import com.ncm.electro.constant.AppConstants;
 import com.ncm.electro.dto.ListResponse;
+import com.ncm.electro.dto.client.ClientConfirmedOrderResponse;
 import com.ncm.electro.dto.client.ClientOrderResponse;
+import com.ncm.electro.dto.client.ClientSimpleOrderRequest;
 import com.ncm.electro.dto.client.ClientSimpleOrderResponse;
 import com.ncm.electro.service.client.ClientOrderService;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +33,10 @@ public class ClientOrderController {
     @GetMapping("/{code}")
     public ResponseEntity<ClientOrderResponse> getOrder(@PathVariable String code) {
         return ResponseEntity.status(HttpStatus.OK).body(clientOrderService.findByCode(code));
+    }
+
+    @PostMapping
+    public ResponseEntity<ClientConfirmedOrderResponse> createOrder(@RequestBody ClientSimpleOrderRequest request) {
+        return ResponseEntity.ok(clientOrderService.createOrder(request));
     }
 }

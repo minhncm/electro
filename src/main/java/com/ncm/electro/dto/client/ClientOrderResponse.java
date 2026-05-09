@@ -1,6 +1,7 @@
 package com.ncm.electro.dto.client;
 
 import com.ncm.electro.entity.cashbook.PaymentMethodType;
+import com.ncm.electro.entity.order.PaymentStatus;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
@@ -25,7 +26,7 @@ public class ClientOrderResponse {
     private BigDecimal shippingCost;
     private BigDecimal totalPay;
     private PaymentMethodType paymentMethodType;
-    private Integer paymentStatus;
+    private PaymentStatus paymentStatus;
     private Set<ClientOrderVariantResponse> orderVariants;
     @Nullable
     private ClientWaybillResponse waybill;

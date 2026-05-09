@@ -8,8 +8,8 @@ spring:
   application:
     name: electro
   datasource:
-    username: root
-    password: Minh071205@
+    username: ${USERNAME_DB}
+    password: ${PASSWORD_DB}
     driver-class-name: com.mysql.cj.jdbc.Driver
   profiles:
     active: @spring.profiles.active@
@@ -24,8 +24,13 @@ spring:
       poll-interval: 1000
       quiet-period: 400
 jwt:
-  access-key: NNeD/wMEwa+XqRdj+uQ/YUodsw7JjmMjuzLhwyO+JSo=
-  refresh-key: y3ZiVQV/AIAeyLwf0wTIx/8ZdCsrhgn9OmD/qtlIfqg=
+  access-key: ${JWT_ACCESS_KEY}
+  refresh-key: ${JWT_REFRESH_KEY}
   expiration-hour: 1
   expiration-day: 7
+
+paypal:
+  client-id: ${PAYPAL_CLIENT_ID}
+  secret: ${PAYPAL_SECRET}
+  mode: sandbox
 

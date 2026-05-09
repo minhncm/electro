@@ -16,6 +16,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
             "JOIN ov.variant v " +
             "WHERE v.product.id =: productId " +
             "AND o.status = 4 " +
-            "AND o.paymentStatus = 2")
+            "AND o.paymentStatus = 'PAID'")
     boolean existsDeliveredAndPaidByProductId(Long productId);
 }

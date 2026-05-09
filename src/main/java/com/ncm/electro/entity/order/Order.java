@@ -72,8 +72,9 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PaymentMethodType paymentMethodType;
 
-    @Column(name = "payment_status", nullable = false, columnDefinition = "TINYINT")
-    private Integer paymentStatus;
+    @Column(name = "payment_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
 
     @Column(name = "paypal_order_id")
     private String paypalOrderId;
@@ -84,7 +85,7 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order")
     private List<Docket> dockets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderVariant> orderVariants = new HashSet<>();
 
     @OneToOne(mappedBy = "order")

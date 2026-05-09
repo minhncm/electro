@@ -1,27 +1,51 @@
 package com.ncm.electro.service.client;
 
+import com.ncm.electro.constant.AppConstants;
 import com.ncm.electro.constant.FieldName;
 import com.ncm.electro.dto.ListResponse;
-import com.ncm.electro.dto.client.ClientOrderRequest;
+import com.ncm.electro.dto.client.ClientConfirmedOrderResponse;
 import com.ncm.electro.dto.client.ClientOrderResponse;
+import com.ncm.electro.dto.client.ClientSimpleOrderRequest;
 import com.ncm.electro.dto.client.ClientSimpleOrderResponse;
-import com.ncm.electro.entity.order.Order;
+import com.ncm.electro.entity.authentication.User;
+import com.ncm.electro.entity.cart.Cart;
+import com.ncm.electro.entity.cart.CartVariant;
+import com.ncm.electro.entity.cashbook.PaymentMethodType;
+import com.ncm.electro.entity.order.*;
+import com.ncm.electro.entity.promotion.Promotion;
 import com.ncm.electro.exception.ResourceNotFoundException;
 import com.ncm.electro.mapper.client.ClientOrderMapper;
+import com.ncm.electro.repository.authentication.UserRepository;
+import com.ncm.electro.repository.cart.CartRepository;
+import com.ncm.electro.repository.cart.CartVariantRepository;
 import com.ncm.electro.repository.order.OrderRepository;
+import com.ncm.electro.repository.promotion.PromotionRepository;
 import com.ncm.electro.specification.OrderSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ClientOrderServiceImpl implements ClientOrderService{
     private final OrderRepository orderRepository;
     private final ClientOrderMapper clientOrderMapper;
+    private final CartRepository cartRepository;
+    private final UserRepository userRepository;
+    private final PromotionRepository promotionRepository;
+    private final CartVariantRepository cartVariantRepository;
     @Override
     public ListResponse<ClientSimpleOrderResponse> findAllByUsername(String username, int page, int size, String sort, String filter) {
         Page<Order> orders = orderRepository.findAll(
@@ -42,8 +66,92 @@ public class ClientOrderServiceImpl implements ClientOrderService{
     }
 
     @Override
-    public ClientOrderResponse createOrder(ClientOrderRequest request) {
-        return null;
+    public ClientConfirmedOrderResponse createOrder(ClientSimpleOrderRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException(User.class.getSimpleName(), FieldName.USERNAME, username));
+
+        Cart cart = cartRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException(Cart.class.getSimpleName(), FieldName.USERNAME, username));
+
+        Order order = new Order();
+        order.setCode(generateOrderCode());
+        order.setStatus(1); // don hang moi
+        order.setToName(user.getFullname());
+        order.setToPhone(user.getPhone());
+        order.setToAddress(user.getAddress().getLine());
+        order.setToWardName(user.getAddress().getWard().getName());
+        order.setToDistrictName(user.getAddress().getDistrict().getName());
+        order.setToProvinceName(user.getAddress().getProvince().getName());
+        OrderResource orderResource = new OrderResource();
+        orderResource.setId(1L);
+        order.setOrderResource(orderResource);
+        order.setUser(user);
+        order.setOrderVariants(convertToOrderVariant(cart.getCartVariants(), order));
+
+        BigDecimal totalAmount = BigDecimal.valueOf(order.getOrderVariants().stream()
+                .mapToDouble(orderVariant -> orderVariant.getAmount().doubleValue())
+                .sum());
+
+        BigDecimal tax = BigDecimal.valueOf(AppConstants.DEFAULT_TAX);
+
+        BigDecimal shippingCost = BigDecimal.ZERO;
+
+        BigDecimal totalPay = totalAmount.add(totalAmount.multiply(tax).setScale(0, RoundingMode.HALF_UP));
+
+        order.setTotalAmount(totalAmount);
+        order.setTax(tax);
+        order.setShippingCost(shippingCost);
+        order.setTotalPay(totalPay);
+        order.setPaymentMethodType(request.getPaymentMethodType());
+        order.setPaymentStatus(PaymentStatus.PAID);
+
+        ClientConfirmedOrderResponse response = new ClientConfirmedOrderResponse();
+        response.setCode(order.getCode());
+        response.setPaymentMethodType(request.getPaymentMethodType());
+
+        if(request.getPaymentMethodType() == PaymentMethodType.CASH) {
+            orderRepository.save(order);
+            cartVariantRepository.deleteAllInBatch(cart.getCartVariants());
+        }
+        return response;
+    }
+
+    private String generateOrderCode() {
+        String datePart = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyMMdd"));
+        String randomPart = String.format("%06d", new Random().nextInt(999999));
+        return "ORD-" + datePart + "-" + randomPart;
+    }
+
+    private Set<OrderVariant> convertToOrderVariant(Set<CartVariant> cartVariants, Order order) {
+        return cartVariants.stream()
+                .map(cartVariant -> {
+                    Promotion promotion = promotionRepository
+                            .findActivePromotionByProductId(cartVariant.getVariant().getProduct().getId())
+                            .stream()
+                            .findFirst()
+                            .orElse(null);
+                    double currentPrice = calculateDiscountPrice(
+                            cartVariant.getVariant().getPrice(),
+                            promotion == null ? 0 : promotion.getPercent()
+                    );
+
+                    OrderVariant orderVariant = new OrderVariant();
+                    orderVariant.setOrderVariantKey(new OrderVariantKey());
+                    orderVariant.setOrder(order);
+                    orderVariant.setVariant(cartVariant.getVariant());
+                    orderVariant.setPrice(BigDecimal.valueOf(currentPrice));
+                    orderVariant.setQuantity(cartVariant.getQuantity());
+                    orderVariant.setAmount(BigDecimal.valueOf(currentPrice).multiply(BigDecimal.valueOf(cartVariant.getQuantity())));
+                    return orderVariant;
+
+                }).collect(Collectors.toSet());
+    }
+
+    private double calculateDiscountPrice(Double price, Integer discount) {
+        return price * (100 - discount) / 100;
     }
 }
 

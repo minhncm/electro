@@ -1,5 +1,6 @@
 package com.ncm.electro.dto.client;
 
+import com.ncm.electro.entity.order.PaymentStatus;
 import lombok.Data;
 
 import java.time.Instant;
@@ -13,6 +14,6 @@ public class ClientSimpleOrderResponse {
     private Integer status;
     private Double totalPay;
     private Set<ClientOrderVariantResponse> orderVariants;
-    private Integer paymentStatus;
+    private PaymentStatus paymentStatus;
 
 }
