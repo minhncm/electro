@@ -7,6 +7,7 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   BrandPaypal,
@@ -22,17 +23,21 @@ import { useCartApi } from "~/hooks/client/use-cart-api";
 import useAuthStore from "~/stores/use-auth-store";
 import MiscUtils from "~/utils/MiscUtils";
 import ClientCartItem from "./ClientCartItem";
+import { useModals } from "@mantine/modals";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import * as PageConfigs from "~/pages/PageConfig";
+import { useCaptureOrder, useCreateOrder } from "~/hooks/client/use-order-api";
 
 function ClientCart() {
   const { user } = useAuthStore();
   const { data: cart } = useCartApi();
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const modals = useModals();
 
-  let totalAmount;
-  let taxCost;
-  let totalPay;
+  const summary = useMemo(() => {
+    if (!cart) return { totalAmount: 0, taxCost: 0, totalPay: 0 };
 
-  if (cart) {
-    totalAmount = cart.cartVariants
+    const totalAmount = cart.cartVariants
       .map(
         (cartItem) =>
           cartItem.quantity *
@@ -45,13 +50,83 @@ function ClientCart() {
       )
       .reduce((sum, current) => sum + current, 0);
 
-    taxCost = Number(
+    const taxCost = Number(
       (totalAmount * ApplicationConstant.DEFAULT_TAX).toFixed(0),
     );
 
-    totalPay =
+    const totalPay =
       totalAmount + taxCost + ApplicationConstant.DEFAULT_SHIPPING_COST;
-  }
+
+    return { totalAmount, taxCost, totalPay };
+  }, [cart]);
+
+  const createOrderApi = useCreateOrder();
+  const captureOrderApi = useCaptureOrder();
+  const handleOrderButton = () => {
+    const PaymentMethodIcon =
+      PageConfigs.paymentMethodIconMap[paymentMethod.toUpperCase()];
+
+    modals.openConfirmModal({
+      size: "md",
+      closeOnConfirm: false,
+      withCloseButton: false,
+      title: <strong>Thông báo xác nhận đặt mua</strong>,
+      children: (
+        <Stack>
+          <Text>
+            Bạn có muốn đặt mua những sản phẩm đã chọn với hình thức thanh toán
+            sau?
+          </Text>
+          <Group gap="xs">
+            <PaymentMethodIcon />
+            <Text size="sm">
+              {PageConfigs.paymentMethodNameMap[paymentMethod.toUpperCase()]}
+            </Text>
+          </Group>
+        </Stack>
+      ),
+      labels: {
+        cancel: "Hủy",
+        confirm: "Xác nhận đặt mua",
+      },
+      confirmProps: { color: "blue" },
+      onConfirm: () => {
+        if (paymentMethod === "paypal") {
+          modals.openModal({
+            size: "lg",
+            children: (
+              <PayPalScriptProvider
+                options={{
+                  "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+                  buyerCountry: "VN",
+                  currency: "USD",
+                }}
+              >
+                <PayPalButtons
+                  style={{
+                    shape: "rect",
+                    layout: "vertical",
+                    color: "blue",
+                    label: "paypal",
+                  }}
+                  createOrder={async () => {
+                    const response = await createOrderApi.mutateAsync({
+                      paymentMethodType: paymentMethod.toUpperCase(),
+                    });
+
+                    return response.paypalOrderId;
+                  }}
+                  onApprove={async (data) => {
+                    await captureOrderApi.mutateAsync(data.orderID);
+                  }}
+                />
+              </PayPalScriptProvider>
+            ),
+          });
+        }
+      },
+    });
+  };
 
   if (!cart) return <LoadingOverlay />;
 
@@ -215,7 +290,10 @@ function ClientCart() {
                       Hình thức thanh toán
                     </div>
 
-                    <Radio.Group defaultValue="cash">
+                    <Radio.Group
+                      value={paymentMethod}
+                      onChange={setPaymentMethod}
+                    >
                       <Stack>
                         <Radio
                           value="cash"
@@ -227,7 +305,7 @@ function ClientCart() {
                           }
                         />
                         <Radio
-                          value="Paypal"
+                          value="paypal"
                           label={
                             <Group>
                               <BrandPaypal size={24} />
@@ -250,14 +328,16 @@ function ClientCart() {
                         Tạm tính
                       </div>
                       <div className="text-sm">
-                        {MiscUtils.toVND(totalAmount)}
+                        {MiscUtils.toVND(summary.totalAmount)}
                       </div>
                     </div>
                     <div className="flex flex-wrap items-center justify-between">
                       <div className="text-c-muted text-sm leading-[1.55]">
                         Thuế(10%)
                       </div>
-                      <div className="text-sm">{MiscUtils.toVND(taxCost)}</div>
+                      <div className="text-sm">
+                        {MiscUtils.toVND(summary.taxCost)}
+                      </div>
                     </div>
                     <div className="flex flex-wrap items-center justify-between">
                       <div className="flex flex-wrap items-center justify-start gap-2.5">
@@ -269,13 +349,13 @@ function ClientCart() {
                         </div>
                       </div>
                       <div className="text-lg text-primary font-bold">
-                        {MiscUtils.toVND(totalPay)}
+                        {MiscUtils.toVND(summary.totalPay)}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <Button>
+                <Button onClick={handleOrderButton}>
                   <div className="flex items-center">
                     <ShoppingCart size={24} />
                     <span className="ml-2.5">Đặt mua</span>

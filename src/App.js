@@ -1,12 +1,16 @@
 import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
-import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
-import "@mantine/dates/styles.css";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ManagerPath from "~/constants/ManagerPath";
+import queryClient from "~/lib/queryClient";
 import Admin from "~/pages/Admin";
+import AdminAccount from "~/pages/admin-account";
 import AddressManage from "~/pages/Admin-address";
 import AddressCreate from "~/pages/Admin-address/AddressCreate";
 import AddressUpdate from "~/pages/Admin-address/AddressUpdate";
@@ -29,6 +33,7 @@ import CustomerStatusCreate from "~/pages/Admin-customer-status/CustomerStatusCr
 import CustomerStatusUpdate from "~/pages/Admin-customer-status/CustomerStatusUpdate";
 import CustomerCreate from "~/pages/Admin-customer/CustomerCreate";
 import CustomerUpdate from "~/pages/Admin-customer/CustomerUpdate";
+import AdminDashboard from "~/pages/Admin-dashboard";
 import DepartmentManage from "~/pages/Admin-department";
 import DepartmentCreate from "~/pages/Admin-department/DepartmentCreate";
 import DepartmentUpdate from "~/pages/Admin-department/DepartmentUpdate";
@@ -57,6 +62,7 @@ import JobTitleUpdate from "~/pages/Admin-jobTitle/JobTitleUpdate";
 import JobTypeManage from "~/pages/Admin-jobType";
 import JobTypeCreate from "~/pages/Admin-jobType/JobTypeCreate";
 import JobTypeUpdate from "~/pages/Admin-jobType/JobTypeUpdate";
+import AdminNotification from "~/pages/Admin-notification";
 import OfficeManage from "~/pages/Admin-office";
 import OfficeCreate from "~/pages/Admin-office/OfficeCreate";
 import OfficeUpdate from "~/pages/Admin-office/OfficeUpdate";
@@ -69,9 +75,14 @@ import OrderResourceManage, {
   OrderResourceCreate,
   OrderResourceUpdate,
 } from "~/pages/Admin-order-resourse";
+import PaymentMethodManage from "~/pages/Admin-payment-method";
 import ProductManage from "~/pages/Admin-product";
 import ProductCreate from "~/pages/Admin-product/ProductCreate";
 import ProductUpdate from "~/pages/Admin-product/ProductUpdate";
+import PromotionManage, {
+  PromotionCreate,
+  PromotionUpdate,
+} from "~/pages/Admin-promotion";
 import PropertyManage, {
   PropertyCreate,
   PropertyUpdate,
@@ -79,6 +90,8 @@ import PropertyManage, {
 import ProvinceManage from "~/pages/Admin-province";
 import ProvinceCreate from "~/pages/Admin-province/ProvinceCreate";
 import ProvinceUpdate from "~/pages/Admin-province/ProvinceUpdate";
+import ReviewManage from "~/pages/Admin-review";
+import RewardStartegyManage from "~/pages/Admin-reward-strategy";
 import RoleManage from "~/pages/Admin-role";
 import RoleCreate from "~/pages/Admin-role/RoleCreate";
 import RoleUpdate from "~/pages/Admin-role/RoleUpdate";
@@ -100,10 +113,15 @@ import UnitUpdate from "~/pages/Admin-unit/UnitUpdate";
 import UserManage from "~/pages/Admin-user";
 import UserCreate from "~/pages/Admin-user/UserCreate";
 import UserUpdate from "~/pages/Admin-user/UserUpdate";
+import VoucherManage from "~/pages/Admin-voucher";
 import WarehouseManage, {
   WarehouseCreate,
   WarehouseUpdate,
 } from "~/pages/Admin-warehouse";
+import WaybillManage, {
+  WaybillCreate,
+  WaybillUpdate,
+} from "~/pages/Admin-waybill";
 import Client from "~/pages/Client";
 import ClientAllCategories from "~/pages/Client-all-category";
 import ClientCart from "~/pages/Client-cart/ClientCart";
@@ -135,24 +153,6 @@ import PurchaseOrderManage, {
   PurchaseOrderCreate,
   PurchaseOrderUpdate,
 } from "./pages/Admin-purchase-order";
-import WaybillManage, {
-  WaybillCreate,
-  WaybillUpdate,
-} from "~/pages/Admin-waybill";
-import ReviewManage from "~/pages/Admin-review";
-import RewardStartegyManage from "~/pages/Admin-reward-strategy";
-import VoucherManage from "~/pages/Admin-voucher";
-import PaymentMethodManage from "~/pages/Admin-payment-method";
-import PromotionManage, {
-  PromotionCreate,
-  PromotionUpdate,
-} from "~/pages/Admin-promotion";
-import AdminNotification from "~/pages/Admin-notification";
-import AdminAccount from "~/pages/admin-account";
-import AdminDashboard from "~/pages/Admin-dashboard";
-import { QueryClientProvider } from "@tanstack/react-query";
-import queryClient from "~/lib/queryClient";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 function App() {
   return (
     <BrowserRouter>
