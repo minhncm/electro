@@ -6,4 +6,5 @@ public final class FieldName {
     public static final String SLUG = "slug";
     public static final String ORDER_CODE = "order_code";
     public static final String USERNAME = "username";
+    public static final String PAYPAL_ORDER_ID = "paypal_order_id";
 }

@@ -39,4 +39,10 @@ public class ClientOrderController {
     public ResponseEntity<ClientConfirmedOrderResponse> createOrder(@RequestBody ClientSimpleOrderRequest request) {
         return ResponseEntity.ok(clientOrderService.createOrder(request));
     }
+
+    @PostMapping("/paypal/capture/{paypalOrderId}")
+    public ResponseEntity<Void> captureOrder(@PathVariable String paypalOrderId) {
+        clientOrderService.captureOrder(paypalOrderId);
+        return ResponseEntity.ok().build();
+    }
 }

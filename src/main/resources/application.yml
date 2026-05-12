@@ -32,5 +32,4 @@ jwt:
 paypal:
   client-id: ${PAYPAL_CLIENT_ID}
   secret: ${PAYPAL_SECRET}
-  mode: sandbox
 

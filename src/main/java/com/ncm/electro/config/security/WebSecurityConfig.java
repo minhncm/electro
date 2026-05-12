@@ -33,7 +33,7 @@ public class WebSecurityConfig {
             "/api/auth/**",
             "/client-api/products/**",
             "/client-api/categories/**",
-            "/client-api/reviews/products/*"
+            "/client-api/reviews/products/*",
     };
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }

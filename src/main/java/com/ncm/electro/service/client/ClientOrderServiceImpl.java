@@ -20,7 +20,10 @@ import com.ncm.electro.repository.cart.CartRepository;
 import com.ncm.electro.repository.cart.CartVariantRepository;
 import com.ncm.electro.repository.order.OrderRepository;
 import com.ncm.electro.repository.promotion.PromotionRepository;
+import com.ncm.electro.service.paypal.PaypalService;
 import com.ncm.electro.specification.OrderSpecification;
+import com.paypal.sdk.exceptions.ApiException;
+import com.paypal.sdk.models.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +31,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -46,6 +50,7 @@ public class ClientOrderServiceImpl implements ClientOrderService{
     private final UserRepository userRepository;
     private final PromotionRepository promotionRepository;
     private final CartVariantRepository cartVariantRepository;
+    private final PaypalService paypalService;
     @Override
     public ListResponse<ClientSimpleOrderResponse> findAllByUsername(String username, int page, int size, String sort, String filter) {
         Page<Order> orders = orderRepository.findAll(
@@ -94,11 +99,8 @@ public class ClientOrderServiceImpl implements ClientOrderService{
         BigDecimal totalAmount = BigDecimal.valueOf(order.getOrderVariants().stream()
                 .mapToDouble(orderVariant -> orderVariant.getAmount().doubleValue())
                 .sum());
-
         BigDecimal tax = BigDecimal.valueOf(AppConstants.DEFAULT_TAX);
-
         BigDecimal shippingCost = BigDecimal.ZERO;
-
         BigDecimal totalPay = totalAmount.add(totalAmount.multiply(tax).setScale(0, RoundingMode.HALF_UP));
 
         order.setTotalAmount(totalAmount);
@@ -106,17 +108,42 @@ public class ClientOrderServiceImpl implements ClientOrderService{
         order.setShippingCost(shippingCost);
         order.setTotalPay(totalPay);
         order.setPaymentMethodType(request.getPaymentMethodType());
-        order.setPaymentStatus(PaymentStatus.PAID);
+        order.setPaymentStatus(PaymentStatus.UNPAID);
 
         ClientConfirmedOrderResponse response = new ClientConfirmedOrderResponse();
-        response.setCode(order.getCode());
         response.setPaymentMethodType(request.getPaymentMethodType());
 
         if(request.getPaymentMethodType() == PaymentMethodType.CASH) {
             orderRepository.save(order);
             cartVariantRepository.deleteAllInBatch(cart.getCartVariants());
+        } else if(request.getPaymentMethodType() == PaymentMethodType.PAYPAL) {
+            com.paypal.sdk.models.Order paypalOrder = paypalService.createOrder(order);
+            order.setPaypalOrderId(paypalOrder.getId());
+            order.setPaypalOrderStatus(paypalOrder.getStatus().toString());
+            response.setPaypalOrderId(paypalOrder.getId());
+            orderRepository.save(order);
         }
         return response;
+    }
+
+    @Override
+    public void captureOrder(String paypalOrderId) {
+        Order order = orderRepository.findByPaypalOrderId(paypalOrderId)
+                .orElseThrow(() -> new ResourceNotFoundException(Order.class.getSimpleName(), FieldName.PAYPAL_ORDER_ID, paypalOrderId));
+
+        order.setPaypalOrderStatus(OrderStatus.APPROVED.toString());
+        orderRepository.save(order);
+
+        paypalService.captureOrder(paypalOrderId);
+        order.setPaypalOrderStatus(OrderStatus.COMPLETED.toString());
+        order.setPaymentStatus(PaymentStatus.PAID);
+        orderRepository.save(order);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Cart cart = cartRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException(Cart.class.getSimpleName(), FieldName.USERNAME, username));
+        cartVariantRepository.deleteAllInBatch(cart.getCartVariants());
     }
 
     private String generateOrderCode() {

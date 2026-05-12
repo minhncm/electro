@@ -66,4 +66,15 @@ public class ApplicationExceptionHandler {
         );
     }
 
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ExceptionHandler(PaypalException.class)
+    public ErrorMessage paypalExceptionHandler(PaypalException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.BAD_GATEWAY.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
+
 }

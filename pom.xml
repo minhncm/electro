@@ -117,6 +117,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- paypal-->
+        <dependency>
+            <groupId>com.paypal.sdk</groupId>
+            <artifactId>paypal-server-sdk</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>

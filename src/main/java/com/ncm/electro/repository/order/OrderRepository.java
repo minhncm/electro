@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecificationExecutor<Order> {
     Optional<Order> findByCode(@Param("code") String code);
+    Optional<Order> findByPaypalOrderId(String paypalOrderId);
     @Query("SELECT CASE WHEN COUNT(o) > 0 THEN TRUE ELSE FALSE END " +
             "FROM Order o " +
             "JOIN o.orderVariants ov " +

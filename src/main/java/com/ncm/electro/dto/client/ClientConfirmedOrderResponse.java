@@ -6,8 +6,6 @@ import org.springframework.lang.Nullable;
 
 @Data
 public class ClientConfirmedOrderResponse {
-    private String code;
+    private String paypalOrderId;
     private PaymentMethodType paymentMethodType;
-    @Nullable
-    private String paypalCheckoutLink;
 }
