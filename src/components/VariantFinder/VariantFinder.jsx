@@ -1,11 +1,17 @@
-import { Box, Popover, Stack, Text, TextInput, UnstyledButton } from "@mantine/core";
+import {
+  Box,
+  Popover,
+  Stack,
+  Text,
+  TextInput,
+  UnstyledButton,
+} from "@mantine/core";
 import { useDebouncedValue, useElementSize } from "@mantine/hooks";
 import { useState } from "react";
 import { Loader, Search } from "tabler-icons-react";
 import VariantResult from "~/components/VariantResult";
-
-const variants = { totalElements: 0 };
-const isFetching = false;
+import ResourceUrl from "~/constants/ResourceURL";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
 
 function VariantFinder({ selectedVariants, onClickItem, errorSearchInput }) {
   const { ref: refBox, width: widthBox } = useElementSize();
@@ -15,6 +21,14 @@ function VariantFinder({ selectedVariants, onClickItem, errorSearchInput }) {
 
   const [debouncedKeyword] = useDebouncedValue(keyword, 400);
 
+  const { data: variants, isFetching } = useGetAllApi(
+    ResourceUrl.VARIANT,
+    "variants",
+    { all: 1, search: debouncedKeyword },
+  );
+
+  if (!variants) return null;
+
   const selectedVariantIds = selectedVariants.map((variant) => variant.id);
   return (
     <Box ref={refBox}>
@@ -22,9 +36,10 @@ function VariantFinder({ selectedVariants, onClickItem, errorSearchInput }) {
         opened={popoverOpened}
         position="bottom-start"
         transitionProps={{ transition: "pop-top-left" }}
-        styles={{ dropdown: { width: widthBox } }}
         trapFocus={false}
+        styles={{ dropdown: { width: widthBox } }}
         onClose={() => setPopoverOpened(false)}
+        closeOnClickOutside
       >
         <Popover.Target>
           <TextInput

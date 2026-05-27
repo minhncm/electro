@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Text } from "@mantine/core";
+import { ActionIcon, Checkbox, Group, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Minus, Plus, Trash } from "tabler-icons-react";
@@ -10,7 +10,7 @@ import useAuthStore from "~/stores/use-auth-store";
 import MiscUtils from "~/utils/MiscUtils";
 import onModalDelete from "~/utils/ModalsUtil";
 
-function ClientCartItem({ cartId, cartItem }) {
+function ClientCartItem({ cartId, cartItem, checked, onCheck }) {
   const [quantity, setQuantity] = useState(cartItem.quantity);
   const { user } = useAuthStore();
 
@@ -48,6 +48,14 @@ function ClientCartItem({ cartId, cartItem }) {
 
   return (
     <tr>
+      <td className="px-5 py-4 border-t border-[#dee2e6] text-sm">
+        <Checkbox
+          checked={checked}
+          onChange={(event) =>
+            onCheck(cartItem.variant.id, event.currentTarget.checked)
+          }
+        />
+      </td>
       <td className="px-5 py-4 border-t border-[#dee2e6] text-sm">
         <div className="flex flex-wrap items-center justify-start gap-2.5">
           <img

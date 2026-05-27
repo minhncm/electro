@@ -11,6 +11,7 @@ import {
 import { Clipboard, Plus } from "tabler-icons-react";
 import FilterPanel from "~/components/FilterPanel";
 import ManageHeader from "~/components/ManageHeader";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
 import ManageMain from "~/components/ManageMain/ManageMain";
 import ManagePagination from "~/components/ManagePagination";
 import ManageTable from "~/components/ManageTable";
@@ -19,9 +20,9 @@ import PaymentStatusBadge from "~/components/PaymentStatusBadge";
 import SearchPanel from "~/components/SearchPanel";
 import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
-import * as PageConfigs from "~/pages/PageConfig";
 import DocketConfigs from "~/pages/Admin-docket/DocketConfigs";
 import OrderConfigs from "~/pages/Admin-order/OrderConfigs";
+import * as PageConfigs from "~/pages/PageConfig";
 import DateUtils from "~/utils/DateUtils";
 import MiscUtils from "~/utils/MiscUtils";
 import NotifyUtils from "~/utils/NotifyUtils";
@@ -126,7 +127,9 @@ function OrderManage() {
 
   return (
     <Stack>
-      <ManageHeader title={OrderConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={OrderConfigs.manageTitle} />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />

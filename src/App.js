@@ -153,6 +153,7 @@ import PurchaseOrderManage, {
   PurchaseOrderCreate,
   PurchaseOrderUpdate,
 } from "./pages/Admin-purchase-order";
+import ClientPayment from "./pages/client-payment/ClientPayment";
 function App() {
   return (
     <BrowserRouter>
@@ -171,6 +172,7 @@ function App() {
                     path="/order/detail/:code"
                     element={<ClientOrderDetail />}
                   />
+                  <Route path="/payment" element={<ClientPayment />} />
                   <Route path="/user/" element={<ClientUser />} />
                   <Route path="/user/setting" element={<ClientSetting />} />
                   <Route

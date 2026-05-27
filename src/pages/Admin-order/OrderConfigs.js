@@ -7,6 +7,9 @@ import DateUtils from "~/utils/DateUtils";
 import OrderStatusBadge from "~/components/OrderStatusBadge";
 import MiscUtils from "~/utils/MiscUtils";
 import PaymentStatusBadge from "~/components/PaymentStatusBadge";
+import ApplicationConstant from "~/constants/ApplicationConstant";
+import z from "zod";
+import MessageUtils from "~/utils/MessageUtils";
 
 class OrderConfigs extends Configs {
   static managerPath = ManagerPath.ORDER;
@@ -49,7 +52,8 @@ class OrderConfigs extends Configs {
   };
 
   static EntityDetailTableRowsFragment = ({ entity }) => {
-    const PaymentMethodIcon = PageConfigs.paymentMethodIconMap[entity.paymentMethodType];
+    const PaymentMethodIcon =
+      PageConfigs.paymentMethodIconMap[entity.paymentMethodType];
 
     return (
       <>
@@ -76,7 +80,9 @@ class OrderConfigs extends Configs {
           </Table.Td>
         </Table.Tr>
         <Table.Tr>
-          <Table.Td>{OrderConfigs.properties["orderResource.name"].label}</Table.Td>
+          <Table.Td>
+            {OrderConfigs.properties["orderResource.name"].label}
+          </Table.Td>
           <Table.Td>
             <Group gap="xs">
               <ColorSwatch color={entity.orderResource.color} />
@@ -110,7 +116,12 @@ class OrderConfigs extends Configs {
               <Text size="sm">{entity.toName}</Text>
               <Text size="xs">{entity.toPhone}</Text>
               <Text size="xs" c="dimmed">
-                {[entity.toAddress, entity.toWardName, entity.toDistrictName, entity.toProvinceName].join(", ")}
+                {[
+                  entity.toAddress,
+                  entity.toWardName,
+                  entity.toDistrictName,
+                  entity.toProvinceName,
+                ].join(", ")}
               </Text>
             </Stack>
           </Table.Td>
@@ -152,8 +163,59 @@ class OrderConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    code: "",
+    status: "1",
+    toName: "",
+    toPhone: "",
+    toAddress: "",
+    toWardName: "",
+    toDistrictName: "",
+    toProvinceName: "",
+    orderResourceId: "1",
+    orderCancellationReasonId: null,
+    note: "",
+    userId: null,
+    orderVariants: [],
+    totalAmount: 0,
+    tax: ApplicationConstant.DEFAULT_TAX,
+    shippingCost: ApplicationConstant.DEFAULT_SHIPPING_COST,
+    totalPay: ApplicationConstant.DEFAULT_SHIPPING_COST,
+    paymentMethodType: "CASH",
+    paymentStatus: "1",
+  };
+  static createUpdateFormSchema = z.object({
+    code: z
+      .string()
+      .min(5, MessageUtils.min(OrderConfigs.properties.code.label, 5)),
+    status: z.string(),
+    toName: z.string(),
+    toPhone: z.string(),
+    toAddress: z.string(),
+    toWardName: z.string(),
+    toDistrictName: z.string(),
+    toProvinceName: z.string(),
+    orderResourceId: z.string(),
+    orderCancellationReasonId: z.string().nullable(),
+    note: z.string(),
+    userId: z.string(),
+    orderVariants: z
+      .array(
+        z.object({
+          variantId: z.number(),
+          price: z.number(),
+          quantity: z.number(),
+          amount: z.number(),
+        }),
+      )
+      .min(1, "Cần thêm ít nhất 1 mặt hàng"),
+    totalAmount: z.number().min(0),
+    tax: z.number().min(0),
+    shippingCost: z.number().min(0),
+    totalPay: z.number().min(0),
+    paymentMethodType: z.string(),
+    paymentStatus: z.string(),
+  });
 }
 
 export default OrderConfigs;

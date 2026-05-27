@@ -1,5 +1,14 @@
-import { ActionIcon, Center, Group, NumberInput, Stack, Table, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Center,
+  Group,
+  NumberInput,
+  Stack,
+  Table,
+  Text,
+} from "@mantine/core";
 import React from "react";
+import { Trash } from "tabler-icons-react";
 import MiscUtils from "~/utils/MiscUtils";
 
 export const EntityType = {
@@ -45,13 +54,25 @@ function VariantTable({
         <Table.Tr>
           <Table.Th ta="center">STT</Table.Th>
           <Table.Th>Mặt hàng</Table.Th>
-          {type === EntityType.PURCHASE_ORDER && <Table.Th ta="right">Giá vốn</Table.Th>}
+          {type === EntityType.PURCHASE_ORDER && (
+            <Table.Th ta="right">Giá vốn</Table.Th>
+          )}
           {type === EntityType.ORDER && <Table.Th ta="right">Giá bán</Table.Th>}
-          {type !== EntityType.COUNT && <Table.Th ta="center">Số lượng</Table.Th>}
-          {type === EntityType.COUNT && <Table.Th ta="center">Tồn kho</Table.Th>}
-          {type === EntityType.COUNT && <Table.Th ta="center">Kiểm thực tế</Table.Th>}
-          {type === EntityType.COUNT && <Table.Th ta="center">Chênh lệch</Table.Th>}
-          {[EntityType.PURCHASE_ORDER, EntityType.ORDER].includes(type) && <Table.Th ta="right">Thành tiền</Table.Th>}
+          {type !== EntityType.COUNT && (
+            <Table.Th ta="center">Số lượng</Table.Th>
+          )}
+          {type === EntityType.COUNT && (
+            <Table.Th ta="center">Tồn kho</Table.Th>
+          )}
+          {type === EntityType.COUNT && (
+            <Table.Th ta="center">Kiểm thực tế</Table.Th>
+          )}
+          {type === EntityType.COUNT && (
+            <Table.Th ta="center">Chênh lệch</Table.Th>
+          )}
+          {[EntityType.PURCHASE_ORDER, EntityType.ORDER].includes(type) && (
+            <Table.Th ta="right">Thành tiền</Table.Th>
+          )}
           <Table.Th ta="center">Thao tác</Table.Th>
         </Table.Tr>
       </Table.Thead>
@@ -80,8 +101,12 @@ function VariantTable({
                 </Group>
               </Stack>
             </Table.Td>
-            {type === EntityType.PURCHASE_ORDER && <Table.Td ta="right">{MiscUtils.toVND(variant.cost)}</Table.Td>}
-            {type === EntityType.ORDER && <Table.Td ta="right">{MiscUtils.toVND(variant.price)}</Table.Td>}
+            {type === EntityType.PURCHASE_ORDER && (
+              <Table.Td ta="right">{MiscUtils.toVND(variant.cost)}</Table.Td>
+            )}
+            {type === EntityType.ORDER && (
+              <Table.Td ta="right">{MiscUtils.toVND(variant.price)}</Table.Td>
+            )}
             {type !== EntityType.COUNT && handleQuantityInput && (
               <Table.Td>
                 <Center>
@@ -99,13 +124,17 @@ function VariantTable({
             )}
             {type === EntityType.COUNT && handleActualInventoryInput && (
               <>
-                <Table.Td ta="center">{variantRequests[index].inventory}</Table.Td>
+                <Table.Td ta="center">
+                  {variantRequests[index].inventory}
+                </Table.Td>
                 <Table.Td>
                   <Center>
                     <NumberInput
                       size="xs"
                       placeholder="--"
-                      onChange={(value) => handleActualInventoryInput(value || 0, index)}
+                      onChange={(value) =>
+                        handleActualInventoryInput(value || 0, index)
+                      }
                       min={0}
                       max={1_000_000}
                       parser={MiscUtils.parserPrice}
@@ -116,13 +145,16 @@ function VariantTable({
                 </Table.Td>
                 <Table.Td ta="center">
                   {deltaVariantInventoryFragment(
-                    variantRequests[index].actualInventory - variantRequests[index].inventory
+                    variantRequests[index].actualInventory -
+                      variantRequests[index].inventory,
                   )}
                 </Table.Td>
               </>
             )}
             {[EntityType.PURCHASE_ORDER, EntityType.ORDER].includes(type) && (
-              <Table.Td ta="right">{MiscUtils.toVND(variantRequests[index].amount)}</Table.Td>
+              <Table.Td ta="right">
+                {MiscUtils.toVND(variantRequests[index].amount)}
+              </Table.Td>
             )}
             <Table.Td>
               <Center>
@@ -133,7 +165,7 @@ function VariantTable({
                   title="Xóa mặt hàng này"
                   onClick={() => handleDeleteVariantButton(index)}
                 >
-                  <Table.Trash size={16} />
+                  <Trash size={16} />
                 </ActionIcon>
               </Center>
             </Table.Td>

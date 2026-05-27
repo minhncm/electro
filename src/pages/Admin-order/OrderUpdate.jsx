@@ -15,32 +15,64 @@ import { Loader } from "tabler-icons-react";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
 import OrderConfigs from "./OrderConfigs";
+import useOrderUpdateViewModel from "./OrderUpdate.vm";
+import { useParams } from "react-router-dom";
+import VariantFinder from "~/components/VariantFinder";
+import VariantTable from "~/components/VariantTable";
+import { EntityType } from "~/components/VariantTable/VariantTable";
+import MiscUtils from "~/utils/MiscUtils";
 
 const isFetchingUserListResponse = false;
 
 function OrderUpdate() {
+  const { id } = useParams();
+  const {
+    form,
+    orderResourceSelectList,
+    orderCancellationReasonSelectList,
+    paymentMethodSelectList,
+    statusSelectList,
+    paymentStatusSelectList,
+    variants,
+    order,
+    handleFormSubmit,
+    handleClickVariantResultItem,
+    handleQuantityInput,
+    handleDeleteVariantButton,
+    handleShippingCostInput,
+    resetForm,
+  } = useOrderUpdateViewModel(id);
+  if (!order) return null;
+
   return (
     <Stack pb={50}>
-      <CreateUpdateTitle managerPath={OrderConfigs.managerPath} title={OrderConfigs.updateTitle} />
-      <DefaultPropertyPanel />
+      <CreateUpdateTitle
+        managerPath={OrderConfigs.managerPath}
+        title={OrderConfigs.updateTitle}
+      />
+      <DefaultPropertyPanel
+        id={order.id}
+        createdAt={order.createdAt}
+        updatedAt={order.updatedAt}
+      />
       <Grid>
         <Grid.Col span={8}>
           <Paper shadow="xs">
             <Stack gap="xs" p="sm">
-              {/* <VariantFinder
+              <VariantFinder
                 selectedVariants={variants}
                 onClickItem={handleClickVariantResultItem}
-                errorSearchInput={form.errors.countVariants}
+                errorSearchInput={form.errors.orderVariants}
               />
               {variants.length > 0 && (
                 <VariantTable
-                  type={EntityType.COUNT}
+                  type={EntityType.ORDER}
                   variants={variants}
-                  variantRequests={form.values.countVariants}
-                  handleActualInventoryInput={handleActualInventoryInput}
+                  variantRequests={form.values.orderVariants}
+                  handleQuantityInput={handleQuantityInput}
                   handleDeleteVariantButton={handleDeleteVariantButton}
                 />
-              )} */}
+              )}
             </Stack>
 
             <Divider mt={5} />
@@ -53,15 +85,19 @@ function OrderUpdate() {
                   </Text>
                 </Grid.Col>
                 <Grid.Col span={6}>
-                  <Text size="md" c="blue" fw={500} ta="right"></Text>
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <Text size="sm" fw={500}>
-                    Thuế
+                  <Text size="md" c="blue" fw={500} ta="right">
+                    {MiscUtils.toVND(form.values.totalAmount)}
                   </Text>
                 </Grid.Col>
                 <Grid.Col span={6}>
-                  <Text size="md" c="blue" fw={500} ta="right"></Text>
+                  <Text size="sm" fw={500}>
+                    Thuế {form.values.tax * 100 + "%"}:
+                  </Text>
+                </Grid.Col>
+                <Grid.Col span={6}>
+                  <Text size="md" c="blue" fw={500} ta="right">
+                    {MiscUtils.toVND(form.values.tax * form.values.totalAmount)}
+                  </Text>
                 </Grid.Col>
                 <Grid.Col span={6}>
                   <Text size="sm" fw={500}>
@@ -69,7 +105,17 @@ function OrderUpdate() {
                   </Text>
                 </Grid.Col>
                 <Grid.Col span={6}>
-                  <NumberInput size="xs" placeholder="--" min={0} step={100} icon={"₫"} disabled />
+                  <NumberInput
+                    size="xs"
+                    placeholder="--"
+                    value={form.values.shippingCost}
+                    onChange={(value) => handleShippingCostInput(value || 0)}
+                    error={form.errors.shippingCost}
+                    min={0}
+                    step={100}
+                    icon={"₫"}
+                    disabled
+                  />
                 </Grid.Col>
                 <Grid.Col span={6}>
                   <Text size="sm" fw={500}>
@@ -78,7 +124,9 @@ function OrderUpdate() {
                 </Grid.Col>
                 <Grid.Col span={6}>
                   <Stack gap={2.5} ta="right">
-                    <Text size="md" c="blue" fw={500}></Text>
+                    <Text size="md" c="blue" fw={500}>
+                      {MiscUtils.toVND(form.values.totalPay)}
+                    </Text>
                     <Text size="xs" c="dimmed">
                       (chưa tính phí vận chuyển)
                     </Text>
@@ -90,71 +138,136 @@ function OrderUpdate() {
         </Grid.Col>
 
         <Grid.Col span={4}>
-          <form>
+          <form onSubmit={handleFormSubmit}>
             <Paper shadow="xs">
               <Stack gap={0}>
                 <Grid p="sm">
                   <Grid.Col>
-                    <Select
+                    <TextInput
                       required
-                      rightSection={isFetchingUserListResponse ? <Loader size={16} /> : null}
+                      // rightSection={
+                      //   isFetchingUserListResponse ? <Loader size={16} /> : null
+                      // }
                       label="Người đặt hàng"
-                      placeholder="--"
-                      searchable
+                      // placeholder="--"
+                      // searchable
+                      // onSearchChange={setUserSelectKeyword}
+                      // data={userSelectList}
+                      {...form.getInputProps("userId")}
+                      disabled
                     />
                   </Grid.Col>
                   <Grid.Col>
-                    <TextInput required label={OrderConfigs.properties.code.label} />
+                    <TextInput
+                      required
+                      label={OrderConfigs.properties.code.label}
+                      {...form.getInputProps("code")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <Select required label={OrderConfigs.properties.status.label} placeholder="--" />
+                    <Select
+                      required
+                      label={OrderConfigs.properties.status.label}
+                      placeholder="--"
+                      data={statusSelectList}
+                      {...form.getInputProps("status")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <TextInput required label="Tên người nhận" />
+                    <TextInput
+                      required
+                      label="Tên người nhận"
+                      {...form.getInputProps("toName")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <TextInput required label="Số điện thoại người nhận" />
+                    <TextInput
+                      required
+                      label="Số điện thoại người nhận"
+                      {...form.getInputProps("toPhone")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <TextInput required label="Tỉnh thành người nhận" />
+                    <TextInput
+                      required
+                      label="Tỉnh thành người nhận"
+                      {...form.getInputProps("toProvinceName")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <TextInput required label="Quận huyện người nhận" />
+                    <TextInput
+                      required
+                      label="Quận huyện người nhận"
+                      {...form.getInputProps("toDistrictName")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <TextInput required label="Phường xã người nhận" />
+                    <TextInput
+                      required
+                      label="Phường xã người nhận"
+                      {...form.getInputProps("toWardName")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <TextInput required label="Địa chỉ người nhận" />
+                    <TextInput
+                      required
+                      label="Địa chỉ người nhận"
+                      {...form.getInputProps("toAddress")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <Select required label="Nguồn đơn hàng" placeholder="--" />
+                    <Select
+                      required
+                      label="Nguồn đơn hàng"
+                      placeholder="--"
+                      data={orderResourceSelectList}
+                      {...form.getInputProps("orderResourceId")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
                     <Select
                       label="Lý do hủy đơn hàng"
                       placeholder="--"
                       clearable
+                      data={orderCancellationReasonSelectList}
                       // Chỉ bật khi trạng thái đơn hàng là "Hủy bỏ" (5)
-                      // disabled={form.values.status !== "5"}
+                      disabled={form.values.status !== "5"}
+                      {...form.getInputProps("orderCancellationReasonId")}
                     />
                   </Grid.Col>
                   <Grid.Col>
-                    <Textarea label="Ghi chú đơn hàng" />
+                    <Textarea
+                      label="Ghi chú đơn hàng"
+                      {...form.getInputProps("note")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <Select required label="Hình thức thanh toán" placeholder="--" />
+                    <Select
+                      required
+                      label="Hình thức thanh toán"
+                      placeholder="--"
+                      data={paymentMethodSelectList}
+                      {...form.getInputProps("paymentMethodType")}
+                    />
                   </Grid.Col>
                   <Grid.Col>
-                    <Select required label="Trạng thái thanh toán" placeholder="--" />
+                    <Select
+                      required
+                      label="Trạng thái thanh toán"
+                      placeholder="--"
+                      data={paymentStatusSelectList}
+                      {...form.getInputProps("paymentStatus")}
+                    />
                   </Grid.Col>
                 </Grid>
 
                 <Divider mt="xs" />
 
                 <Group justify="space-between" p="sm">
-                  <Button variant="default">Mặc định</Button>
-                  <Button type="submit">Thêm</Button>
+                  <Button variant="default" onClick={resetForm}>
+                    Mặc định
+                  </Button>
+                  <Button type="submit">Cập nhật</Button>
                 </Group>
               </Stack>
             </Paper>

@@ -1,54 +1,59 @@
-import {
-  Button,
-  Group,
-  Image,
-  LoadingOverlay,
-  Radio,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Button, Checkbox, LoadingOverlay } from "@mantine/core";
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  BrandPaypal,
-  Cash,
-  Home,
-  InfoCircle,
-  Marquee,
-  ShoppingCart,
-} from "tabler-icons-react";
+import { InfoCircle, Marquee, ShoppingCart } from "tabler-icons-react";
 import Container from "~/components/Container/Container";
 import ApplicationConstant from "~/constants/ApplicationConstant";
 import { useCartApi } from "~/hooks/client/use-cart-api";
-import useAuthStore from "~/stores/use-auth-store";
 import MiscUtils from "~/utils/MiscUtils";
 import ClientCartItem from "./ClientCartItem";
-import { useModals } from "@mantine/modals";
-import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
-import * as PageConfigs from "~/pages/PageConfig";
-import { useCaptureOrder, useCreateOrder } from "~/hooks/client/use-order-api";
+import NotifyUtils from "~/utils/NotifyUtils";
+import { useNavigate } from "react-router-dom";
 
 function ClientCart() {
-  const { user } = useAuthStore();
   const { data: cart } = useCartApi();
-  const [paymentMethod, setPaymentMethod] = useState("cash");
-  const modals = useModals();
+  const [selectCartItems, setSelectCartItems] = useState([]);
+  const navigate = useNavigate();
 
-  const summary = useMemo(() => {
+  const cartItemIds = cart?.cartVariants?.map((item) => item.variant.id) || [];
+
+  const isAllSelected =
+    selectCartItems.length > 0 && selectCartItems.length === cartItemIds.length;
+
+  const indeterminate =
+    selectCartItems.length > 0 && selectCartItems.length < cartItemIds.length;
+
+  const handleSelectAll = (checked) => {
+    if (checked) {
+      setSelectCartItems(cartItemIds);
+    } else {
+      setSelectCartItems([]);
+    }
+  };
+
+  const handleSelectItem = (variantId, checked) => {
+    if (checked) {
+      setSelectCartItems((prev) => [...prev, variantId]);
+    } else {
+      setSelectCartItems((prev) => prev.filter((id) => id !== variantId));
+    }
+  };
+
+  const detailPay = useMemo(() => {
     if (!cart) return { totalAmount: 0, taxCost: 0, totalPay: 0 };
 
-    const totalAmount = cart.cartVariants
-      .map(
-        (cartItem) =>
-          cartItem.quantity *
+    const totalAmount = cart.cartVariants.reduce((sum, cartItem) => {
+      if (!selectCartItems.includes(cartItem.variant.id)) {
+        return sum;
+      }
+      return (
+        sum +
+        cartItem.quantity *
           MiscUtils.calculateDiscountedPrice(
             cartItem.variant.price,
-            cartItem.variant.product.promotion
-              ? cartItem.variant.product.promotion.percent
-              : 0,
-          ),
-      )
-      .reduce((sum, current) => sum + current, 0);
+            cartItem.variant.product.promotion?.percent || 0,
+          )
+      );
+    }, 0);
 
     const taxCost = Number(
       (totalAmount * ApplicationConstant.DEFAULT_TAX).toFixed(0),
@@ -58,74 +63,26 @@ function ClientCart() {
       totalAmount + taxCost + ApplicationConstant.DEFAULT_SHIPPING_COST;
 
     return { totalAmount, taxCost, totalPay };
-  }, [cart]);
+  }, [cart, selectCartItems]);
 
-  const createOrderApi = useCreateOrder();
-  const captureOrderApi = useCaptureOrder();
-  const handleOrderButton = () => {
-    const PaymentMethodIcon =
-      PageConfigs.paymentMethodIconMap[paymentMethod.toUpperCase()];
+  const handleClickPayment = () => {
+    if (selectCartItems.length === 0) {
+      NotifyUtils.simpleFailed(
+        "Bạn chưa chọn bất kỳ mặt hàng nào để thanh toán",
+      );
+    } else {
+      const selectedCartVariants = cart.cartVariants.filter((item) =>
+        selectCartItems.includes(item.variant.id),
+      );
 
-    modals.openConfirmModal({
-      size: "md",
-      closeOnConfirm: false,
-      withCloseButton: false,
-      title: <strong>Thông báo xác nhận đặt mua</strong>,
-      children: (
-        <Stack>
-          <Text>
-            Bạn có muốn đặt mua những sản phẩm đã chọn với hình thức thanh toán
-            sau?
-          </Text>
-          <Group gap="xs">
-            <PaymentMethodIcon />
-            <Text size="sm">
-              {PageConfigs.paymentMethodNameMap[paymentMethod.toUpperCase()]}
-            </Text>
-          </Group>
-        </Stack>
-      ),
-      labels: {
-        cancel: "Hủy",
-        confirm: "Xác nhận đặt mua",
-      },
-      confirmProps: { color: "blue" },
-      onConfirm: () => {
-        if (paymentMethod === "paypal") {
-          modals.openModal({
-            size: "lg",
-            children: (
-              <PayPalScriptProvider
-                options={{
-                  "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
-                  buyerCountry: "VN",
-                  currency: "USD",
-                }}
-              >
-                <PayPalButtons
-                  style={{
-                    shape: "rect",
-                    layout: "vertical",
-                    color: "blue",
-                    label: "paypal",
-                  }}
-                  createOrder={async () => {
-                    const response = await createOrderApi.mutateAsync({
-                      paymentMethodType: paymentMethod.toUpperCase(),
-                    });
-
-                    return response.paypalOrderId;
-                  }}
-                  onApprove={async (data) => {
-                    await captureOrderApi.mutateAsync(data.orderID);
-                  }}
-                />
-              </PayPalScriptProvider>
-            ),
-          });
-        }
-      },
-    });
+      navigate("/payment", {
+        state: {
+          cartId: cart.id,
+          cartItems: selectedCartVariants,
+          detailPay,
+        },
+      });
+    }
   };
 
   if (!cart) return <LoadingOverlay />;
@@ -140,7 +97,7 @@ function ClientCart() {
           </div>
 
           <div className="grid grid-cols-4 m-[-8px]">
-            <div className="col-span-3 p-2">
+            <div className="col-span-full p-2">
               <div
                 className="relative overflow-hidden rounded-lg bg-white 
                         shadow-[0_1px_3px_rgba(0,0,0,0.05),0_10px_15px_-5px_rgba(0,0,0,0.05),0_7px_7px_-5px_rgba(0,0,0,0.04)]"
@@ -150,6 +107,15 @@ function ClientCart() {
                     <table className="w-full">
                       <thead>
                         <tr>
+                          <th className="max-w-[50px] px-5 py-4 text-start">
+                            <Checkbox
+                              checked={isAllSelected}
+                              indeterminate={indeterminate}
+                              onChange={(event) =>
+                                handleSelectAll(event.currentTarget.checked)
+                              }
+                            />
+                          </th>
                           <th className="min-w-[325px] px-5 py-4 text-start">
                             <div className="text-c-muted text-sm leading-[1.55] no-underline font-normal">
                               Mặt hàng
@@ -198,6 +164,10 @@ function ClientCart() {
                             key={cartItem.variant.id}
                             cartItem={cartItem}
                             cartId={cart.id}
+                            checked={selectCartItems.includes(
+                              cartItem.variant.id,
+                            )}
+                            onCheck={handleSelectItem}
                           />
                         ))}
                       </tbody>
@@ -206,162 +176,31 @@ function ClientCart() {
                 </div>
               </div>
             </div>
-
-            <div className="col-span-1 p-2">
-              <div className="flex flex-col items-stretch gap-4">
-                <div
-                  className="relative overflow-hidden bg-white pt-4 px-5 pb-5 rounded-lg 
-                            shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_10px_15px_-5px_rgba(0,0,0,0.05),_0_7px_7px_-5px_rgba(0,0,0,0.04)]"
-                >
-                  <div className="flex flex-col items-stretch gap-2.5">
-                    <div className="flex flex-wrap items-center justify-between gap-4">
-                      <div className="text-c-muted leading-[1.55] font-medium">
-                        Giao tới
-                      </div>
-                      <Button
-                        component={Link}
-                        to={"/user/setting/personal"}
-                        size="compact-xs"
-                        variant="light"
-                      >
-                        Thay đổi
-                      </Button>
-                    </div>
-                    <div className="flex flex-col items-stretch gap-[3.5px]">
-                      <div className="text-sm font-medium leading-[1.55]">
-                        {user.fullname}
-                        <div
-                          title="Địa chỉ của người dùng đặt mua"
-                          className="inline-flex items-center justify-center w-4 h-4 ml-2.5 
-                                      bg-c-green text-white rounded"
-                        >
-                          <Home size={12} />
-                        </div>
-                      </div>
-                      <div className="text-sm leading-[1.55] font-medium">
-                        {user.phone}
-                      </div>
-                      <div className="text-c-muted text-sm leading-[1.55]">
-                        {[
-                          user.address.line,
-                          user.address.ward.name,
-                          user.address.district.name,
-                          user.address.province.name,
-                        ]
-                          .filter(Boolean)
-                          .join(", ")}
-                      </div>
-                    </div>
+          </div>
+          <div
+            className="sticky bottom-0 left-0 w-full h-[100px] flex items-center justify-end px-5 rounded-lg bg-white 
+                        shadow-[0_1px_3px_rgba(0,0,0,0.05),0_10px_15px_-5px_rgba(0,0,0,0.05),0_7px_7px_-5px_rgba(0,0,0,0.04)]"
+          >
+            <div className="flex">
+              <div className="flex flex-wrap items-center justify-between mr-4">
+                <div className="flex flex-wrap items-center justify-start gap-2.5">
+                  <div className="flex items-center justify-center w-5 h-5 rounded text-primary bg-soft">
+                    <InfoCircle size={12} />
+                  </div>
+                  <div className="text-sm leading-[1.55] font-medium">
+                    Tổng ({cart.cartVariants.length} mục):
                   </div>
                 </div>
-
-                <div
-                  className="relative overflow-hidden bg-white pt-4 px-5 pb-5 rounded-lg 
-                            shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_10px_15px_-5px_rgba(0,0,0,0.05),_0_7px_7px_-5px_rgba(0,0,0,0.04)]"
-                >
-                  <div className="flex flex-col items-stretch gap-2.5">
-                    <div className="text-c-muted leading-[1.55] font-medium">
-                      Hình thức giao hàng
-                    </div>
-                    <Radio.Group defaultValue="ghn">
-                      <Group>
-                        <Radio
-                          value="ghn"
-                          label={
-                            <Group>
-                              <Image
-                                w={150}
-                                src="https://file.hstatic.net/200000472237/file/logo_b8515d08a6d14b09bce4e39221712e15.png"
-                                alt="Giao hàng nhanh"
-                              />
-                            </Group>
-                          }
-                        />
-                      </Group>
-                    </Radio.Group>
-                  </div>
+                <div className="text-lg text-primary font-bold ml-2">
+                  {MiscUtils.toVND(detailPay.totalAmount)}
                 </div>
-                <div
-                  className="relative overflow-hidden bg-white pt-4 px-5 pb-5 rounded-lg 
-                            shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_10px_15px_-5px_rgba(0,0,0,0.05),_0_7px_7px_-5px_rgba(0,0,0,0.04)]"
-                >
-                  <div className="flex flex-col items-stretch gap-2.5">
-                    <div className="text-c-muted leading-[1.55] font-medium">
-                      Hình thức thanh toán
-                    </div>
-
-                    <Radio.Group
-                      value={paymentMethod}
-                      onChange={setPaymentMethod}
-                    >
-                      <Stack>
-                        <Radio
-                          value="cash"
-                          label={
-                            <Group>
-                              <Cash size={24} />
-                              <Text size="sm">Tiền mặt</Text>
-                            </Group>
-                          }
-                        />
-                        <Radio
-                          value="paypal"
-                          label={
-                            <Group>
-                              <BrandPaypal size={24} />
-                              <Text size="sm">Paypal</Text>
-                            </Group>
-                          }
-                        />
-                      </Stack>
-                    </Radio.Group>
-                  </div>
-                </div>
-
-                <div
-                  className="relative overflow-hidden bg-white pt-4 px-5 pb-5 rounded-lg 
-                            shadow-[0_1px_3px_rgba(0,0,0,0.05),_0_10px_15px_-5px_rgba(0,0,0,0.05),_0_7px_7px_-5px_rgba(0,0,0,0.04)]"
-                >
-                  <div className="flex flex-col items-stretch gap-3">
-                    <div className="flex flex-wrap items-center justify-between">
-                      <div className="text-c-muted text-sm leading-[1.55]">
-                        Tạm tính
-                      </div>
-                      <div className="text-sm">
-                        {MiscUtils.toVND(summary.totalAmount)}
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap items-center justify-between">
-                      <div className="text-c-muted text-sm leading-[1.55]">
-                        Thuế(10%)
-                      </div>
-                      <div className="text-sm">
-                        {MiscUtils.toVND(summary.taxCost)}
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap items-center justify-between">
-                      <div className="flex flex-wrap items-center justify-start gap-2.5">
-                        <div className="text-sm leading-[1.55] font-medium">
-                          Tổng tiền
-                        </div>
-                        <div className="flex items-center justify-center w-5 h-5 rounded text-primary bg-soft">
-                          <InfoCircle size={12} />
-                        </div>
-                      </div>
-                      <div className="text-lg text-primary font-bold">
-                        {MiscUtils.toVND(summary.totalPay)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <Button onClick={handleOrderButton}>
-                  <div className="flex items-center">
-                    <ShoppingCart size={24} />
-                    <span className="ml-2.5">Đặt mua</span>
-                  </div>
-                </Button>
               </div>
+              <Button onClick={handleClickPayment}>
+                <div className="flex items-center">
+                  <ShoppingCart size={24} />
+                  <span className="ml-2.5">Thanh toán</span>
+                </div>
+              </Button>
             </div>
           </div>
         </div>

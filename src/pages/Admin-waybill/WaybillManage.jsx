@@ -22,6 +22,8 @@ import OrderConfigs from "../Admin-order/OrderConfigs";
 import WaybillConfigs from "./WaybillConfigs";
 import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
 
 function WaybillManage() {
   useResetManagePageState();
@@ -195,7 +197,14 @@ function WaybillManage() {
 
   return (
     <Stack>
-      <ManageHeader title={WaybillConfigs.manageTitle} />
+      <ManageHeader>
+        <ManageHeaderTitle title={WaybillConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={WaybillConfigs.resourceUrl}
+          resourceKey={WaybillConfigs.resourceKey}
+        />
+      </ManageHeader>
 
       <SearchPanel />
       <FilterPanel />

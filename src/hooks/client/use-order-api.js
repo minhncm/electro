@@ -42,3 +42,11 @@ export const useCaptureOrder = () => {
     onSuccess: () => queryClient.invalidateQueries(["client-cart", "getCart"]),
   });
 };
+
+export const useGetShippingFee = () => {
+  return useQuery({
+    queryKey: ["client-api", "getShippingFee"],
+    queryFn: () =>
+      FetchUtils.get(ResourceUrl.CLIENT_ORDER + "/shipping-order/fee"),
+  });
+};
