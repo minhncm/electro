@@ -22,6 +22,9 @@ public class Province extends BaseEntity {
     @Column(name = "code", nullable = false, length = 35)
     private String code;
 
+    @Column(name = "ghn_province_id")
+    private Integer ghnProvinceId;
+
     @OneToMany(mappedBy = "province")
     private List<Address> addresses = new ArrayList<>();
 

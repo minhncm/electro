@@ -12,6 +12,9 @@ import com.ncm.electro.entity.customer.CustomerStatus;
 import com.ncm.electro.entity.employee.*;
 import com.ncm.electro.entity.inventory.Docket;
 import com.ncm.electro.entity.order.Order;
+import com.ncm.electro.entity.order.OrderCancellationReason;
+import com.ncm.electro.entity.order.OrderResource;
+import com.ncm.electro.entity.order.OrderVariantKey;
 import com.ncm.electro.entity.product.Category;
 import com.ncm.electro.entity.product.Variant;
 import com.ncm.electro.exception.ResourceNotFoundException;
@@ -20,8 +23,7 @@ import com.ncm.electro.repository.address.ProvinceRepository;
 import com.ncm.electro.repository.address.WardRepository;
 import com.ncm.electro.repository.authentication.RoleRepository;
 import jakarta.annotation.Nullable;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -69,5 +71,17 @@ public abstract class MapperUtils {
     public abstract Category mapToCategory(Long id);
     public abstract Variant mapToVariant(Long id);
     public abstract User mapToUser(Long id);
+    public abstract OrderCancellationReason mapToOrderCancellationReason(Long id);
+    public abstract OrderResource mapToOrderResource(Long id);
+
+    @AfterMapping
+    @Named("attachOrder")
+    public Order attachOrder(@MappingTarget Order order) {
+        order.getOrderVariants().forEach(orderVariant -> {
+            orderVariant.setOrderVariantKey(new OrderVariantKey(order.getId(), orderVariant.getVariant().getId()));
+            orderVariant.setOrder(order);
+        });
+        return order;
+    }
 
 }

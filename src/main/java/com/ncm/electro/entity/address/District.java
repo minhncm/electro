@@ -23,6 +23,9 @@ public class District extends BaseEntity {
     @JoinColumn(name = "province_id", nullable = false)
     private Province province;
 
+    @Column(name = "ghn_district_id")
+    private Integer ghnDistrictId;
+
     @OneToMany(mappedBy = "district")
     private List<Address> addresses = new ArrayList<>();
 

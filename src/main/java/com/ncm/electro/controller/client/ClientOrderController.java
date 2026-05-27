@@ -6,6 +6,7 @@ import com.ncm.electro.dto.client.ClientConfirmedOrderResponse;
 import com.ncm.electro.dto.client.ClientOrderResponse;
 import com.ncm.electro.dto.client.ClientSimpleOrderRequest;
 import com.ncm.electro.dto.client.ClientSimpleOrderResponse;
+import com.ncm.electro.dto.ghn.GhnShippingFeeResponse;
 import com.ncm.electro.service.client.ClientOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,5 +45,17 @@ public class ClientOrderController {
     public ResponseEntity<Void> captureOrder(@PathVariable String paypalOrderId) {
         clientOrderService.captureOrder(paypalOrderId);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{code}/cancel")
+    public ResponseEntity<Void> cancelOrder(@PathVariable String code) {
+        clientOrderService.cancelOrder(code);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/shipping-order/fee")
+    public ResponseEntity<GhnShippingFeeResponse> getShippingFee(Authentication authentication) {
+        String username = authentication.getName();
+        return ResponseEntity.ok().body(clientOrderService.getShippingFee(username));
     }
 }

@@ -49,7 +49,7 @@ import com.ncm.electro.entity.promotion.Promotion;
 import com.ncm.electro.entity.review.Review;
 import com.ncm.electro.entity.reward.RewardStrategy;
 import com.ncm.electro.entity.waybill.Waybill;
-import com.ncm.electro.mapper.WaybillMapper;
+import com.ncm.electro.mapper.waybill.WaybillMapper;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
 import com.ncm.electro.mapper.address.ProvinceMapper;

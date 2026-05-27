@@ -24,6 +24,8 @@ public class PaypalServiceImpl implements PaypalService{
     @Value("${paypal.secret}")
     private String PAYPAL_SECRET;
 
+    private static final int USD_VND_RATE = 26309;
+
     private PaypalServerSdkClient paypalClient() {
         return new PaypalServerSdkClient.Builder()
                 .loggingConfig(builder -> builder
@@ -44,7 +46,7 @@ public class PaypalServiceImpl implements PaypalService{
     public Order createOrder(com.ncm.electro.entity.order.Order order) {
         try{
             BigDecimal usdTotalPay = order.getTotalPay()
-                    .divide(BigDecimal.valueOf(26309), 2, RoundingMode.HALF_UP);
+                    .divide(BigDecimal.valueOf(USD_VND_RATE), 2, RoundingMode.HALF_UP);
 
             CreateOrderInput createOrderInput = new CreateOrderInput.Builder(
                     null,

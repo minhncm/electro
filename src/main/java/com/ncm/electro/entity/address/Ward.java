@@ -23,6 +23,9 @@ public class Ward extends BaseEntity {
     @JoinColumn(name = "district_id", nullable = false)
     private District district;
 
+    @Column(name = "ghn_ward_code")
+    private String ghnWardCode;
+
     @OneToMany(mappedBy = "ward")
     private List<Address> addresses = new ArrayList<>();
 

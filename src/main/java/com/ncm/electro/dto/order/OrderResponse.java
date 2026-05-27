@@ -1,17 +1,20 @@
 package com.ncm.electro.dto.order;
 
+import com.ncm.electro.dto.BaseResponse;
 import com.ncm.electro.dto.authentication.UserResponse;
 import com.ncm.electro.entity.cashbook.PaymentMethodType;
 import com.ncm.electro.entity.order.OrderVariant;
 import com.ncm.electro.entity.order.PaymentStatus;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class OrderResponse {
+@EqualsAndHashCode(callSuper = true)
+public class OrderResponse extends BaseResponse {
     private String code;
     private Integer status;
     private String toName;

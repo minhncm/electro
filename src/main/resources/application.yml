@@ -33,3 +33,7 @@ paypal:
   client-id: ${PAYPAL_CLIENT_ID}
   secret: ${PAYPAL_SECRET}
 
+ghn:
+  token: ${GHN_TOKEN}
+  shop-id: 200380
+  url: https://dev-online-gateway.ghn.vn/shiip/public-api/v2

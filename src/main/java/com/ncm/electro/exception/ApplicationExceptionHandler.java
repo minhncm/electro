@@ -77,4 +77,26 @@ public class ApplicationExceptionHandler {
         );
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(InvalidOrderStatusException.class)
+    public ErrorMessage invalidOrderStatusExceptionHandler(InvalidOrderStatusException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.CONFLICT.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(WaybillAlreadyExistsException.class)
+    public ErrorMessage waybillAlreadyExistsExceptionHandler(WaybillAlreadyExistsException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.CONFLICT.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
+
 }
