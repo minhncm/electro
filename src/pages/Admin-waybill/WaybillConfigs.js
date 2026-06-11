@@ -1,7 +1,10 @@
+import z from "zod";
 import ManagerPath from "~/constants/ManagerPath";
 import ResourceUrl from "~/constants/ResourceURL";
 import * as PageConfigs from "~/pages/PageConfig";
 import { Configs } from "~/types";
+import DateUtils from "~/utils/DateUtils";
+import { RequiredNote } from "~/pages/PageConfig";
 
 class WaybillConfigs extends Configs {
   static managerPath = ManagerPath.WAYBILL;
@@ -55,8 +58,31 @@ class WaybillConfigs extends Configs {
   };
 
   static properties = this._rawProperties;
-  static initialCreateUpdateFormValues = {};
-  static createUpdateFormSchema = {};
+  static initialCreateUpdateFormValues = {
+    orderId: "",
+    shippingDate: DateUtils.today(),
+    weight: 1,
+    length: 1,
+    width: 1,
+    height: 1,
+    note: "",
+    ghnRequiredNote: RequiredNote.KHONGCHOXEMHANG,
+  };
+  static createUpdateFormSchema = z.object({
+    orderId: z.string().min(1, "Vui lòng không để trống"),
+    shippingDate: z
+      .date()
+      .nullable()
+      .refine((value) => value !== null, {
+        message: "Vui lòng không để trống",
+      }),
+    weight: z.number().min(1),
+    length: z.number().min(1),
+    width: z.number().min(1),
+    height: z.number().min(1),
+    note: z.string(),
+    ghnRequiredNote: z.string(),
+  });
 
   static ghnRequiredNoteMap = {
     CHOTHUHANG: "Cho thử hàng",

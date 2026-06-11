@@ -186,3 +186,9 @@ export const statusSelectList = [
     label: "Vô hiệu lực",
   },
 ];
+
+export const RequiredNote = {
+  CHOTHUHANG: "CHOTHUHANG",
+  CHOXEMHANGKHONGTHU: "CHOXEMHANGKHONGTHU",
+  KHONGCHOXEMHANG: "KHONGCHOXEMHANG",
+};
