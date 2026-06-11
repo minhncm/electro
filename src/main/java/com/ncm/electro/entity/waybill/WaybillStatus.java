@@ -1,7 +1,10 @@
 package com.ncm.electro.entity.waybill;
 
+import lombok.Getter;
+
+@Getter
 public enum WaybillStatus {
-    WAITING_PICKUP(1),
+    WAITING(1),
     SHIPPING(2),
     DELIVERED(3),
     CANCELLED(4);
@@ -12,7 +15,4 @@ public enum WaybillStatus {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
 }

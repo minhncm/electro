@@ -82,6 +82,7 @@ public class GhnServiceImpl implements GhnService {
         request.setToName(order.getToName());
         request.setToPhone(order.getToPhone());
         request.setToAddress(order.getToAddress());
+        request.setToWardName(order.getToWardName());
         request.setToDistrictName(order.getToDistrictName());
         request.setToProvinceName(order.getToProvinceName());
         request.setCodAmount(

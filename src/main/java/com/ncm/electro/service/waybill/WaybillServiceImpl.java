@@ -3,6 +3,7 @@ package com.ncm.electro.service.waybill;
 import com.ncm.electro.constant.FieldName;
 import com.ncm.electro.constant.SearchFields;
 import com.ncm.electro.dto.ListResponse;
+import com.ncm.electro.dto.ghn.GhnCallbackOrderRequest;
 import com.ncm.electro.dto.ghn.GhnCreateOrderResponse;
 import com.ncm.electro.dto.ghn.GhnUpdateOrderResponse;
 import com.ncm.electro.dto.waybill.WaybillRequest;
@@ -11,12 +12,14 @@ import com.ncm.electro.entity.cashbook.PaymentMethodType;
 import com.ncm.electro.entity.order.Order;
 import com.ncm.electro.entity.order.OrderStatus;
 import com.ncm.electro.entity.waybill.Waybill;
+import com.ncm.electro.entity.waybill.WaybillLog;
 import com.ncm.electro.entity.waybill.WaybillStatus;
 import com.ncm.electro.exception.InvalidOrderStatusException;
 import com.ncm.electro.exception.ResourceNotFoundException;
 import com.ncm.electro.exception.WaybillAlreadyExistsException;
 import com.ncm.electro.mapper.waybill.WaybillMapper;
 import com.ncm.electro.repository.order.OrderRepository;
+import com.ncm.electro.repository.waybill.WaybillLogRepository;
 import com.ncm.electro.repository.waybill.WaybillRepository;
 import com.ncm.electro.service.ghn.GhnService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,8 @@ public class WaybillServiceImpl implements WaybillService{
     private final WaybillMapper waybillMapper;
     private final OrderRepository orderRepository;
     private final GhnService ghnService;
+    private final WaybillLogRepository waybillLogRepository;
+
     @Override
     public ListResponse<WaybillResponse> findAll(int page, int size, String sort, String filter, String search, boolean all) {
         return defaultFindAll(page, size, sort, filter, search, all, SearchFields.WAYBILL, waybillRepository, waybillMapper);
@@ -60,7 +65,7 @@ public class WaybillServiceImpl implements WaybillService{
         waybill.setCode(ghnCreateOrderResponse.getData().getOrderCode());
         waybill.setOrder(order);
         waybill.setExpectedDeliveryTime(ghnCreateOrderResponse.getData().getExpectedDeliveryTime());
-        waybill.setStatus(WaybillStatus.WAITING_PICKUP.getValue()); // status = 1: Đang đợi lấy hàng
+        waybill.setStatus(WaybillStatus.WAITING.getValue()); // status = 1: Đang đợi lấy hàng
         waybill.setCodAmount(
                 order.getPaymentMethodType() == PaymentMethodType.CASH
                         ? order.getTotalPay().intValue()
@@ -91,5 +96,50 @@ public class WaybillServiceImpl implements WaybillService{
     @Override
     public void delete(List<Long> ids) {
         waybillRepository.deleteAllById(ids);
+    }
+
+    @Override
+    public void callbackStatusWaybillFromGHN(GhnCallbackOrderRequest request) {
+        Waybill waybill = waybillRepository.findByCode(request.getOrderCode())
+                .orElseThrow(() -> new ResourceNotFoundException(Waybill.class.getSimpleName(), FieldName.WAYBILL_CODE, request.getOrderCode()));
+
+        Order order = waybill.getOrder();
+
+        WaybillLog waybillLog = new WaybillLog();
+        waybillLog.setWaybill(waybill);
+        waybillLog.setPreviousStatus(waybill.getStatus());
+
+        int currentWaybillStatus = WaybillCallbackConstants.WAYBILL_STATUS_CODE.get(request.getStatus());
+
+        if(!waybill.getStatus().equals(currentWaybillStatus)) {
+            switch (currentWaybillStatus) {
+                case WaybillCallbackConstants.WAITING -> {
+                    waybillLog.setCurrentStatus(WaybillStatus.WAITING.getValue());
+                    waybill.setStatus(WaybillStatus.WAITING.getValue());
+                    order.setStatus(OrderStatus.PROCESSING.getValue());
+                }
+                case WaybillCallbackConstants.SHIPPING -> {
+                    //TODO: notification
+                    waybillLog.setCurrentStatus(WaybillStatus.SHIPPING.getValue());
+                    waybill.setStatus(WaybillStatus.SHIPPING.getValue());
+                    order.setStatus(OrderStatus.SHIPPING.getValue());
+                }
+                case WaybillCallbackConstants.SUCCESS -> {
+                    //TODO: notification
+                    waybillLog.setCurrentStatus(WaybillStatus.DELIVERED.getValue());
+                    waybill.setStatus(WaybillStatus.DELIVERED.getValue());
+                    order.setStatus(OrderStatus.DELIVERED.getValue());
+                }
+                case WaybillCallbackConstants.FAILED, WaybillCallbackConstants.RETURN -> {
+                    //TODO: notification
+                    waybillLog.setCurrentStatus(WaybillStatus.CANCELLED.getValue());
+                    waybill.setStatus(WaybillStatus.CANCELLED.getValue());
+                    order.setStatus(OrderStatus.CANCELLED.getValue());
+                }
+            }
+        }
+        waybillRepository.save(waybill);
+        orderRepository.save(order);
+        waybillLogRepository.save(waybillLog);
     }
 }

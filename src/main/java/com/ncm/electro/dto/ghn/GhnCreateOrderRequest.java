@@ -1,6 +1,6 @@
 package com.ncm.electro.dto.ghn;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ncm.electro.entity.waybill.RequiredNote;
 import lombok.Data;
 
@@ -8,42 +8,30 @@ import java.util.List;
 
 @Data
 public class GhnCreateOrderRequest {
-    @JsonAlias("payment_type_id")
+    @JsonProperty("payment_type_id")
     private Integer paymentTypeId;
     private String note;
-    @JsonAlias("required_note")
+    @JsonProperty("required_note")
     private RequiredNote requiredNote;
-//    @JsonAlias("from_name")
-//    private String fromName;
-//    @JsonAlias("from_phone")
-//    private String fromPhone;
-//    @JsonAlias("from_address")
-//    private String fromAddress;
-//    @JsonAlias("from_ward_name")
-//    private String fromWardName;
-//    @JsonAlias("from_district_name")
-//    private String fromDistrictName;
-//    @JsonAlias("from_province_name")
-//    private String fromProvinceName;
-    @JsonAlias("to_name")
+    @JsonProperty("to_name")
     private String toName;
-    @JsonAlias("to_phone")
+    @JsonProperty("to_phone")
     private String toPhone;
-    @JsonAlias("to_address")
+    @JsonProperty("to_address")
     private String toAddress;
-    @JsonAlias("to_ward_name")
+    @JsonProperty("to_ward_name")
     private String toWardName;
-    @JsonAlias("to_district_name")
+    @JsonProperty("to_district_name")
     private String toDistrictName;
-    @JsonAlias("to_province_name")
+    @JsonProperty("to_province_name")
     private String toProvinceName;
-    @JsonAlias("cod_amount")
+    @JsonProperty("cod_amount")
     private Integer codAmount;
     private Integer weight;
     private Integer length;
     private Integer width;
     private Integer height;
-    @JsonAlias("service_type_id")
+    @JsonProperty("service_type_id")
     private Integer serviceTypeId;
     private List<Item> items;
     @Data

@@ -1,7 +1,8 @@
 package com.ncm.electro.entity.order;
 
-import org.springframework.security.core.parameters.P;
+import lombok.Getter;
 
+@Getter
 public enum OrderStatus {
     NEW(1),
     PROCESSING(2),
@@ -15,7 +16,4 @@ public enum OrderStatus {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
 }

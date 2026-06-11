@@ -97,6 +97,7 @@ import com.ncm.electro.repository.reward.RewardStrategyRepository;
 import com.ncm.electro.repository.waybill.WaybillRepository;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
+import com.ncm.electro.service.waybill.WaybillService;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -205,7 +206,6 @@ public class GenericMappingRegister {
     private GenericService<OrderResource, OrderResourceRequest, OrderResourceResponse> orderResourceService;
     private GenericService<OrderCancellationReason, OrderCancellationReasonRequest, OrderCancellationReasonResponse> orderCancellationReasonService;
     private GenericService<Order, OrderRequest, OrderResponse> orderService;
-    private GenericService<Waybill, WaybillRequest, WaybillResponse> waybillService;
     private GenericService<Review, ReviewRequest, ReviewResponse> reviewService;
     private GenericService<PaymentMethod, PaymentMethodRequest, PaymentMethodResponse> paymentMethodService;
     private GenericService<Promotion, PromotionRequest, PromotionResponse> promotionService;
@@ -493,12 +493,7 @@ public class GenericMappingRegister {
                 Order.class.getSimpleName()
         ), OrderRequest.class);
 
-        register("waybills", waybillController, waybillService.init(
-                context.getBean(WaybillRepository.class),
-                context.getBean(WaybillMapper.class),
-                SearchFields.WAYBILL,
-                Waybill.class.getSimpleName()
-        ), WaybillRequest.class);
+        register("waybills", waybillController, context.getBean(WaybillService.class), WaybillRequest.class);
 
         register("reviews", reviewController, reviewService.init(
                 context.getBean(ReviewRepository.class),
