@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -18,6 +19,7 @@ import java.time.Instant;
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
     @Id

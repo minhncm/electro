@@ -31,6 +31,9 @@ public class WebSecurityConfig {
     private final JwtFilter jwtFilter;
     private String[] WHITE_LIST = {
             "/api/auth/**",
+            "/api/provinces/**",
+            "/api/districts/**",
+            "/api/wards/**",
             "/client-api/products/**",
             "/client-api/categories/**",
             "/client-api/reviews/products/*",

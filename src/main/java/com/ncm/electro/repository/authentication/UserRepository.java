@@ -20,4 +20,8 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @EntityGraph(attributePaths = {"roles", "address.province", "address.district", "address.ward",})
     Optional<User> findByUsername(String username);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

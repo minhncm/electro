@@ -99,4 +99,15 @@ public class ApplicationExceptionHandler {
         );
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AuthException.class)
+    public ErrorMessage authExceptionHandler(AuthException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.UNAUTHORIZED.value(),
+                Instant.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+    }
+
 }

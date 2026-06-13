@@ -17,12 +17,22 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-
   devtools:
     restart:
       enabled: true
       poll-interval: 1000
       quiet-period: 400
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL}
+    password: ${PASSWORD_EMAIL}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 jwt:
   access-key: ${JWT_ACCESS_KEY}
   refresh-key: ${JWT_REFRESH_KEY}

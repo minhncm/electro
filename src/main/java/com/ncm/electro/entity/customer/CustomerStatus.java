@@ -5,16 +5,22 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "customer_status")
+@Accessors(chain = true)
 public class CustomerStatus extends BaseEntity {
     @Column(name = "code", nullable = false)
     private String code;

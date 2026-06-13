@@ -103,7 +103,7 @@ public class User extends BaseEntity {
     @OneToOne(mappedBy = "user")
     private Room room;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Verification verification;
 
     @OneToMany(mappedBy = "user")

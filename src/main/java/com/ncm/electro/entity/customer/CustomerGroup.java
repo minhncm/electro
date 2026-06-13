@@ -5,18 +5,24 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "customer_group")
+@Accessors(chain = true)
 public class CustomerGroup extends BaseEntity {
     @Column(name = "code", nullable = false)
     private String code;
