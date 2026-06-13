@@ -5,15 +5,19 @@ import ClientSignupStepOne from "./ClientSignupStepOne";
 import ClientSignupStepTwo from "./ClientSignupStepTwo";
 import ClientSignupStepThree from "./ClientSignupStepThree";
 import { useState } from "react";
+import useAuthStore from "~/stores/use-auth-store";
 
 function ClientSignup() {
-  const userId = false; // TODO: hoàn thành
+  const { currentSignupUserId } = useAuthStore();
 
-  const currentStep = userId ? 1 : 0; // Nếu có userId thì nhảy sang bước 2
+  const currentStep = currentSignupUserId ? 1 : 0; // Nếu có userId thì nhảy sang bước 2
 
   const [active, setActive] = useState(currentStep);
 
-  const nextStep = () => setActive((current) => (current < 1 ? current + 1 : current === 1 ? 3 : current)); // bỏ bước 3 đến ui completed
+  const nextStep = () =>
+    setActive(
+      (current) => (current < 1 ? current + 1 : current === 1 ? 3 : current), // bỏ qua bước 3 đến UI complete
+    );
 
   return (
     <main>
@@ -24,9 +28,16 @@ function ClientSignup() {
           <Stepper
             active={active}
             breakpoint="xs"
-            styles={{ root: { width: "100%", maxWidth: 800 }, content: { paddingTop: 50 } }}
+            styles={{
+              root: { width: "100%", maxWidth: 800 },
+              content: { paddingTop: 50 },
+            }}
           >
-            <Stepper.Step icon={<UserCheck size={18} />} label="Bước 1" description="Tạo tài khoản">
+            <Stepper.Step
+              icon={<UserCheck size={18} />}
+              label="Bước 1"
+              description="Tạo tài khoản"
+            >
               <ClientSignupStepOne nextStep={nextStep} />
             </Stepper.Step>
             <Stepper.Step
@@ -35,7 +46,7 @@ function ClientSignup() {
               description="Xác nhận email"
               allowStepSelect={false}
             >
-              <ClientSignupStepTwo nextStep={nextStep} userId={Number(userId) || null} />
+              <ClientSignupStepTwo nextStep={nextStep} />
             </Stepper.Step>
             <Stepper.Step
               icon={<ShieldCheck size={18} />}
@@ -43,6 +54,7 @@ function ClientSignup() {
               description="Đăng ký thành công"
               allowStepSelect={false}
             />
+
             <Stepper.Completed>
               <ClientSignupStepThree />
             </Stepper.Completed>

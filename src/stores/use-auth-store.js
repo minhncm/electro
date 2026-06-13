@@ -3,6 +3,7 @@ import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 const authState = {
   user: null,
+  currentSignupUserId: null,
 };
 
 const useAuthStore = create(
@@ -13,6 +14,12 @@ const useAuthStore = create(
         setUser: (user) => set(() => ({ user }), false, "AuthStore/setUser"),
         resetAuthState: () =>
           set(() => ({ user: null }), false, "AuthStore/resetAuthState"),
+        updateCurrentSignupUserId: (value) =>
+          set(
+            () => ({ currentSignupUserId: value }),
+            false,
+            "AuthStore/updateCurrentSignupUserId",
+          ),
       }),
       {
         name: "electro-auth-store",

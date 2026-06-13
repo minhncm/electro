@@ -80,6 +80,11 @@ const ResourceUrl = {
   AUTH_ME: ApplicationPath.API_PATH + "/auth/me",
   LOGIN: ApplicationPath.API_PATH + "/auth/login",
   LOGOUT: ApplicationPath.API_PATH + "/auth/logout",
+  CLIENT_REGISTRATION: ApplicationPath.API_PATH + "/auth/registration",
+  CLIENT_CONFIRM_REGISTRATION:
+    ApplicationPath.API_PATH + "/auth/registration/confirm",
+  CLIENT_RESEND_TOKEN_REGISTRATION: (userId) =>
+    ApplicationPath.API_PATH + `/auth/registration/${userId}/resend-token`,
 };
 
 export default ResourceUrl;

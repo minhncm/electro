@@ -27,3 +27,27 @@ export const useLogoutApi = () => {
     },
   });
 };
+
+export const useRegisterUser = () => {
+  return useMutation({
+    mutationKey: ["client-api", "registerUser"],
+    mutationFn: (data) =>
+      FetchUtils.post(ResourceUrl.CLIENT_REGISTRATION, data),
+  });
+};
+
+export const useConfirmRegistration = () => {
+  return useMutation({
+    mutationKey: ["client-api", "confirmRegistration"],
+    mutationFn: (data) =>
+      FetchUtils.post(ResourceUrl.CLIENT_CONFIRM_REGISTRATION, data),
+  });
+};
+
+export const useResendTokenRegistration = () => {
+  return useMutation({
+    mutationKey: ["client-api", "resendTokenRegistration"],
+    mutationFn: ({ userId }) =>
+      FetchUtils.post(ResourceUrl.CLIENT_RESEND_TOKEN_REGISTRATION(userId)),
+  });
+};
