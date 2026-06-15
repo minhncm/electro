@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class WaybillController {
     private final WaybillService waybillService;
     @PutMapping()
-    public ResponseEntity<ObjectNode> callbackStatusWaybillFromGHN(@RequestBody GhnCallbackOrderRequest ghnCallbackOrderRequest) {
-        return null;
+    public ResponseEntity<?> callbackStatusWaybillFromGHN(@RequestBody GhnCallbackOrderRequest ghnCallbackOrderRequest) {
+        waybillService.callbackStatusWaybillFromGHN(ghnCallbackOrderRequest);
+        return ResponseEntity.ok().build();
     }
 }

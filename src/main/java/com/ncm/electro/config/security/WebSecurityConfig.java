@@ -1,5 +1,7 @@
 package com.ncm.electro.config.security;
 
+import com.ncm.electro.constant.AppConstants;
+import com.ncm.electro.constant.SecurityConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,15 +31,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final JwtFilter jwtFilter;
-    private String[] WHITE_LIST = {
-            "/api/auth/**",
-            "/api/provinces/**",
-            "/api/districts/**",
-            "/api/wards/**",
-            "/client-api/products/**",
-            "/client-api/categories/**",
-            "/client-api/reviews/products/*",
-    };
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 
@@ -55,7 +48,9 @@ public class WebSecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(WHITE_LIST).permitAll();
+                    auth.requestMatchers(SecurityConstants.WHITE_LIST).permitAll();
+                    auth.requestMatchers(SecurityConstants.CLIENT_API_PATHS).hasAuthority(SecurityConstants.Role.CUSTOMER);
+                    auth.requestMatchers(SecurityConstants.ADMIN_API_PATHS).hasAnyAuthority(SecurityConstants.Role.EMPLOYEE, SecurityConstants.Role.ADMIN);
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -66,7 +61,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3001"));
+        configuration.setAllowedOrigins(Arrays.asList(AppConstants.FRONTEND_HOST));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

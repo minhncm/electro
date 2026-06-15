@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InventoryController {
     private final ProductInventoryService productInventoryService;
-    @GetMapping("product-inventories")
+    @GetMapping("/product-inventories")
     public ResponseEntity<ListResponse<ProductInventoryResponse>> getProductInventories(
             @RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
             @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
