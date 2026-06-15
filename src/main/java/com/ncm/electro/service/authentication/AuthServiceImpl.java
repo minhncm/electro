@@ -2,10 +2,7 @@ package com.ncm.electro.service.authentication;
 
 import com.ncm.electro.constant.AppConstants;
 import com.ncm.electro.constant.TokenType;
-import com.ncm.electro.dto.authentication.JwtResponse;
-import com.ncm.electro.dto.authentication.LoginRequest;
-import com.ncm.electro.dto.authentication.RegistrationRequest;
-import com.ncm.electro.dto.authentication.UserRequest;
+import com.ncm.electro.dto.authentication.*;
 import com.ncm.electro.entity.authentication.*;
 import com.ncm.electro.entity.customer.Customer;
 import com.ncm.electro.entity.customer.CustomerGroup;
@@ -33,6 +30,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -159,6 +157,32 @@ public class AuthServiceImpl implements AuthService{
         JwtResponse response = new JwtResponse();
         response.setAccessToken(newAccessToken);
         return response;
+    }
+
+    @Override
+    public void forgotPassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthException("User does not exist by email"));
+
+        if(user.getStatus().equals(UserStatus.VERIFIED)) {
+            throw new AuthException("Account is not activated");
+        }
+
+        String token = UUID.randomUUID().toString();
+        user.setResetPasswordToken(token);
+        userRepository.save(user);
+        String link = MessageFormat.format("{0}/change-password?token={1}&email={2}", AppConstants.FRONTEND_HOST, token, email);
+        emailSenderService.sendForgetPasswordToken(user.getEmail(), Map.of("link", link));
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequest request) {
+        User user = userRepository.findByEmailAndResetPasswordToken(request.getEmail(), request.getToken())
+                .orElseThrow(() -> new AuthException("Email and/or token are invalid"));
+
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
     }
 
     private String generateVerificationToken() {

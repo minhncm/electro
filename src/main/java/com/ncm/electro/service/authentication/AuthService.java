@@ -1,9 +1,6 @@
 package com.ncm.electro.service.authentication;
 
-import com.ncm.electro.dto.authentication.JwtResponse;
-import com.ncm.electro.dto.authentication.LoginRequest;
-import com.ncm.electro.dto.authentication.RegistrationRequest;
-import com.ncm.electro.dto.authentication.UserRequest;
+import com.ncm.electro.dto.authentication.*;
 
 public interface AuthService {
     JwtResponse authenticate(LoginRequest request);
@@ -11,4 +8,7 @@ public interface AuthService {
     Long registerUser(UserRequest userRequest);
     void confirmRegistration(RegistrationRequest registrationRequest);
     void resendVerificationToken(Long userId);
+    void forgotPassword(String email);
+    void resetPassword(ResetPasswordRequest request);
+
 }

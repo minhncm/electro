@@ -26,6 +26,12 @@ public class EmailSenderServiceImpl implements EmailSenderService{
         sendEmail(toEmail, "[Electro Shop] Xác thực email", text);
     }
 
+    @Override
+    public void sendForgetPasswordToken(String toEmail, Map<String, Object> attributes) {
+        String text = getEmailContent("forget-password-email.ftlh", attributes);
+        sendEmail(toEmail, "[Electro Shop] Yêu cầu cấp lại mật khẩu", text);
+    }
+
     private String getEmailContent(String template, Map<String, Object> model) {
         try {
             StringWriter writer = new StringWriter();
