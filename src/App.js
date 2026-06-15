@@ -156,6 +156,7 @@ import PurchaseOrderManage, {
 import ClientPayment from "./pages/client-payment/ClientPayment";
 import ClientForgotPassword from "./pages/Client-forgot-password/ClientForotPassword";
 import ClientChangePassword from "./pages/Client-forgot-password/ClientChangePassword";
+import AdminGuard from "./pages/AdminGuard";
 function App() {
   return (
     <BrowserRouter>
@@ -217,444 +218,457 @@ function App() {
                     element={<ClientChangePassword />}
                   />
                 </Route>
-                <Route path="/admin" element={<Admin />}>
-                  <Route index element={<AdminDashboard />} />
-                  <Route
-                    path={ManagerPath.ADDRESS}
-                    element={<AddressManage />}
-                  />
-                  <Route
-                    path={ManagerPath.ADDRESS + "/create"}
-                    element={<AddressCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.ADDRESS + "/update/:id"}
-                    element={<AddressUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.PROVINCE}
-                    element={<ProvinceManage />}
-                  />
-                  <Route
-                    path={ManagerPath.PROVINCE + "/create"}
-                    element={<ProvinceCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.PROVINCE + "/update/:id"}
-                    element={<ProvinceUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.DISTRICT}
-                    element={<DistrictManage />}
-                  />
-                  <Route
-                    path={ManagerPath.DISTRICT + "/create"}
-                    element={<DistrictCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.DISTRICT + "/update/:id"}
-                    element={<DistrictUpdate />}
-                  />
-                  <Route path={ManagerPath.USER} element={<UserManage />} />
-                  <Route
-                    path={ManagerPath.USER + "/create"}
-                    element={<UserCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.USER + "/update/:id"}
-                    element={<UserUpdate />}
-                  />
-                  <Route path={ManagerPath.ROLE} element={<RoleManage />} />
-                  <Route
-                    path={ManagerPath.ROLE + "/create"}
-                    element={<RoleCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.ROLE + "/update/:id"}
-                    element={<RoleUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.EMPLOYEE}
-                    element={<EmployeeManage />}
-                  />
-                  <Route
-                    path={ManagerPath.EMPLOYEE + "/create"}
-                    element={<EmployeeCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.EMPLOYEE + "/update/:id"}
-                    element={<EmployeeUpdate />}
-                  />
-                  <Route path={ManagerPath.OFFICE} element={<OfficeManage />} />
-                  <Route
-                    path={ManagerPath.OFFICE + "/create"}
-                    element={<OfficeCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.OFFICE + "/update/:id"}
-                    element={<OfficeUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.DEPARTMENT}
-                    element={<DepartmentManage />}
-                  />
-                  <Route
-                    path={ManagerPath.DEPARTMENT + "/create"}
-                    element={<DepartmentCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.DEPARTMENT + "/update/:id"}
-                    element={<DepartmentUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_TYPE}
-                    element={<JobTypeManage />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_TYPE + "/create"}
-                    element={<JobTypeCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_TYPE + "/update/:id"}
-                    element={<JobTypeUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_LEVEL}
-                    element={<JobLevelManage />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_LEVEL + "/create"}
-                    element={<JobLevelCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_LEVEL + "/update/:id"}
-                    element={<JobLevelUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_TITLE}
-                    element={<JobTitleManage />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_TITLE + "/create"}
-                    element={<JobTitleCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.JOB_TITLE + "/update/:id"}
-                    element={<JobTitleUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER}
-                    element={<CustomerManage />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER + "/create"}
-                    element={<CustomerCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER + "/update/:id"}
-                    element={<CustomerUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_GROUP}
-                    element={<CustomerGroupManage />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_GROUP + "/create"}
-                    element={<CustomerGroupCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_GROUP + "/update/:id"}
-                    element={<CustomerGroupUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_RESOURCE}
-                    element={<CustomerResourseManage />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_RESOURCE + "/create"}
-                    element={<CustomerResourseCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_RESOURCE + "/update/:id"}
-                    element={<CustomerResourseUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_STATUS}
-                    element={<CustomerStatusManage />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_STATUS + "/create"}
-                    element={<CustomerStatusCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.CUSTOMER_STATUS + "/update/:id"}
-                    element={<CustomerStatusUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.PRODUCT}
-                    element={<ProductManage />}
-                  />
-                  <Route
-                    path={ManagerPath.PRODUCT + "/create"}
-                    element={<ProductCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.PRODUCT + "/update/:id"}
-                    element={<ProductUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.CATEGORY}
-                    element={<CategoryManage />}
-                  />
-                  <Route
-                    path={ManagerPath.CATEGORY + "/create"}
-                    element={<CategoryCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.CATEGORY + "/update/:id"}
-                    element={<CategoryUpdate />}
-                  />
-                  <Route path={ManagerPath.BRAND} element={<BrandManage />} />
-                  <Route
-                    path={ManagerPath.BRAND + "/create"}
-                    element={<BrandCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.BRAND + "/update/:id"}
-                    element={<BrandUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.SUPPLIER}
-                    element={<SupplierManage />}
-                  />
-                  <Route
-                    path={ManagerPath.SUPPLIER + "/create"}
-                    element={<SupplierCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.SUPPLIER + "/update/:id"}
-                    element={<SuppilerUpdate />}
-                  />
-                  <Route path={ManagerPath.UNIT} element={<UnitManage />} />
-                  <Route
-                    path={ManagerPath.UNIT + "/create"}
-                    element={<UnitCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.UNIT + "/update/:id"}
-                    element={<UnitUpdate />}
-                  />
-                  <Route path={ManagerPath.TAG} element={<TagManage />} />
-                  <Route
-                    path={ManagerPath.TAG + "/create"}
-                    element={<TagCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.TAG + "/update/:id"}
-                    element={<TagUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.GUARANTEE}
-                    element={<GuaranteeManage />}
-                  />
-                  <Route
-                    path={ManagerPath.GUARANTEE + "/create"}
-                    element={<GuaranteeCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.GUARANTEE + "/update/:id"}
-                    element={<GuaranteeUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.PROPERTY}
-                    element={<PropertyManage />}
-                  />
-                  <Route
-                    path={ManagerPath.PROPERTY + "/create"}
-                    element={<PropertyCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.PROPERTY + "/update/:id"}
-                    element={<PropertyUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.SPECIFICATION}
-                    element={<SpecificationManage />}
-                  />
-                  <Route
-                    path={ManagerPath.SPECIFICATION + "/create"}
-                    element={<SpecificationCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.SPECIFICATION + "/update/:id"}
-                    element={<SpecificationUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.INVENTORY}
-                    element={<InventoryManage />}
-                  />
-                  <Route
-                    path={ManagerPath.WAREHOUSE}
-                    element={<WarehouseManage />}
-                  />
-                  <Route
-                    path={ManagerPath.WAREHOUSE + "/create"}
-                    element={<WarehouseCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.WAREHOUSE + "/update/:id"}
-                    element={<WarehouseUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.PURCHASE_ORDER}
-                    element={<PurchaseOrderManage />}
-                  />
-                  <Route
-                    path={ManagerPath.PURCHASE_ORDER + "/create"}
-                    element={<PurchaseOrderCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.PURCHASE_ORDER + "/update/:id"}
-                    element={<PurchaseOrderUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.DESTINATION}
-                    element={<DestinationManage />}
-                  />
-                  <Route
-                    path={ManagerPath.DESTINATION + "/create"}
-                    element={<DestinationCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.DESTINATION + "/update/:id"}
-                    element={<DestinationUpdate />}
-                  />
-                  <Route path={ManagerPath.DOCKET} element={<DocketManage />} />
-                  <Route
-                    path={ManagerPath.DOCKET + "/create"}
-                    element={<DocketCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.DOCKET + "/update/:id"}
-                    element={<DocketUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.DOCKET_REASON}
-                    element={<DocketReasonManage />}
-                  />
-                  <Route
-                    path={ManagerPath.DOCKET_REASON + "/create"}
-                    element={<DocketReasonCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.DOCKET_REASON + "/update/:id"}
-                    element={<DocketReasonUpdate />}
-                  />
-                  <Route path={ManagerPath.COUNT} element={<CountManage />} />
-                  <Route
-                    path={ManagerPath.COUNT + "/create"}
-                    element={<CountCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.COUNT + "/update/:id"}
-                    element={<CountUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.TRANSFER}
-                    element={<TransferManage />}
-                  />
-                  <Route
-                    path={ManagerPath.TRANSFER + "/create"}
-                    element={<TransferCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.TRANSFER + "/update/:id"}
-                    element={<TransferUpdate />}
-                  />
-                  <Route path={ManagerPath.ORDER} element={<OrderManage />} />
-                  <Route
-                    path={ManagerPath.ORDER + "/create"}
-                    element={<OrderCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.ORDER + "/update/:id"}
-                    element={<OrderUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.ORDER_RESOURCE}
-                    element={<OrderResourceManage />}
-                  />
-                  <Route
-                    path={ManagerPath.ORDER_RESOURCE + "/create"}
-                    element={<OrderResourceCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.ORDER_RESOURCE + "/update/:id"}
-                    element={<OrderResourceUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.ORDER_CANCELLATION_REASON}
-                    element={<OrderCancellationReasonManage />}
-                  />
-                  <Route
-                    path={ManagerPath.ORDER_CANCELLATION_REASON + "/create"}
-                    element={<OrderCancellationReasonCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.ORDER_CANCELLATION_REASON + "/update/:id"}
-                    element={<OrderCancellationReasonUpdate />}
-                  />
-                  <Route
-                    path={ManagerPath.WAYBILL}
-                    element={<WaybillManage />}
-                  />
-                  <Route
-                    path={ManagerPath.WAYBILL + "/create"}
-                    element={<WaybillCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.WAYBILL + "/update/:id"}
-                    element={<WaybillUpdate />}
-                  />
+                <Route element={<AdminGuard />}>
+                  <Route path="/admin" element={<Admin />}>
+                    <Route index element={<AdminDashboard />} />
+                    <Route
+                      path={ManagerPath.ADDRESS}
+                      element={<AddressManage />}
+                    />
+                    <Route
+                      path={ManagerPath.ADDRESS + "/create"}
+                      element={<AddressCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.ADDRESS + "/update/:id"}
+                      element={<AddressUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.PROVINCE}
+                      element={<ProvinceManage />}
+                    />
+                    <Route
+                      path={ManagerPath.PROVINCE + "/create"}
+                      element={<ProvinceCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.PROVINCE + "/update/:id"}
+                      element={<ProvinceUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.DISTRICT}
+                      element={<DistrictManage />}
+                    />
+                    <Route
+                      path={ManagerPath.DISTRICT + "/create"}
+                      element={<DistrictCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.DISTRICT + "/update/:id"}
+                      element={<DistrictUpdate />}
+                    />
+                    <Route path={ManagerPath.USER} element={<UserManage />} />
+                    <Route
+                      path={ManagerPath.USER + "/create"}
+                      element={<UserCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.USER + "/update/:id"}
+                      element={<UserUpdate />}
+                    />
+                    <Route path={ManagerPath.ROLE} element={<RoleManage />} />
+                    <Route
+                      path={ManagerPath.ROLE + "/create"}
+                      element={<RoleCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.ROLE + "/update/:id"}
+                      element={<RoleUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.EMPLOYEE}
+                      element={<EmployeeManage />}
+                    />
+                    <Route
+                      path={ManagerPath.EMPLOYEE + "/create"}
+                      element={<EmployeeCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.EMPLOYEE + "/update/:id"}
+                      element={<EmployeeUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.OFFICE}
+                      element={<OfficeManage />}
+                    />
+                    <Route
+                      path={ManagerPath.OFFICE + "/create"}
+                      element={<OfficeCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.OFFICE + "/update/:id"}
+                      element={<OfficeUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.DEPARTMENT}
+                      element={<DepartmentManage />}
+                    />
+                    <Route
+                      path={ManagerPath.DEPARTMENT + "/create"}
+                      element={<DepartmentCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.DEPARTMENT + "/update/:id"}
+                      element={<DepartmentUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_TYPE}
+                      element={<JobTypeManage />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_TYPE + "/create"}
+                      element={<JobTypeCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_TYPE + "/update/:id"}
+                      element={<JobTypeUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_LEVEL}
+                      element={<JobLevelManage />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_LEVEL + "/create"}
+                      element={<JobLevelCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_LEVEL + "/update/:id"}
+                      element={<JobLevelUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_TITLE}
+                      element={<JobTitleManage />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_TITLE + "/create"}
+                      element={<JobTitleCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.JOB_TITLE + "/update/:id"}
+                      element={<JobTitleUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER}
+                      element={<CustomerManage />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER + "/create"}
+                      element={<CustomerCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER + "/update/:id"}
+                      element={<CustomerUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_GROUP}
+                      element={<CustomerGroupManage />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_GROUP + "/create"}
+                      element={<CustomerGroupCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_GROUP + "/update/:id"}
+                      element={<CustomerGroupUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_RESOURCE}
+                      element={<CustomerResourseManage />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_RESOURCE + "/create"}
+                      element={<CustomerResourseCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_RESOURCE + "/update/:id"}
+                      element={<CustomerResourseUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_STATUS}
+                      element={<CustomerStatusManage />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_STATUS + "/create"}
+                      element={<CustomerStatusCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.CUSTOMER_STATUS + "/update/:id"}
+                      element={<CustomerStatusUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.PRODUCT}
+                      element={<ProductManage />}
+                    />
+                    <Route
+                      path={ManagerPath.PRODUCT + "/create"}
+                      element={<ProductCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.PRODUCT + "/update/:id"}
+                      element={<ProductUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.CATEGORY}
+                      element={<CategoryManage />}
+                    />
+                    <Route
+                      path={ManagerPath.CATEGORY + "/create"}
+                      element={<CategoryCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.CATEGORY + "/update/:id"}
+                      element={<CategoryUpdate />}
+                    />
+                    <Route path={ManagerPath.BRAND} element={<BrandManage />} />
+                    <Route
+                      path={ManagerPath.BRAND + "/create"}
+                      element={<BrandCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.BRAND + "/update/:id"}
+                      element={<BrandUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.SUPPLIER}
+                      element={<SupplierManage />}
+                    />
+                    <Route
+                      path={ManagerPath.SUPPLIER + "/create"}
+                      element={<SupplierCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.SUPPLIER + "/update/:id"}
+                      element={<SuppilerUpdate />}
+                    />
+                    <Route path={ManagerPath.UNIT} element={<UnitManage />} />
+                    <Route
+                      path={ManagerPath.UNIT + "/create"}
+                      element={<UnitCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.UNIT + "/update/:id"}
+                      element={<UnitUpdate />}
+                    />
+                    <Route path={ManagerPath.TAG} element={<TagManage />} />
+                    <Route
+                      path={ManagerPath.TAG + "/create"}
+                      element={<TagCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.TAG + "/update/:id"}
+                      element={<TagUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.GUARANTEE}
+                      element={<GuaranteeManage />}
+                    />
+                    <Route
+                      path={ManagerPath.GUARANTEE + "/create"}
+                      element={<GuaranteeCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.GUARANTEE + "/update/:id"}
+                      element={<GuaranteeUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.PROPERTY}
+                      element={<PropertyManage />}
+                    />
+                    <Route
+                      path={ManagerPath.PROPERTY + "/create"}
+                      element={<PropertyCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.PROPERTY + "/update/:id"}
+                      element={<PropertyUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.SPECIFICATION}
+                      element={<SpecificationManage />}
+                    />
+                    <Route
+                      path={ManagerPath.SPECIFICATION + "/create"}
+                      element={<SpecificationCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.SPECIFICATION + "/update/:id"}
+                      element={<SpecificationUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.INVENTORY}
+                      element={<InventoryManage />}
+                    />
+                    <Route
+                      path={ManagerPath.WAREHOUSE}
+                      element={<WarehouseManage />}
+                    />
+                    <Route
+                      path={ManagerPath.WAREHOUSE + "/create"}
+                      element={<WarehouseCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.WAREHOUSE + "/update/:id"}
+                      element={<WarehouseUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.PURCHASE_ORDER}
+                      element={<PurchaseOrderManage />}
+                    />
+                    <Route
+                      path={ManagerPath.PURCHASE_ORDER + "/create"}
+                      element={<PurchaseOrderCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.PURCHASE_ORDER + "/update/:id"}
+                      element={<PurchaseOrderUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.DESTINATION}
+                      element={<DestinationManage />}
+                    />
+                    <Route
+                      path={ManagerPath.DESTINATION + "/create"}
+                      element={<DestinationCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.DESTINATION + "/update/:id"}
+                      element={<DestinationUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.DOCKET}
+                      element={<DocketManage />}
+                    />
+                    <Route
+                      path={ManagerPath.DOCKET + "/create"}
+                      element={<DocketCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.DOCKET + "/update/:id"}
+                      element={<DocketUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.DOCKET_REASON}
+                      element={<DocketReasonManage />}
+                    />
+                    <Route
+                      path={ManagerPath.DOCKET_REASON + "/create"}
+                      element={<DocketReasonCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.DOCKET_REASON + "/update/:id"}
+                      element={<DocketReasonUpdate />}
+                    />
+                    <Route path={ManagerPath.COUNT} element={<CountManage />} />
+                    <Route
+                      path={ManagerPath.COUNT + "/create"}
+                      element={<CountCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.COUNT + "/update/:id"}
+                      element={<CountUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.TRANSFER}
+                      element={<TransferManage />}
+                    />
+                    <Route
+                      path={ManagerPath.TRANSFER + "/create"}
+                      element={<TransferCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.TRANSFER + "/update/:id"}
+                      element={<TransferUpdate />}
+                    />
+                    <Route path={ManagerPath.ORDER} element={<OrderManage />} />
+                    <Route
+                      path={ManagerPath.ORDER + "/create"}
+                      element={<OrderCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.ORDER + "/update/:id"}
+                      element={<OrderUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.ORDER_RESOURCE}
+                      element={<OrderResourceManage />}
+                    />
+                    <Route
+                      path={ManagerPath.ORDER_RESOURCE + "/create"}
+                      element={<OrderResourceCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.ORDER_RESOURCE + "/update/:id"}
+                      element={<OrderResourceUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.ORDER_CANCELLATION_REASON}
+                      element={<OrderCancellationReasonManage />}
+                    />
+                    <Route
+                      path={ManagerPath.ORDER_CANCELLATION_REASON + "/create"}
+                      element={<OrderCancellationReasonCreate />}
+                    />
+                    <Route
+                      path={
+                        ManagerPath.ORDER_CANCELLATION_REASON + "/update/:id"
+                      }
+                      element={<OrderCancellationReasonUpdate />}
+                    />
+                    <Route
+                      path={ManagerPath.WAYBILL}
+                      element={<WaybillManage />}
+                    />
+                    <Route
+                      path={ManagerPath.WAYBILL + "/create"}
+                      element={<WaybillCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.WAYBILL + "/update/:id"}
+                      element={<WaybillUpdate />}
+                    />
 
-                  <Route path={ManagerPath.REVIEW} element={<ReviewManage />} />
+                    <Route
+                      path={ManagerPath.REVIEW}
+                      element={<ReviewManage />}
+                    />
 
-                  <Route
-                    path={ManagerPath.REWARD_STRATEGY}
-                    element={<RewardStartegyManage />}
-                  />
+                    <Route
+                      path={ManagerPath.REWARD_STRATEGY}
+                      element={<RewardStartegyManage />}
+                    />
 
-                  <Route
-                    path={ManagerPath.VOUCHER}
-                    element={<VoucherManage />}
-                  />
-                  <Route
-                    path={ManagerPath.PAYMENT_METHOD}
-                    element={<PaymentMethodManage />}
-                  />
+                    <Route
+                      path={ManagerPath.VOUCHER}
+                      element={<VoucherManage />}
+                    />
+                    <Route
+                      path={ManagerPath.PAYMENT_METHOD}
+                      element={<PaymentMethodManage />}
+                    />
 
-                  <Route
-                    path={ManagerPath.PROMOTION}
-                    element={<PromotionManage />}
-                  />
-                  <Route
-                    path={ManagerPath.PROMOTION + "/create"}
-                    element={<PromotionCreate />}
-                  />
-                  <Route
-                    path={ManagerPath.PROMOTION + "/update/:id"}
-                    element={<PromotionUpdate />}
-                  />
+                    <Route
+                      path={ManagerPath.PROMOTION}
+                      element={<PromotionManage />}
+                    />
+                    <Route
+                      path={ManagerPath.PROMOTION + "/create"}
+                      element={<PromotionCreate />}
+                    />
+                    <Route
+                      path={ManagerPath.PROMOTION + "/update/:id"}
+                      element={<PromotionUpdate />}
+                    />
 
-                  <Route
-                    path={ManagerPath.NOTIFICATION}
-                    element={<AdminNotification />}
-                  />
+                    <Route
+                      path={ManagerPath.NOTIFICATION}
+                      element={<AdminNotification />}
+                    />
 
-                  <Route
-                    path={ManagerPath.ACCOUNT}
-                    element={<AdminAccount />}
-                  />
+                    <Route
+                      path={ManagerPath.ACCOUNT}
+                      element={<AdminAccount />}
+                    />
+                  </Route>
                 </Route>
               </Routes>
             </div>

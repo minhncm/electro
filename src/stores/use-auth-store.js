@@ -13,7 +13,7 @@ const useAuthStore = create(
         ...authState,
         setUser: (user) => set(() => ({ user }), false, "AuthStore/setUser"),
         resetAuthState: () =>
-          set(() => ({ user: null }), false, "AuthStore/resetAuthState"),
+          set(() => ({ ...authState }), false, "AuthStore/resetAuthState"),
         updateCurrentSignupUserId: (value) =>
           set(
             () => ({ currentSignupUserId: value }),
