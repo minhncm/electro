@@ -154,6 +154,8 @@ import PurchaseOrderManage, {
   PurchaseOrderUpdate,
 } from "./pages/Admin-purchase-order";
 import ClientPayment from "./pages/client-payment/ClientPayment";
+import ClientForgotPassword from "./pages/Client-forgot-password/ClientForotPassword";
+import ClientChangePassword from "./pages/Client-forgot-password/ClientChangePassword";
 function App() {
   return (
     <BrowserRouter>
@@ -209,6 +211,11 @@ function App() {
                   <Route path="/search" element={<ClientSearch />} />
                   <Route path="/signin" element={<ClientSignin />} />
                   <Route path="/signup" element={<ClientSignup />} />
+                  <Route path="/forgot" element={<ClientForgotPassword />} />
+                  <Route
+                    path="/change-password"
+                    element={<ClientChangePassword />}
+                  />
                 </Route>
                 <Route path="/admin" element={<Admin />}>
                   <Route index element={<AdminDashboard />} />

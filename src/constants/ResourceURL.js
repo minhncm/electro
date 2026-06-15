@@ -85,6 +85,8 @@ const ResourceUrl = {
     ApplicationPath.API_PATH + "/auth/registration/confirm",
   CLIENT_RESEND_TOKEN_REGISTRATION: (userId) =>
     ApplicationPath.API_PATH + `/auth/registration/${userId}/resend-token`,
+  CLIENT_FORGOT_PASSWORD: ApplicationPath.API_PATH + "/auth/forgot-password",
+  CLIENT_RESET_PASSWORD: ApplicationPath.API_PATH + "/auth/reset-password",
 };
 
 export default ResourceUrl;

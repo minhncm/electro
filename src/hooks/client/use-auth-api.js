@@ -51,3 +51,19 @@ export const useResendTokenRegistration = () => {
       FetchUtils.post(ResourceUrl.CLIENT_RESEND_TOKEN_REGISTRATION(userId)),
   });
 };
+
+export const useForgotPasswordApi = () => {
+  return useMutation({
+    mutationKey: ["client-api", "forgotPassword"],
+    mutationFn: (request) =>
+      FetchUtils.get(ResourceUrl.CLIENT_FORGOT_PASSWORD, request),
+  });
+};
+
+export const useResetPasswordApi = () => {
+  return useMutation({
+    mutationKey: ["client-api, resetPassword"],
+    mutationFn: (request) =>
+      FetchUtils.put(ResourceUrl.CLIENT_RESET_PASSWORD, request),
+  });
+};
