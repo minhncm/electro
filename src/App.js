@@ -157,6 +157,7 @@ import ClientPayment from "./pages/client-payment/ClientPayment";
 import ClientForgotPassword from "./pages/Client-forgot-password/ClientForotPassword";
 import ClientChangePassword from "./pages/Client-forgot-password/ClientChangePassword";
 import AdminGuard from "./pages/AdminGuard";
+import AdminSignin from "./pages/Admin-signin";
 function App() {
   return (
     <BrowserRouter>
@@ -218,6 +219,7 @@ function App() {
                     element={<ClientChangePassword />}
                   />
                 </Route>
+                <Route path={ManagerPath.SIGNIN} element={<AdminSignin />} />
                 <Route element={<AdminGuard />}>
                   <Route path="/admin" element={<Admin />}>
                     <Route index element={<AdminDashboard />} />

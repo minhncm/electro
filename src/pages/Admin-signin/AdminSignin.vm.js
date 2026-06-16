@@ -5,18 +5,18 @@ import { useLoginApi } from "~/hooks/client/use-auth-api";
 import useAuthStore from "~/stores/use-auth-store";
 import MessageUtils from "~/utils/MessageUtils";
 
-function useClientSigninViewModel() {
+function useAdminSignin() {
   const initialFormValues = {
     username: "",
     password: "",
   };
 
-  const { user } = useAuthStore();
-
   const formSchema = z.object({
     username: z.string().min(2, MessageUtils.min("Tên tài khoản", 2)),
     password: z.string().min(1, MessageUtils.min("Mật khẩu", 1)),
   });
+
+  const { user } = useAuthStore();
 
   const form = useForm({
     initialValues: initialFormValues,
@@ -33,5 +33,4 @@ function useClientSigninViewModel() {
 
   return { form, isSuccessLogin: loginApi.isSuccess, handleFormSubmit };
 }
-
-export default useClientSigninViewModel;
+export default useAdminSignin;

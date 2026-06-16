@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+import ManagerPath from "~/constants/ManagerPath";
 import useAuthStore from "~/stores/use-auth-store";
 
 function AdminGuard() {
@@ -6,13 +7,15 @@ function AdminGuard() {
 
   // Chưa đăng nhập
   if (!user) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to={ManagerPath.SIGNIN} replace />;
   }
 
   // Không phải admin
-  const isAdmin = user.roles?.some((role) => role.code === "ADMIN");
+  const isAdminOrEmployee = user.roles?.some(
+    (role) => role.code === "ADMIN" || role.code === "EMPLOYEE",
+  );
 
-  if (!isAdmin) {
+  if (!isAdminOrEmployee) {
     return <Navigate to="/" replace />;
     // hoặc /403
   }

@@ -1,4 +1,10 @@
-import { AppShell, NavLink, ScrollArea, Stack, useMantineTheme } from "@mantine/core";
+import {
+  AppShell,
+  NavLink,
+  ScrollArea,
+  Stack,
+  useMantineTheme,
+} from "@mantine/core";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -16,6 +22,7 @@ import {
   Point,
   Users,
 } from "tabler-icons-react";
+import useAuthStore from "~/stores/use-auth-store";
 
 const navbarLinks = [
   {
@@ -234,12 +241,22 @@ function AdminNavbar() {
   const theme = useMantineTheme();
   const location = useLocation();
   const [active, setActive] = useState(location.pathname);
+  const { user } = useAuthStore();
+
+  const isOnlyEmployee =
+    user.roles.length > 0 &&
+    user.roles.every((role) => role.code === "EMPLOYEE");
 
   return (
     <AppShell.Navbar p="md" w={250}>
       <AppShell.Section grow component={ScrollArea}>
         {navbarLinks.map((navbarLink) => (
-          <Stack key={navbarLink.label} gap={0} bdrs={theme.radius.sm} style={{ overflow: "hidden" }}>
+          <Stack
+            key={navbarLink.label}
+            gap={0}
+            bdrs={theme.radius.sm}
+            style={{ overflow: "hidden" }}
+          >
             <NavLink
               pt="sm"
               component={Link}
@@ -251,6 +268,7 @@ function AdminNavbar() {
               active={active === navbarLink.link}
               opened={active === navbarLink.link}
               childrenOffset={0}
+              disabled={navbarLink.disableForEmployee === isOnlyEmployee}
               onClick={() => setActive(navbarLink.link)}
             />
             {active === navbarLink.link &&

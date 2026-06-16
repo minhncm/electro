@@ -55,6 +55,8 @@ const ManagerPath = {
   CHAT: "/admin/chat",
   NOTIFICATION: "/admin/notification",
   ACCOUNT: "/admin/account",
+
+  SIGNIN: "/admin/signin",
 };
 
 export default ManagerPath;

@@ -7,7 +7,7 @@ import {
   Group,
   useMantineTheme,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ElectroLogo from "../ElectroLogo/ElectroLogo";
 import {
   Bell,
@@ -19,6 +19,8 @@ import {
   Sun,
   User,
 } from "tabler-icons-react";
+import useAuthStore from "~/stores/use-auth-store";
+import ManagerPath from "~/constants/ManagerPath";
 
 function AdminHeader() {
   const theme = useMantineTheme();
@@ -95,6 +97,13 @@ function AdminHeader() {
     },
   ];
 
+  const { resetAuthState } = useAuthStore();
+  const navigate = useNavigate();
+  const handleLogoutButton = () => {
+    resetAuthState();
+    navigate(ManagerPath.SIGNIN);
+  };
+
   return (
     <AppShell.Header style={classes.header}>
       <div style={classes.inner}>
@@ -144,7 +153,12 @@ function AdminHeader() {
                 <MoonStars size={18} />
               )}
             </ActionIcon>
-            <ActionIcon variant="outline" title="Đăng xuất" c="blue">
+            <ActionIcon
+              variant="outline"
+              title="Đăng xuất"
+              c="blue"
+              onClick={handleLogoutButton}
+            >
               <Logout size={18} />
             </ActionIcon>
           </Group>
