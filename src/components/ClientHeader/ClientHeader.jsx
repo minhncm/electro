@@ -23,6 +23,7 @@ import Container from "~/components/Container/Container";
 import ElectroLogo from "~/components/ElectroLogo/ElectroLogo";
 import { useLogoutApi } from "~/hooks/client/use-auth-api";
 import { useGetAllCategories } from "~/hooks/client/use-category-api";
+import useAuthStore from "~/stores/use-auth-store";
 import Badge from "../common/Bagde";
 import Button from "../common/Button";
 import {
@@ -34,7 +35,6 @@ import {
 import Popover from "../common/Popover";
 import Tooltip from "../common/Tooltip";
 import CategoryHeader from "./CategoryHeader";
-import useAuthStore from "~/stores/use-auth-store";
 
 function ClientHeader() {
   const navigate = useNavigate();
