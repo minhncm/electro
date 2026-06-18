@@ -24,6 +24,7 @@ public final class SecurityConstants {
             "/client-api/products/**",
             "/client-api/categories/**",
             "/client-api/reviews/products/*",
+            "/client-api/notifications/test-events",
     };
 
     public static final class Role {

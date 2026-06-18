@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface SseEmitterRepository {
     void addEmitter(String uuid, String username, SseEmitter sseEmitter);
-    void remove(String username);
-    Optional<SseEmitter> findByUsername(String username);
+    void remove(String uniqueKey);
+    Optional<SseEmitter> findByUniqueKey(String uniqueKey);
     Optional<SseEmitter> findByUUID(String uuid);
 }

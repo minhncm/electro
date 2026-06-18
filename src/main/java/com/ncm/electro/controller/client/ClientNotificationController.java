@@ -2,17 +2,16 @@ package com.ncm.electro.controller.client;
 
 import com.ncm.electro.constant.AppConstants;
 import com.ncm.electro.dto.ListResponse;
+import com.ncm.electro.dto.genaral.NotificationRequest;
 import com.ncm.electro.dto.genaral.NotificationResponse;
 import com.ncm.electro.service.general.NotificationService;
 import com.ncm.electro.service.general.SseEmitterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.UUID;
@@ -40,5 +39,25 @@ public class ClientNotificationController {
         String username = authentication.getName();
         String uuid = UUID.randomUUID().toString();
         return sseEmitterService.createEmitter(uuid, username);
+    }
+
+    @PostMapping("/push-events")
+    public ResponseEntity<NotificationResponse> pushNotification(@RequestBody NotificationRequest request) {
+        NotificationResponse response =  notificationService.pushNotification(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/test-events")
+    public ResponseEntity<Void> pushNotification(@RequestParam String message) {
+        sseEmitterService.pushEvent("dtreat3", message);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NotificationResponse> updateNotification(
+            @PathVariable Long id,
+            @RequestBody NotificationRequest request) {
+        NotificationResponse response = notificationService.updateNotification(id, request);
+        return ResponseEntity.ok(response);
     }
 }

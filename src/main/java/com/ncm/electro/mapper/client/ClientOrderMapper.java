@@ -33,7 +33,6 @@ public abstract class ClientOrderMapper implements GenericMapper<Order, ClientOr
                 .orElse(null);
     }
 
-    // TODO: chỉnh sửa lại sau khi làm auth
     protected boolean mapIsReviewed(Product product) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

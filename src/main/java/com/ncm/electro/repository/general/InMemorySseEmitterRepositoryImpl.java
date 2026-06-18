@@ -7,27 +7,29 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+//TODO: hien tai 1 user -> 1 emitter, sua lai thanh 1 user -> n emitter ==> Map<String, Map<String, SseEmitter>>
+//TODO: khi reload lai website thi emitter cua user bi mat, dang le phai tao 1 emitter moi repalce cai cu
 @Repository
 public class InMemorySseEmitterRepositoryImpl implements SseEmitterRepository{
     private final Map<String, String> uuidEmitterMap = new ConcurrentHashMap<>(); // Map<uuid, username>
     private final Map<String, SseEmitter> emitterMap = new ConcurrentHashMap<>(); // Map<username, sseEmitter>
 
     @Override
-    public void addEmitter(String uuid, String username, SseEmitter sseEmitter) {
-        remove(username);
-        uuidEmitterMap.put(uuid, username);
-        emitterMap.put(username, sseEmitter);
+    public void addEmitter(String uuid, String uniqueKey, SseEmitter sseEmitter) {
+        remove(uniqueKey);
+        uuidEmitterMap.put(uuid, uniqueKey);
+        emitterMap.put(uniqueKey, sseEmitter);
     }
 
     @Override
-    public Optional<SseEmitter> findByUsername(String username) {
-        return Optional.ofNullable(emitterMap.get(username));
+    public Optional<SseEmitter> findByUniqueKey(String uniqueKey) {
+        return Optional.ofNullable(emitterMap.get(uniqueKey));
     }
 
     @Override
-    public void remove(String username) {
-        uuidEmitterMap.entrySet().removeIf(entry -> entry.getValue().equals(username));
-        emitterMap.remove(username);
+    public void remove(String uniqueKey) {
+        uuidEmitterMap.entrySet().removeIf(entry -> entry.getValue().equals(uniqueKey));
+        emitterMap.remove(uniqueKey);
     }
 
     @Override

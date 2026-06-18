@@ -7,8 +7,6 @@ import com.ncm.electro.entity.review.Review;
 import com.ncm.electro.mapper.GenericMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-
-//TODO: update again
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = ClientProductMapper.class)
 public interface ClientReviewMapper extends GenericMapper<Review, ClientReviewRequest, ClientReviewResponse> {
     ClientReviewByProductResponse entityToReviewByProductResponse(Review review);
