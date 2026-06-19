@@ -2,6 +2,7 @@ package com.ncm.electro.config.security;
 
 import com.ncm.electro.constant.AppConstants;
 import com.ncm.electro.constant.SecurityConstants;
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,6 +49,11 @@ public class WebSecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
+                    //dung de bo qua authenticate cho viec spring don dep SSE cu
+                    auth.dispatcherTypeMatchers(
+                            DispatcherType.ASYNC,
+                            DispatcherType.ERROR
+                    ).permitAll();
                     auth.requestMatchers(SecurityConstants.WHITE_LIST).permitAll();
                     auth.requestMatchers(SecurityConstants.CLIENT_API_PATHS).hasAuthority(SecurityConstants.Role.CUSTOMER);
                     auth.requestMatchers(SecurityConstants.ADMIN_API_PATHS).hasAnyAuthority(SecurityConstants.Role.EMPLOYEE, SecurityConstants.Role.ADMIN);

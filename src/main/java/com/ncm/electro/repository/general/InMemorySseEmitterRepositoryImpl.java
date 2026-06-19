@@ -3,37 +3,36 @@ package com.ncm.electro.repository.general;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-//TODO: hien tai 1 user -> 1 emitter, sua lai thanh 1 user -> n emitter ==> Map<String, Map<String, SseEmitter>>
-//TODO: khi reload lai website thi emitter cua user bi mat, dang le phai tao 1 emitter moi repalce cai cu
+
 @Repository
 public class InMemorySseEmitterRepositoryImpl implements SseEmitterRepository{
-    private final Map<String, String> uuidEmitterMap = new ConcurrentHashMap<>(); // Map<uuid, username>
-    private final Map<String, SseEmitter> emitterMap = new ConcurrentHashMap<>(); // Map<username, sseEmitter>
-
+    private final Map<String, Map<String, SseEmitter>> emitterMap = new ConcurrentHashMap<>(); // Map<username, <uuid, sseEmitter>>
     @Override
-    public void addEmitter(String uuid, String uniqueKey, SseEmitter sseEmitter) {
-        remove(uniqueKey);
-        uuidEmitterMap.put(uuid, uniqueKey);
-        emitterMap.put(uniqueKey, sseEmitter);
+    public void addEmitter(String uniqueKey, String uuid, SseEmitter sseEmitter) {
+        if(!emitterMap.containsKey(uniqueKey)) {
+            emitterMap.put(uniqueKey, new ConcurrentHashMap<>());
+        }
+        emitterMap.get(uniqueKey).put(uuid, sseEmitter);
     }
 
     @Override
-    public Optional<SseEmitter> findByUniqueKey(String uniqueKey) {
-        return Optional.ofNullable(emitterMap.get(uniqueKey));
+    public Map<String, SseEmitter> findByUniqueKey(String uniqueKey) {
+        return emitterMap.getOrDefault(uniqueKey, Collections.emptyMap());
     }
 
     @Override
-    public void remove(String uniqueKey) {
-        uuidEmitterMap.entrySet().removeIf(entry -> entry.getValue().equals(uniqueKey));
-        emitterMap.remove(uniqueKey);
-    }
+    public void remove(String uniqueKey, String uuid) {
+        Map<String, SseEmitter> emitters = emitterMap.get(uniqueKey);
+        if(emitters != null) {
+            emitters.remove(uuid);
 
-    @Override
-    public Optional<SseEmitter> findByUUID(String uuid) {
-        return Optional.ofNullable(uuidEmitterMap.get(uuid)).map(emitterMap::get);
+            if(emitters.isEmpty()) {
+                emitterMap.remove(uniqueKey);
+            }
+        }
     }
 }
