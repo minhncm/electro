@@ -1,4 +1,4 @@
-import { LoadingOverlay, TextInput } from "@mantine/core";
+import { Group, Indicator, LoadingOverlay, TextInput } from "@mantine/core";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -23,7 +23,9 @@ import Container from "~/components/Container/Container";
 import ElectroLogo from "~/components/ElectroLogo/ElectroLogo";
 import { useLogoutApi } from "~/hooks/client/use-auth-api";
 import { useGetAllCategories } from "~/hooks/client/use-category-api";
+import { useNotificationEvent } from "~/hooks/client/use-notification-api";
 import useAuthStore from "~/stores/use-auth-store";
+import useClientSiteStore from "~/stores/use-client-site-store";
 import Badge from "../common/Bagde";
 import Button from "../common/Button";
 import {
@@ -42,6 +44,10 @@ function ClientHeader() {
 
   const { data: categories } = useGetAllCategories();
   const { user } = useAuthStore();
+
+  useNotificationEvent();
+  const { hasUnreadNotification, markNotificationsAsRead } =
+    useClientSiteStore();
 
   const handleSearchInput = (event) => {
     if (event.key === "Enter" && search.trim() !== "") {
@@ -106,13 +112,25 @@ function ClientHeader() {
               )}
 
               <Tooltip content="Thông báo">
-                <Link to={"/user/notification"}>
-                  <div
-                    className="flex flex-row items-center justify-start gap-[10px] text-c-black 
-                                  bg-alt rounded-lg px-3 py-[10px] hover:bg-alt-hover"
+                <Link
+                  to={"/user/notification"}
+                  onClick={markNotificationsAsRead}
+                >
+                  <Indicator
+                    size={14}
+                    color="pink"
+                    withBorder
+                    disabled={!hasUnreadNotification}
                   >
-                    <Bell strokeWidth={1} />
-                  </div>
+                    <Group
+                      spacing="xs"
+                      px="sm"
+                      py="xs"
+                      className="bg-alt rounded-lg hover:bg-alt-hover"
+                    >
+                      <Bell strokeWidth={1} />
+                    </Group>
+                  </Indicator>
                 </Link>
               </Tooltip>
 

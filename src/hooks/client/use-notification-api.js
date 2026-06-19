@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ResourceUrl from "~/constants/ResourceURL";
 import useAuthStore from "~/stores/use-auth-store";
+import useClientSiteStore from "~/stores/use-client-site-store";
 import FetchUtils from "~/utils/FetchUtils";
 
 export const useGetAllNotificationApi = (page) => {
@@ -16,9 +17,9 @@ export const useGetAllNotificationApi = (page) => {
   });
 };
 
-export const useGetNotificationApi = () => {
-  const [notification, setNotification] = useState(null);
+export const useNotificationEvent = () => {
   const { user } = useAuthStore();
+  const { pushNewNotification } = useClientSiteStore();
   useEffect(() => {
     if (!user) return;
     const eventSource = new EventSource(
@@ -37,14 +38,12 @@ export const useGetNotificationApi = () => {
     };
 
     eventSource.onmessage = (event) => {
-      const data = event.data;
-      setNotification(data);
+      const notificationResponse = event.data;
+      pushNewNotification(notificationResponse);
     };
 
     return () => {
       eventSource.close();
     };
-  }, [user]);
-
-  return notification;
+  }, [user, pushNewNotification]);
 };
