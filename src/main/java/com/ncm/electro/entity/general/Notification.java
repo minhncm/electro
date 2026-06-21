@@ -3,13 +3,15 @@ package com.ncm.electro.entity.general;
 import com.ncm.electro.entity.BaseEntity;
 import com.ncm.electro.entity.authentication.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "notification")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Notification extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)

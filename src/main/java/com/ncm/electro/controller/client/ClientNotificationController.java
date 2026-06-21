@@ -41,18 +41,6 @@ public class ClientNotificationController {
         return sseEmitterService.createEmitter(uuid, username);
     }
 
-    @PostMapping("/push-events")
-    public ResponseEntity<NotificationResponse> pushNotification(@RequestBody NotificationRequest request) {
-        NotificationResponse response =  notificationService.pushNotification(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-    @PostMapping("/test-events")
-    public ResponseEntity<Void> pushNotification(@RequestParam String message) {
-        sseEmitterService.pushEvent("dtreat3", message);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<NotificationResponse> updateNotification(
             @PathVariable Long id,

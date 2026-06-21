@@ -36,8 +36,7 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
-    public NotificationResponse pushNotification(NotificationRequest request) {
-        Notification notification = notificationRepository.save(notificationMapper.requestToEntity(request));
+    public NotificationResponse pushNotification(Notification notification) {
         NotificationResponse notificationResponse = notificationMapper.entityToResponse(notification);
         sseEmitterService.pushEvent(notification.getUser().getUsername(), notificationResponse);
         return notificationResponse;

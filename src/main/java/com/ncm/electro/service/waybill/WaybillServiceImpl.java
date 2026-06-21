@@ -9,6 +9,9 @@ import com.ncm.electro.dto.ghn.GhnUpdateOrderResponse;
 import com.ncm.electro.dto.waybill.WaybillRequest;
 import com.ncm.electro.dto.waybill.WaybillResponse;
 import com.ncm.electro.entity.cashbook.PaymentMethodType;
+import com.ncm.electro.entity.general.Notification;
+import com.ncm.electro.entity.general.NotificationStatus;
+import com.ncm.electro.entity.general.NotificationType;
 import com.ncm.electro.entity.order.Order;
 import com.ncm.electro.entity.order.OrderStatus;
 import com.ncm.electro.entity.waybill.Waybill;
@@ -21,6 +24,7 @@ import com.ncm.electro.mapper.waybill.WaybillMapper;
 import com.ncm.electro.repository.order.OrderRepository;
 import com.ncm.electro.repository.waybill.WaybillLogRepository;
 import com.ncm.electro.repository.waybill.WaybillRepository;
+import com.ncm.electro.service.general.NotificationService;
 import com.ncm.electro.service.ghn.GhnService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,10 +34,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WaybillServiceImpl implements WaybillService{
-    private final WaybillRepository waybillRepository;
-    private final WaybillMapper waybillMapper;
-    private final OrderRepository orderRepository;
     private final GhnService ghnService;
+    private final NotificationService notificationService;
+
+    private final WaybillMapper waybillMapper;
+
+    private final WaybillRepository waybillRepository;
+    private final OrderRepository orderRepository;
     private final WaybillLogRepository waybillLogRepository;
 
     @Override
@@ -119,19 +126,43 @@ public class WaybillServiceImpl implements WaybillService{
                     order.setStatus(OrderStatus.PROCESSING.getValue());
                 }
                 case WaybillCallbackConstants.SHIPPING -> {
-                    //TODO: notification
+                    notificationService.pushNotification(
+                            Notification.builder()
+                                    .user(order.getUser())
+                                    .type(NotificationType.ORDER)
+                                    .message(String.format("Đơn hàng %s của bạn đang đc vận chuyển.", order.getCode()))
+                                    .anchor("/order/detail/" + order.getCode())
+                                    .status(NotificationStatus.UNREAD)
+                                    .build()
+                    );
                     waybillLog.setCurrentStatus(WaybillStatus.SHIPPING.getValue());
                     waybill.setStatus(WaybillStatus.SHIPPING.getValue());
                     order.setStatus(OrderStatus.SHIPPING.getValue());
                 }
                 case WaybillCallbackConstants.SUCCESS -> {
-                    //TODO: notification
+                    notificationService.pushNotification(
+                            Notification.builder()
+                                    .user(order.getUser())
+                                    .type(NotificationType.ORDER)
+                                    .message(String.format("Đơn hàng %s của bạn đã giao thành công.", order.getCode()))
+                                    .anchor("/order/detail/" + order.getCode())
+                                    .status(NotificationStatus.UNREAD)
+                                    .build()
+                    );
                     waybillLog.setCurrentStatus(WaybillStatus.DELIVERED.getValue());
                     waybill.setStatus(WaybillStatus.DELIVERED.getValue());
                     order.setStatus(OrderStatus.DELIVERED.getValue());
                 }
                 case WaybillCallbackConstants.FAILED, WaybillCallbackConstants.RETURN -> {
-                    //TODO: notification
+                    notificationService.pushNotification(
+                            Notification.builder()
+                                    .user(order.getUser())
+                                    .type(NotificationType.ORDER)
+                                    .message(String.format("Đơn hàng %s của bạn đã bị hủy.", order.getCode()))
+                                    .anchor("/order/detail/" + order.getCode())
+                                    .status(NotificationStatus.UNREAD)
+                                    .build()
+                    );
                     waybillLog.setCurrentStatus(WaybillStatus.CANCELLED.getValue());
                     waybill.setStatus(WaybillStatus.CANCELLED.getValue());
                     order.setStatus(OrderStatus.CANCELLED.getValue());
