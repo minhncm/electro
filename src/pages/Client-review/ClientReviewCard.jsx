@@ -91,8 +91,8 @@ function ClientReviewCard({ review }) {
         {review.reply && (
           <Card p="sm" radius="md" style={cardStyle}>
             <Stack gap="xs">
-              <Text size="sm" fw={500}>
-                Phản hồi từ khách hàng
+              <Text size="sm" fw={700}>
+                Phản hồi từ cửa hàng
               </Text>
               <Text size="sm">{review.reply}</Text>
             </Stack>

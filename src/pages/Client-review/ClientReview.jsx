@@ -14,11 +14,13 @@ import Container from "~/components/Container/Container";
 import ClientReviewCard from "./ClientReviewCard";
 import { Marquee } from "tabler-icons-react";
 import { useGetAllReviewsByUser } from "~/hooks/client/use-review-api";
+import { useState } from "react";
 
 function ClientReview() {
   const theme = useMantineTheme();
+  const [activePage, setActivePage] = useState();
 
-  const { data: reviews } = useGetAllReviewsByUser();
+  const { data: reviews } = useGetAllReviewsByUser(activePage);
 
   let reviewContentFragment;
 
@@ -43,10 +45,14 @@ function ClientReview() {
         </Stack>
 
         <Group justify="space-between" mt="lg">
-          <Pagination value={1} total={reviews.totalPages} />
+          <Pagination
+            value={activePage}
+            total={reviews.totalPages}
+            onChange={(page) => page !== activePage && setActivePage(page)}
+          />
           <Text>
             <Text component="span" fw={500}>
-              Trang 1
+              Trang {activePage}
             </Text>
             <span> / {reviews.totalPages}</span>
           </Text>

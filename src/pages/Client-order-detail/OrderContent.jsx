@@ -245,7 +245,9 @@ function OrderContent({ order }) {
                 <OrderItemRow
                   key={orderItem.variant.id}
                   orderItem={orderItem}
-                  canReview={order.status === 4 && order.paymentStatus === 2}
+                  canReview={
+                    order.status === 4 && order.paymentStatus === "PAID"
+                  }
                 />
               ))}
             </Table.Tbody>

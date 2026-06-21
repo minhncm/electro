@@ -58,6 +58,7 @@ function ClientHeader() {
 
   const logoutApi = useLogoutApi();
   const handleLogout = () => {
+    navigate("/");
     logoutApi.mutate();
   };
 

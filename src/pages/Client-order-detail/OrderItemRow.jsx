@@ -7,10 +7,21 @@ import {
   Table,
   Text,
 } from "@mantine/core";
+import { useModals } from "@mantine/modals";
 import { Link } from "react-router-dom";
 import MiscUtils from "~/utils/MiscUtils";
+import ReviewProductModal from "./ReviewProductModal";
 
 function OrderItemRow({ orderItem, canReview }) {
+  const modals = useModals();
+  const handleOpenReviewModalButton = () => {
+    modals.openModal({
+      size: "lg",
+      title: <strong>Đánh giá sản phẩm</strong>,
+      children: <ReviewProductModal orderItem={orderItem} />,
+      closeOnClickOutside: false,
+    });
+  };
   return (
     <Table.Tr>
       <Table.Td>
@@ -49,12 +60,13 @@ function OrderItemRow({ orderItem, canReview }) {
                 variant="outline"
                 mt={5}
                 w="fit-content"
-                disabled={orderItem.variant.product.isReviewed}
+                disabled={orderItem.variant.product.reviewed}
                 title={
-                  orderItem.variant.product.isReviewed
+                  orderItem.variant.product.reviewed
                     ? "Sản phẩm đã được bạn đánh giá"
                     : ""
                 }
+                onClick={handleOpenReviewModalButton}
               >
                 Đánh giá
               </Button>

@@ -2,9 +2,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ResourceUrl from "~/constants/ResourceURL";
 import FetchUtils from "~/utils/FetchUtils";
 
-export const useGetAllReviewsByUser = () => {
+export const useGetAllReviewsByUser = (page = 1) => {
   const requestParams = {
-    page: 1,
+    page,
     size: 5,
     sort: "id,asc",
     filter: "",
@@ -23,5 +23,13 @@ export const useDeleteReviews = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["client-api", "getAllReviewsByUser"]);
     },
+  });
+};
+
+export const useCreateReviewApi = () => {
+  return useMutation({
+    mutationKey: ["client-api", "createReviewApi"],
+    mutationFn: (request) =>
+      FetchUtils.post(ResourceUrl.CLIENT_REVIEW, request),
   });
 };

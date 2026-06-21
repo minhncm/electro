@@ -11,10 +11,8 @@ import {
 } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import { Check, Hash, Message2, Search, Trash } from "tabler-icons-react";
-import CheckReviewModal from "~/components/CheckReviewModal";
 import ManageMain from "~/components/ManageMain/ManageMain";
 import ManagePagination from "~/components/ManagePagination";
-import ReplyReviewModal from "~/components/ReplyReviewModal";
 import ReviewBadge from "~/components/ReviewBadge";
 import ReviewSearchPanel from "~/components/ReviewSearchPanel";
 import ReviewStar from "~/components/ReviewStar";
@@ -23,6 +21,9 @@ import ReviewConfigs from "./ReviewConfigs";
 import useGetAllApi from "~/hooks/admin/use-get-all-api";
 import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
 import * as PageConfigs from "~/pages/PageConfig";
+import CheckReviewModal from "./CheckReviewModal";
+import ReplyReviewModal from "./ReplyReviewModal";
+import useDeleteByIdApi from "~/hooks/admin/use-delete-by-id-api";
 
 function ReviewManage() {
   useResetManagePageState();
@@ -33,15 +34,13 @@ function ReviewManage() {
   const theme = useMantineTheme();
   const modals = useModals();
 
+  const deleteByIdApi = useDeleteByIdApi(
+    ReviewConfigs.resourceUrl,
+    ReviewConfigs.resourceKey,
+  );
   const handleDeleteEntityButton = (entityId) => {
     modals.openConfirmModal({
       size: "xs",
-      overlayColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[9]
-          : theme.colors.gray[2],
-      overlayOpacity: 0.55,
-      overlayBlur: 3,
       closeOnClickOutside: false,
       title: <strong>Xác nhận xóa</strong>,
       children: <Text size="sm">Xóa phần tử có ID {entityId}?</Text>,
@@ -50,18 +49,13 @@ function ReviewManage() {
         confirm: "Xóa",
       },
       confirmProps: { color: "red" },
+      onConfirm: () => deleteByIdApi.mutate(entityId),
     });
   };
 
-  const handleCheckReviewButton = (review) => {
+  const handleApproveReviewButton = (review) => {
     modals.openModal({
       size: "xl",
-      overlayColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[9]
-          : theme.colors.gray[2],
-      overlayOpacity: 0.55,
-      overlayBlur: 3,
       title: <strong>Xem xét Đánh giá ID {review.id}</strong>,
       children: <CheckReviewModal review={review} />,
     });
@@ -70,12 +64,6 @@ function ReviewManage() {
   const handleReplyReviewButton = (review) => {
     modals.openModal({
       size: "xl",
-      overlayColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[9]
-          : theme.colors.gray[2],
-      overlayOpacity: 0.55,
-      overlayBlur: 3,
       title: <strong>Phản hồi Đánh giá ID {review.id}</strong>,
       children: <ReplyReviewModal review={review} />,
     });
@@ -139,7 +127,7 @@ function ReviewManage() {
             variant="outline"
             size={24}
             title="Xem xét"
-            onClick={() => handleCheckReviewButton(entity)}
+            onClick={() => handleApproveReviewButton(entity)}
           >
             <Search size={16} />
           </ActionIcon>

@@ -1,12 +1,54 @@
-import { Blockquote, Button, Group, Stack, Text, ThemeIcon, useMantineTheme } from "@mantine/core";
+import {
+  Blockquote,
+  Button,
+  Group,
+  Stack,
+  Text,
+  ThemeIcon,
+  useMantineTheme,
+} from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import { Box, Clock, Star, User } from "tabler-icons-react";
 import DateUtils from "~/utils/DateUtils";
 import ReviewStar from "~/components/ReviewStar";
+import useUpdateApi from "~/hooks/admin/use-update-api";
+import ReviewConfigs from "./ReviewConfigs";
 
 function CheckReviewModal({ review }) {
   const theme = useMantineTheme();
   const modals = useModals();
+
+  const updateApi = useUpdateApi(
+    ReviewConfigs.resourceUrl,
+    ReviewConfigs.resourceKey,
+    review.id,
+  );
+
+  const handleApproveReviewButton = () => {
+    const request = {
+      userId: review.user.id,
+      productId: review.product.id,
+      ratingScore: review.ratingScore,
+      content: review.content,
+      reply: review.reply,
+      status: 2,
+    };
+    updateApi.mutate(request);
+    modals.closeAll();
+  };
+
+  const handleRejectReviewButton = () => {
+    const request = {
+      userId: review.user.id,
+      productId: review.product.id,
+      ratingScore: review.ratingScore,
+      content: review.content,
+      reply: review.reply,
+      status: 3,
+    };
+    updateApi.mutate(request);
+    modals.closeAll();
+  };
 
   return (
     <Stack>
@@ -41,10 +83,18 @@ function CheckReviewModal({ review }) {
         <Button variant="default" onClick={modals.closeAll}>
           Đóng
         </Button>
-        <Button color="teal" disabled={review.status === 2}>
+        <Button
+          color="teal"
+          disabled={review.status === 2}
+          onClick={handleApproveReviewButton}
+        >
           Duyệt
         </Button>
-        <Button color="pink" disabled={review.status === 3}>
+        <Button
+          color="pink"
+          disabled={review.status === 3}
+          onClick={handleRejectReviewButton}
+        >
           Không duyệt
         </Button>
       </Group>
