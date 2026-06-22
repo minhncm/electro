@@ -35,3 +35,5 @@ build/
 ### Docker
 /db
 /Dockerfile
+
+src/main/resources/application-dev.yml

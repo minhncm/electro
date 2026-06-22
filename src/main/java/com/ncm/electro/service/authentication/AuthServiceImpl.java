@@ -40,6 +40,7 @@ public class AuthServiceImpl implements AuthService{
 
     private final JwtService jwtService;
     private final EmailSenderService emailSenderService;
+    private final AuthUserDetailService authUserDetailService;
 
     private final UserRepository userRepository;
     private final VerificationRepository verificationRepository;
@@ -147,9 +148,13 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public JwtResponse recreateToken(String refreshToken) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        if(refreshToken == null || !jwtService.isValidToken(refreshToken, TokenType.REFRESH_TOKEN, userDetails)) {
+        if(refreshToken == null) {
+            throw new RuntimeException("Refresh token must be null");
+        }
+        String username = jwtService.extraUsername(refreshToken, TokenType.REFRESH_TOKEN);
+        UserDetails userDetails = authUserDetailService.loadUserByUsername(username);
+
+        if(!jwtService.isValidToken(refreshToken, TokenType.REFRESH_TOKEN, userDetails)) {
             throw new RuntimeException("invalid refresh token");
         }
         String newAccessToken = jwtService.generateToken(userDetails, TokenType.ACCESS_TOKEN);
