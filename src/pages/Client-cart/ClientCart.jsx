@@ -85,7 +85,7 @@ function ClientCart() {
     }
   };
 
-  if (!cart) return <LoadingOverlay />;
+  if (!cart) return <LoadingOverlay visible />;
 
   return (
     <main>

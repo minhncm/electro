@@ -3,15 +3,14 @@ import {
   Grid,
   Group,
   Paper,
-  Select,
   Stack,
-  TextInput,
+  TextInput
 } from "@mantine/core";
+import { useParams } from "react-router-dom";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
-import ProvinceConfigs from "./ProvinceConfigs";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
 import Button from "~/components/common/Button";
-import { useParams } from "react-router-dom";
+import ProvinceConfigs from "./ProvinceConfigs";
 import useProvinceUpdateViewModel from "./ProvinceUpdate.vm";
 
 function ProvinceUpdate() {

@@ -25,7 +25,7 @@ httpRequest.interceptors.response.use(
     const originalRequest = error.config;
 
     const isRefreshRequest = originalRequest?.url?.includes(
-      "/auth/refresh-token",
+      "/api/auth/refresh-token",
     );
 
     // Access token hết hạn
@@ -38,7 +38,7 @@ httpRequest.interceptors.response.use(
 
       try {
         // Backend sẽ đọc refresh token từ cookie
-        await axios.post("/auth/refresh-token");
+        await httpRequest.post("/api/auth/refresh-token");
 
         // Gọi lại request cũ
         return httpRequest(originalRequest);

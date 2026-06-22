@@ -11,18 +11,16 @@ import {
   Textarea,
   TextInput,
 } from "@mantine/core";
-import { Loader } from "tabler-icons-react";
+import { useParams } from "react-router-dom";
 import CreateUpdateTitle from "~/components/CreateUpdateTitle";
 import DefaultPropertyPanel from "~/components/DefaultPropertyPanel";
-import OrderConfigs from "./OrderConfigs";
-import useOrderUpdateViewModel from "./OrderUpdate.vm";
-import { useParams } from "react-router-dom";
 import VariantFinder from "~/components/VariantFinder";
 import VariantTable from "~/components/VariantTable";
 import { EntityType } from "~/components/VariantTable/VariantTable";
 import MiscUtils from "~/utils/MiscUtils";
+import OrderConfigs from "./OrderConfigs";
+import useOrderUpdateViewModel from "./OrderUpdate.vm";
 
-const isFetchingUserListResponse = false;
 
 function OrderUpdate() {
   const { id } = useParams();
