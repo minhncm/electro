@@ -22,6 +22,9 @@ import { Link } from "react-router-dom";
 import { BellPlus, Heart, PhotoOff, ShoppingCart } from "tabler-icons-react";
 import ClientCarousel from "~/components/ClientCarousel/ClientCarousel";
 import ReviewStar from "~/components/ReviewStar";
+import { useAddCartItem } from "~/hooks/client/use-cart-api";
+import { useAddWishItem } from "~/hooks/client/use-wish-api";
+import useAuthStore from "~/stores/use-auth-store";
 import MiscUtils from "~/utils/MiscUtils";
 
 function ClientProductIntro({ product }) {
@@ -29,9 +32,42 @@ function ClientProductIntro({ product }) {
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
+  const { user } = useAuthStore();
+  const addWishItemApi = useAddWishItem();
+  const addCartItemApi = useAddCartItem();
+
+  const handleAddWishItem = (event) => {
+    event.preventDefault();
+    addWishItemApi.mutate({
+      userId: user.id,
+      productId: product.id,
+    });
+  };
+
+  const handleAddCartItem = (event) => {
+    event.preventDefault();
+    addCartItemApi.mutate({
+      userId: user.id,
+      cartItems: [{ variantId: product.variants[0].id, quantity }],
+      status: 1,
+    });
+  };
+
   const handleSelectedVariantButton = (index) => {
     setSelectedVariantIndex(index);
     setQuantity(1);
+  };
+
+  const handleMinusButton = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handlePlusButton = () => {
+    if (quantity < product.variants[selectedVariantIndex].inventory) {
+      setQuantity(quantity + 1);
+    }
   };
   return (
     <Card radius="md" shadow="sm" p="lg">
@@ -241,7 +277,11 @@ function ClientProductIntro({ product }) {
                 <Stack gap="xs">
                   <Text fw={500}> Số lượng</Text>
                   <Group gap={5}>
-                    <ActionIcon size={36} variant="default">
+                    <ActionIcon
+                      size={36}
+                      variant="default"
+                      onClick={handleMinusButton}
+                    >
                       -
                     </ActionIcon>
                     <NumberInput
@@ -253,7 +293,11 @@ function ClientProductIntro({ product }) {
                       w={54}
                       styles={{ input: { textAlign: "center" } }}
                     />
-                    <ActionIcon size={36} variant="default">
+                    <ActionIcon
+                      size={36}
+                      variant="default"
+                      onClick={handlePlusButton}
+                    >
                       +
                     </ActionIcon>
                   </Group>
@@ -276,6 +320,7 @@ function ClientProductIntro({ product }) {
                     size="lg"
                     color="pink"
                     leftSection={<ShoppingCart />}
+                    onClick={handleAddCartItem}
                   >
                     Chọn mua
                   </Button>
@@ -286,6 +331,7 @@ function ClientProductIntro({ product }) {
                   color="pink"
                   variant="outline"
                   leftSection={<Heart />}
+                  onClick={handleAddWishItem}
                 >
                   Yêu thích
                 </Button>
