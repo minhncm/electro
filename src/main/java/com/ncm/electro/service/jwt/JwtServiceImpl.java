@@ -71,7 +71,7 @@ public class JwtServiceImpl implements JwtService{
 
     private long calculateExpiration(TokenType type) {
         switch (type) {
-            case ACCESS_TOKEN -> { return 1000 * 60; }
+            case ACCESS_TOKEN -> { return 1000 * 60 * 60 * expirationHour; }
             case REFRESH_TOKEN -> { return 1000 * 60 * 60 * 24 * expirationDay; }
             default -> throw new RuntimeException("Type key not found");
         }

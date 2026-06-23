@@ -6,6 +6,7 @@ import com.ncm.electro.entity.address.Province;
 import com.ncm.electro.entity.address.Ward;
 import com.ncm.electro.entity.authentication.Role;
 import com.ncm.electro.entity.authentication.User;
+import com.ncm.electro.entity.chat.Room;
 import com.ncm.electro.entity.customer.CustomerGroup;
 import com.ncm.electro.entity.customer.CustomerResource;
 import com.ncm.electro.entity.customer.CustomerStatus;
@@ -73,6 +74,7 @@ public abstract class MapperUtils {
     public abstract User mapToUser(Long id);
     public abstract OrderCancellationReason mapToOrderCancellationReason(Long id);
     public abstract OrderResource mapToOrderResource(Long id);
+    public abstract Room mapToRoom(Long id);
 
     @AfterMapping
     @Named("attachOrder")

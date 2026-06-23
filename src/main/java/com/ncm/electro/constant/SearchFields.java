@@ -366,4 +366,10 @@ public final class SearchFields {
             "category.name",
             "brand.name"
     );
+
+    public static final List<String> MESSAGE = List.of(
+            "createdAt",
+            "room.id"
+    );
+
 }
