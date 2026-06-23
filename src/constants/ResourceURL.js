@@ -76,7 +76,9 @@ const ResourceUrl = {
   CLIENT_WISH: ApplicationPath.CLIENT_API_PATH + "/wishes",
   CLIENT_ORDER: ApplicationPath.CLIENT_API_PATH + "/orders",
   CLIENT_NOTIFICATION: ApplicationPath.CLIENT_API_PATH + "/notifications",
-  CLIENT_NOTIFICATION_EVENTS: ApplicationPath.CLIENT_API_PATH + "/notifications/events",
+  CLIENT_NOTIFICATION_EVENTS:
+    ApplicationPath.CLIENT_API_PATH + "/notifications/events",
+  CLIENT_CHAT: ApplicationPath.CLIENT_API_PATH + "/chat",
 
   // AUTHENTICATION
   AUTH_ME: ApplicationPath.API_PATH + "/auth/me",

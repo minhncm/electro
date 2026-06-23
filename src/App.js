@@ -158,6 +158,8 @@ import ClientForgotPassword from "./pages/Client-forgot-password/ClientForotPass
 import ClientChangePassword from "./pages/Client-forgot-password/ClientChangePassword";
 import AdminGuard from "./pages/AdminGuard";
 import AdminSignin from "./pages/Admin-signin";
+import { StompSessionProvider } from "react-stomp-hooks";
+import ApplicationPath from "./constants/ApplicationPath";
 function App() {
   return (
     <BrowserRouter>
@@ -203,7 +205,16 @@ function App() {
                   <Route path="/user/reward" element={<ClientReward />} />
                   <Route path="/user/wishlist" element={<ClientWishlist />} />
                   <Route path="/user/preorder" element={<ClientPreorder />} />
-                  <Route path="/user/chat" element={<ClientChat />} />
+                  <Route
+                    path="/user/chat"
+                    element={
+                      <StompSessionProvider
+                        url={ApplicationPath.WEBSOCKET_PATH}
+                      >
+                        <ClientChat />
+                      </StompSessionProvider>
+                    }
+                  />
                   <Route path="/product/:slug" element={<ClientProduct />} />
                   <Route
                     path="/all-categories"

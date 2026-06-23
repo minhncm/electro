@@ -1,97 +1,39 @@
-import { Box, Button, Card, Grid, ScrollArea, Stack, Title, useMantineTheme } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Card,
+  Grid,
+  ScrollArea,
+  Stack,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import ClientUserNavbar from "~/components/ClientUserNavbar/ClientUserNavbar";
 import Container from "~/components/Container/Container";
 import MessageInput from "./MessageInput";
 import ToMessage from "./ToMessage";
 import FromMessage from "./FromMessage";
-
-const roomExistResponse = {
-  roomExistence: true,
-  roomResponse: {
-    id: 3,
-    createdAt: "2025-10-29T14:29:40Z",
-    updatedAt: "2025-10-29T14:31:21Z",
-    name: "Nguyễn Công Minh",
-    user: {
-      id: 6,
-      username: "ncm",
-      fullname: "Nguyễn Công Minh",
-      email: "ncm071205@gmail.com",
-    },
-    lastMessage: {
-      id: 5,
-      createdAt: "2025-10-29T14:31:21Z",
-      updatedAt: "2025-10-29T14:31:21Z",
-      content: "ok bạn nói đi",
-      status: 1,
-      user: {
-        id: 3,
-        username: "ethuillier2",
-        fullname: "Ermin Thuillier",
-        email: "ethuillier2@jimdo.com",
-      },
-    },
-  },
-  roomRecentMessages: [
-    {
-      id: 2,
-      createdAt: "2025-10-29T14:29:46Z",
-      updatedAt: "2025-10-29T14:29:46Z",
-      content: "ALooo",
-      status: 1,
-      user: {
-        id: 6,
-        username: "ncm",
-        fullname: "Nguyễn Công Minh",
-        email: "ncm071205@gmail.com",
-      },
-    },
-    {
-      id: 3,
-      createdAt: "2025-10-29T14:30:20Z",
-      updatedAt: "2025-10-29T14:30:20Z",
-      content: "có gì không bạn êi",
-      status: 1,
-      user: {
-        id: 3,
-        username: "ethuillier2",
-        fullname: "Ermin Thuillier",
-        email: "ethuillier2@jimdo.com",
-      },
-    },
-    {
-      id: 4,
-      createdAt: "2025-10-29T14:30:38Z",
-      updatedAt: "2025-10-29T14:30:38Z",
-      content: "tôi muốn tư vấn 1 vài thứ",
-      status: 1,
-      user: {
-        id: 6,
-        username: "ncm",
-        fullname: "Nguyễn Công Minh",
-        email: "ncm071205@gmail.com",
-      },
-    },
-    {
-      id: 5,
-      createdAt: "2025-10-29T14:31:21Z",
-      updatedAt: "2025-10-29T14:31:21Z",
-      content: "ok bạn nói đi",
-      status: 1,
-      user: {
-        id: 3,
-        username: "ethuillier2",
-        fullname: "Ermin Thuillier",
-        email: "ethuillier2@jimdo.com",
-      },
-    },
-  ],
-};
+import useAuthStore from "~/stores/use-auth-store";
+import { useCreateRoomApi, useGetRoomApi } from "~/hooks/client/use-chat-api";
+import { useSubscription } from "react-stomp-hooks";
+import { useState } from "react";
 
 function ClientChat() {
   const theme = useMantineTheme();
 
-  const user = { id: 6 };
+  const { user } = useAuthStore();
+  const { data: roomExistResponse } = useGetRoomApi();
+  const createRoomApi = useCreateRoomApi();
+  const [messages, setMessages] = useState([]);
+  useSubscription(
+    roomExistResponse && roomExistResponse.roomExistence
+      ? ["/chat/receive/" + roomExistResponse.roomResponse.id]
+      : [],
+    (message) =>
+      setMessages((messages) => [...messages, JSON.parse(message.body)]),
+  );
+
+  const handleCreateRoomButton = () => createRoomApi.mutate();
 
   return (
     <main>
@@ -117,25 +59,45 @@ function ClientChat() {
                         zIndex: 10,
                       }}
                     >
-                      <Button size="lg">Gửi yêu cầu tư vấn</Button>
+                      <Button size="lg" onClick={handleCreateRoomButton}>
+                        Gửi yêu cầu tư vấn
+                      </Button>
                     </Box>
                   )}
-                  {roomExistResponse && roomExistResponse.roomExistence && user && (
-                    <Stack gap={0} style={{ position: "relative", height: "100%" }}>
-                      <ScrollArea style={{ height: "calc(100% - 68px)" }}>
-                        <Stack gap={0} style={{ paddingTop: theme.spacing.md }}>
-                          {roomExistResponse.roomRecentMessages.map((message) =>
-                            message.user.id === user.id ? (
-                              <FromMessage key={message.id} message={message} />
-                            ) : (
-                              <ToMessage key={message.id} message={message} />
-                            )
+                  {roomExistResponse &&
+                    roomExistResponse.roomExistence &&
+                    user && (
+                      <Stack
+                        gap={0}
+                        style={{ position: "relative", height: "100%" }}
+                      >
+                        {roomExistResponse &&
+                          roomExistResponse.roomResponse &&
+                          user && (
+                            <ScrollArea style={{ height: "calc(100% - 68px)" }}>
+                              <Stack
+                                gap={0}
+                                style={{ paddingTop: theme.spacing.md }}
+                              >
+                                {messages.map((message) =>
+                                  message.user.id === user.id ? (
+                                    <FromMessage
+                                      key={message.id}
+                                      message={message}
+                                    />
+                                  ) : (
+                                    <ToMessage
+                                      key={message.id}
+                                      message={message}
+                                    />
+                                  ),
+                                )}
+                              </Stack>
+                            </ScrollArea>
                           )}
-                        </Stack>
-                      </ScrollArea>
-                      <MessageInput />
-                    </Stack>
-                  )}
+                        <MessageInput />
+                      </Stack>
+                    )}
                 </Card>
               </Stack>
             </Card>
