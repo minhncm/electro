@@ -13,7 +13,7 @@ function MessageInput({ roomId, userId }) {
       stompClient.publish({
         destination: "/chat/send/" + roomId,
         body: JSON.stringify({
-          content: message.trim,
+          content: message.trim(),
           status: 1,
           userId,
           roomId,
@@ -46,6 +46,7 @@ function MessageInput({ roomId, userId }) {
         variant="filled"
         radius="md"
         style={{ flexGrow: 1 }}
+        value={message}
         onChange={(e) => setMessage(e.currentTarget.value)}
         onKeyDown={handleSendMessageInput}
       />

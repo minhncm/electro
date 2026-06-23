@@ -16,7 +16,7 @@ import FromMessage from "./FromMessage";
 import useAuthStore from "~/stores/use-auth-store";
 import { useCreateRoomApi, useGetRoomApi } from "~/hooks/client/use-chat-api";
 import { useSubscription } from "react-stomp-hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function ClientChat() {
   const theme = useMantineTheme();
@@ -32,6 +32,12 @@ function ClientChat() {
     (message) =>
       setMessages((messages) => [...messages, JSON.parse(message.body)]),
   );
+
+  useEffect(() => {
+    if (roomExistResponse) {
+      setMessages(roomExistResponse.roomRecentMessages);
+    }
+  }, [roomExistResponse]);
 
   const handleCreateRoomButton = () => createRoomApi.mutate();
 
@@ -95,7 +101,10 @@ function ClientChat() {
                               </Stack>
                             </ScrollArea>
                           )}
-                        <MessageInput />
+                        <MessageInput
+                          roomId={roomExistResponse.roomResponse.id}
+                          userId={user.id}
+                        />
                       </Stack>
                     )}
                 </Card>
