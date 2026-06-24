@@ -1,9 +1,7 @@
 package com.ncm.electro.entity.reward;
 
 import com.ncm.electro.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +14,8 @@ public class RewardStrategy extends BaseEntity {
     private String name;
 
     @Column(name = "code", nullable = false)
-    private String code;
+    @Enumerated(EnumType.STRING)
+    private RewardType code;
 
     @Column(name = "formula", nullable = false)
     private String formula;

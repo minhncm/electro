@@ -1,7 +1,7 @@
 package com.ncm.electro.controller.client;
 
 import com.ncm.electro.dto.client.ClientRewardResponse;
-import com.ncm.electro.service.client.ClientRewardService;
+import com.ncm.electro.service.reward.RewardStrategyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/client-api/rewards")
 @RequiredArgsConstructor
 public class ClientRewardController {
-    private final ClientRewardService clientRewardService;
+    private final RewardStrategyService rewardStrategyService;
     @GetMapping
     public ResponseEntity<ClientRewardResponse> getReward(Authentication authentication) {
         String username = authentication.getName();
-        return ResponseEntity.status(HttpStatus.OK).body(clientRewardService.findByUsername(username));
+        return ResponseEntity.status(HttpStatus.OK).body(rewardStrategyService.findByUsername(username));
     }
 }

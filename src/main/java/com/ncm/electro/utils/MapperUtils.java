@@ -17,6 +17,7 @@ import com.ncm.electro.entity.order.OrderCancellationReason;
 import com.ncm.electro.entity.order.OrderResource;
 import com.ncm.electro.entity.order.OrderVariantKey;
 import com.ncm.electro.entity.product.Category;
+import com.ncm.electro.entity.product.Product;
 import com.ncm.electro.entity.product.Variant;
 import com.ncm.electro.exception.ResourceNotFoundException;
 import com.ncm.electro.repository.address.DistrictRepository;
@@ -75,6 +76,7 @@ public abstract class MapperUtils {
     public abstract OrderCancellationReason mapToOrderCancellationReason(Long id);
     public abstract OrderResource mapToOrderResource(Long id);
     public abstract Room mapToRoom(Long id);
+    public abstract Product mapToProduct(Long id);
 
     @AfterMapping
     @Named("attachOrder")

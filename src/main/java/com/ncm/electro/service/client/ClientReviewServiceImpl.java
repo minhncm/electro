@@ -53,6 +53,7 @@ public class ClientReviewServiceImpl implements ClientReviewService{
 
     @Override
     public ClientReviewResponse createReview(ClientReviewRequest request) {
+        System.out.println(request);
         Review review = clientReviewMapper.requestToEntity(request);
         if(!orderRepository.existsDeliveredAndPaidByProductId(request.getProductId())) {
             throw new RuntimeException("Not allowed");

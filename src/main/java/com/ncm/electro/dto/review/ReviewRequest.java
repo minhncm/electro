@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ReviewRequest {
     private Long userId;
-    private Product product;
+    private Integer productId;
     private Integer ratingScore;
     private String content;
     @Nullable

@@ -24,6 +24,7 @@ import com.ncm.electro.mapper.waybill.WaybillMapper;
 import com.ncm.electro.repository.order.OrderRepository;
 import com.ncm.electro.repository.waybill.WaybillLogRepository;
 import com.ncm.electro.repository.waybill.WaybillRepository;
+import com.ncm.electro.service.reward.RewardStrategyService;
 import com.ncm.electro.service.general.NotificationService;
 import com.ncm.electro.service.ghn.GhnService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ import java.util.List;
 public class WaybillServiceImpl implements WaybillService{
     private final GhnService ghnService;
     private final NotificationService notificationService;
+    private final RewardStrategyService rewardStrategyService;
 
     private final WaybillMapper waybillMapper;
 
@@ -152,6 +154,8 @@ public class WaybillServiceImpl implements WaybillService{
                     waybillLog.setCurrentStatus(WaybillStatus.DELIVERED.getValue());
                     waybill.setStatus(WaybillStatus.DELIVERED.getValue());
                     order.setStatus(OrderStatus.DELIVERED.getValue());
+
+                    rewardStrategyService.earningRewardFromOrder(order);
                 }
                 case WaybillCallbackConstants.FAILED, WaybillCallbackConstants.RETURN -> {
                     notificationService.pushNotification(

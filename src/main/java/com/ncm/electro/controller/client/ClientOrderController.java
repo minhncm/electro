@@ -47,7 +47,7 @@ public class ClientOrderController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{code}/cancel")
+    @PutMapping("/cancel/{code}")
     public ResponseEntity<Void> cancelOrder(@PathVariable String code) {
         clientOrderService.cancelOrder(code);
         return ResponseEntity.ok().build();

@@ -46,10 +46,7 @@ import com.ncm.electro.entity.order.OrderCancellationReason;
 import com.ncm.electro.entity.order.OrderResource;
 import com.ncm.electro.entity.product.*;
 import com.ncm.electro.entity.promotion.Promotion;
-import com.ncm.electro.entity.review.Review;
 import com.ncm.electro.entity.reward.RewardStrategy;
-import com.ncm.electro.entity.waybill.Waybill;
-import com.ncm.electro.mapper.waybill.WaybillMapper;
 import com.ncm.electro.mapper.address.AddressMapper;
 import com.ncm.electro.mapper.address.DistrictMapper;
 import com.ncm.electro.mapper.address.ProvinceMapper;
@@ -70,7 +67,6 @@ import com.ncm.electro.mapper.order.OrderMapper;
 import com.ncm.electro.mapper.order.OrderResourceMapper;
 import com.ncm.electro.mapper.product.*;
 import com.ncm.electro.mapper.promotion.PromotionMapper;
-import com.ncm.electro.mapper.review.ReviewMapper;
 import com.ncm.electro.mapper.reward.RewardStrategyMapper;
 import com.ncm.electro.repository.address.AddressRepository;
 import com.ncm.electro.repository.address.DistrictRepository;
@@ -92,11 +88,10 @@ import com.ncm.electro.repository.order.OrderRepository;
 import com.ncm.electro.repository.order.OrderResourceRepository;
 import com.ncm.electro.repository.product.*;
 import com.ncm.electro.repository.promotion.PromotionRepository;
-import com.ncm.electro.repository.review.ReviewRepository;
 import com.ncm.electro.repository.reward.RewardStrategyRepository;
-import com.ncm.electro.repository.waybill.WaybillRepository;
 import com.ncm.electro.service.CrudService;
 import com.ncm.electro.service.GenericService;
+import com.ncm.electro.service.review.ReviewService;
 import com.ncm.electro.service.waybill.WaybillService;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -206,7 +201,6 @@ public class GenericMappingRegister {
     private GenericService<OrderResource, OrderResourceRequest, OrderResourceResponse> orderResourceService;
     private GenericService<OrderCancellationReason, OrderCancellationReasonRequest, OrderCancellationReasonResponse> orderCancellationReasonService;
     private GenericService<Order, OrderRequest, OrderResponse> orderService;
-    private GenericService<Review, ReviewRequest, ReviewResponse> reviewService;
     private GenericService<PaymentMethod, PaymentMethodRequest, PaymentMethodResponse> paymentMethodService;
     private GenericService<Promotion, PromotionRequest, PromotionResponse> promotionService;
     private GenericService<Room, RoomRequest, RoomResponse> roomService;
@@ -495,12 +489,7 @@ public class GenericMappingRegister {
 
         register("waybills", waybillController, context.getBean(WaybillService.class), WaybillRequest.class);
 
-        register("reviews", reviewController, reviewService.init(
-                context.getBean(ReviewRepository.class),
-                context.getBean(ReviewMapper.class),
-                SearchFields.REVIEW,
-                Review.class.getSimpleName()
-        ), ReviewRequest.class);
+        register("reviews", reviewController, context.getBean(ReviewService.class), ReviewRequest.class);
 
         register("payment-methods", paymentMethodController, paymentMethodService.init(
                 context.getBean(PaymentMethodRepository.class),
