@@ -62,6 +62,9 @@ const ResourceUrl = {
   PAYMENT_METHOD: ApplicationPath.API_PATH + "/payment-methods",
   PROMOTION: ApplicationPath.API_PATH + "/promotions",
 
+  ROOM: ApplicationPath.API_PATH + "/rooms",
+  MESSAGE: ApplicationPath.API_PATH + "/messages",
+
   //client
   CLIENT_CATEGORY: ApplicationPath.CLIENT_API_PATH + "/categories",
   CLIENT_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/products",

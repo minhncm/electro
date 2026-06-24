@@ -160,6 +160,8 @@ import AdminGuard from "./pages/AdminGuard";
 import AdminSignin from "./pages/Admin-signin";
 import { StompSessionProvider } from "react-stomp-hooks";
 import ApplicationPath from "./constants/ApplicationPath";
+import ChatDashboard from "./pages/Admin-chat";
+import RoomCard from "./pages/Admin-chat/RoomCard";
 function App() {
   return (
     <BrowserRouter>
@@ -680,6 +682,16 @@ function App() {
                     <Route
                       path={ManagerPath.ACCOUNT}
                       element={<AdminAccount />}
+                    />
+                    <Route
+                      path={ManagerPath.CHAT}
+                      element={
+                        <StompSessionProvider
+                          url={ApplicationPath.WEBSOCKET_PATH}
+                        >
+                          <ChatDashboard />
+                        </StompSessionProvider>
+                      }
                     />
                   </Route>
                 </Route>

@@ -1,4 +1,12 @@
-import { Avatar, Card, Group, Stack, Text, useMantineTheme } from "@mantine/core";
+import {
+  Avatar,
+  Card,
+  Group,
+  Stack,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
+import DateUtils from "~/utils/DateUtils";
 
 function ToMessage({ message }) {
   const theme = useMantineTheme();
@@ -16,12 +24,16 @@ function ToMessage({ message }) {
           px="md"
           py="xs"
           maw={500}
-          bg={theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[0]}
+          bg={
+            theme.colorScheme === "dark"
+              ? theme.colors.dark[4]
+              : theme.colors.gray[0]
+          }
         >
           <Text size="sm">{message.content}</Text>
         </Card>
         <Text size="xs" c="dimmed">
-          {message.createdAt}
+          {DateUtils.formatterDate(message.createdAt)}
         </Text>
       </Stack>
     </Group>

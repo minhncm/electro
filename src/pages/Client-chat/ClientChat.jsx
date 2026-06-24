@@ -25,6 +25,13 @@ function ClientChat() {
   const { data: roomExistResponse } = useGetRoomApi();
   const createRoomApi = useCreateRoomApi();
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    if (roomExistResponse) {
+      setMessages(roomExistResponse.roomRecentMessages);
+    }
+  }, [roomExistResponse]);
+
   useSubscription(
     roomExistResponse && roomExistResponse.roomExistence
       ? ["/chat/receive/" + roomExistResponse.roomResponse.id]
@@ -32,12 +39,6 @@ function ClientChat() {
     (message) =>
       setMessages((messages) => [...messages, JSON.parse(message.body)]),
   );
-
-  useEffect(() => {
-    if (roomExistResponse) {
-      setMessages(roomExistResponse.roomRecentMessages);
-    }
-  }, [roomExistResponse]);
 
   const handleCreateRoomButton = () => createRoomApi.mutate();
 
