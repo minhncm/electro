@@ -1,24 +1,26 @@
-import { Badge, Card, Grid, Group, Stack, Text, ThemeIcon, Title, useMantineTheme } from "@mantine/core";
+import {
+  Badge,
+  Card,
+  Grid,
+  Group,
+  LoadingOverlay,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { Award, Marquee } from "tabler-icons-react";
 import ClientUserNavbar from "~/components/ClientUserNavbar/ClientUserNavbar";
 import Container from "~/components/Container/Container";
+import { useGetRewardApi } from "~/hooks/client/use-reward-api";
 import { RewardLogInfoMap } from "~/pages/PageConfig";
-
-const reward = {
-  rewardTotalScore: 50,
-  rewardLogs: [
-    {
-      rewardLogId: 3,
-      rewardLogCreatedAt: "2025-10-29T14:33:09Z",
-      rewardLogScore: 50,
-      rewardLogType: "ADD_REVIEW",
-      rewardLogNote: "Bạn đã nhận được 50 điểm thưởng cho đánh giá ở sản phẩm Loa Harman Kardon Onyx Studio 7.",
-    },
-  ],
-};
 
 function ClientReward() {
   const theme = useMantineTheme();
+  const { data: reward } = useGetRewardApi();
+
+  if (!reward) return <LoadingOverlay visible />;
 
   let rewardContentFragment;
 
@@ -43,7 +45,7 @@ function ClientReward() {
               Tổng điểm thưởng tích lũy của bạn là
             </Text>
             <Badge radius="md" color="grape" size="xl" variant="filled">
-              {reward.rewardTotalScore}
+              {reward.totalScore}
             </Badge>
           </Stack>
           <Award size={85} strokeWidth={1} color={theme.colors.grape[5]} />
@@ -52,7 +54,12 @@ function ClientReward() {
         <Card
           radius="md"
           p="lg"
-          style={{ backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[0] }}
+          style={{
+            backgroundColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[4]
+                : theme.colors.gray[0],
+          }}
         >
           <Stack gap="lg">
             <Text size="sm" c="dimmed" fw={500}>
@@ -61,20 +68,25 @@ function ClientReward() {
 
             <Stack gap="xs">
               {reward.rewardLogs.map((rewardLog) => {
-                const rewardLogInfo = RewardLogInfoMap[rewardLog.rewardLogType];
+                const rewardLogInfo = RewardLogInfoMap[rewardLog.type];
 
                 return (
-                  <Group key={rewardLog.rewardLogId} gap="sm" wrap="nowrap">
-                    <ThemeIcon color={rewardLogInfo.color} size="sm" variant="filled" radius="xl">
+                  <Group key={rewardLog.id} gap="sm" wrap="nowrap">
+                    <ThemeIcon
+                      color={rewardLogInfo.color}
+                      size="sm"
+                      variant="filled"
+                      radius="xl"
+                    >
                       <rewardLogInfo.icon size={12} />
                     </ThemeIcon>
                     <Text size="xs" c="dimmed">
-                      {rewardLog.rewardLogCreatedAt}
+                      {rewardLog.createdAt}
                     </Text>
                     <Text size="xs" c="blue" fw={500}>
-                      +{rewardLog.rewardLogScore}
+                      +{rewardLog.score}
                     </Text>
-                    <Text size="xs">+{rewardLog.rewardLogNote}</Text>
+                    <Text size="xs">+{rewardLog.note}</Text>
                   </Group>
                 );
               })}

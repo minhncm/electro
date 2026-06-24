@@ -19,9 +19,12 @@ import * as PageConfig from "~/pages/PageConfig";
 import DateUtils from "~/utils/DateUtils";
 import MiscUtils from "~/utils/MiscUtils";
 import OrderItemRow from "./OrderItemRow";
+import { useModals } from "@mantine/modals";
+import { useCancelOrderApi } from "~/hooks/client/use-order-api";
 
 function OrderContent({ order }) {
   const theme = useMantineTheme();
+  const modals = useModals();
 
   const cardStyle = {
     backgroundColor:
@@ -61,6 +64,25 @@ function OrderContent({ order }) {
     };
 
     return waybillLogMap[waybillLog.currentStatus || 0];
+  };
+
+  const cancelOrderApi = useCancelOrderApi(order.code);
+
+  const handleCancelOrderButton = () => {
+    modals.openConfirmModal({
+      size: "xs",
+      closeOnClickOutside: false,
+      title: <strong>Xác nhận hủy</strong>,
+      children: (
+        <Text size="sm">Bạn có muốn hủy đơn hàng này, không thể hoàn tác?</Text>
+      ),
+      labels: {
+        cancel: "Không hủy",
+        confirm: "Hủy",
+      },
+      confirmProps: { color: "red" },
+      onConfirm: () => cancelOrderApi.mutate(),
+    });
   };
 
   const PaymentMethodIcon =
@@ -300,6 +322,7 @@ function OrderContent({ order }) {
         radius="md"
         w="fit-content"
         disabled={![1, 2].includes(order.status)}
+        onClick={handleCancelOrderButton}
       >
         Hủy đơn hàng
       </Button>

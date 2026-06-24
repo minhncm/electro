@@ -82,6 +82,7 @@ const ResourceUrl = {
   CLIENT_NOTIFICATION_EVENTS:
     ApplicationPath.CLIENT_API_PATH + "/notifications/events",
   CLIENT_CHAT: ApplicationPath.CLIENT_API_PATH + "/chat",
+  CLIENT_REWARD: ApplicationPath.CLIENT_API_PATH + "/rewards",
 
   // AUTHENTICATION
   AUTH_ME: ApplicationPath.API_PATH + "/auth/me",

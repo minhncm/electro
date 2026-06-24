@@ -59,3 +59,11 @@ export const useGetShippingFee = () => {
       FetchUtils.get(ResourceUrl.CLIENT_ORDER + "/shipping-order/fee"),
   });
 };
+
+export const useCancelOrderApi = (code) => {
+  return useMutation({
+    mutationKey: ["client-api", "cancelOrder"],
+    mutationFn: (request) =>
+      FetchUtils.putById(ResourceUrl.CLIENT_ORDER + "/cancel", code, request),
+  });
+};

@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import ResourceUrl from "~/constants/ResourceURL";
 import useAuthStore from "~/stores/use-auth-store";
 import useClientSiteStore from "~/stores/use-client-site-store";
 import FetchUtils from "~/utils/FetchUtils";
+import NotifyUtils from "~/utils/NotifyUtils";
 
 export const useGetAllNotificationApi = (page) => {
   const requestParams = {
@@ -46,4 +47,16 @@ export const useNotificationEvent = () => {
       eventSource.close();
     };
   }, [user, pushNewNotification]);
+};
+
+export const useUpdateNotificationApi = (id) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["client-api", "updateNotification"],
+    mutationFn: (request) =>
+      FetchUtils.putById(ResourceUrl.CLIENT_NOTIFICATION, id, request),
+    onSuccess: () =>
+      queryClient.invalidateQueries(["client-api", "getAllNotification"]),
+    onError: () => NotifyUtils.simpleFailed("Cập nhật không thành công"),
+  });
 };
