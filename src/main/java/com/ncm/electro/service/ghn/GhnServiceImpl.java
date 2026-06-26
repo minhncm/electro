@@ -64,6 +64,21 @@ public class GhnServiceImpl implements GhnService {
         return response.getBody();
     }
 
+    @Override
+    public GhnCancelOrderResponse cancelOrder(String orderCode) {
+        String cancelOrderApiUrl = ghnUrl + "/switch-status/cancel";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = buildHeader();
+
+        var request = new HttpEntity<>(new GhnCancelOrderRequest(List.of(orderCode)), headers);
+        var response = restTemplate.postForEntity(cancelOrderApiUrl, request, GhnCancelOrderResponse.class);
+
+        if(!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Error when calling Update Order GHN API");
+        }
+        return response.getBody();
+    }
+
     private HttpHeaders buildHeader() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

@@ -7,6 +7,7 @@ import com.ncm.electro.dto.client.ClientConfirmedOrderResponse;
 import com.ncm.electro.dto.client.ClientOrderResponse;
 import com.ncm.electro.dto.client.ClientSimpleOrderRequest;
 import com.ncm.electro.dto.client.ClientSimpleOrderResponse;
+import com.ncm.electro.dto.ghn.GhnCancelOrderResponse;
 import com.ncm.electro.dto.ghn.GhnShippingFeeRequest;
 import com.ncm.electro.dto.ghn.GhnShippingFeeResponse;
 import com.ncm.electro.entity.address.Address;
@@ -17,6 +18,9 @@ import com.ncm.electro.entity.cart.CartVariantKey;
 import com.ncm.electro.entity.cashbook.PaymentMethodType;
 import com.ncm.electro.entity.order.*;
 import com.ncm.electro.entity.promotion.Promotion;
+import com.ncm.electro.entity.waybill.Waybill;
+import com.ncm.electro.entity.waybill.WaybillLog;
+import com.ncm.electro.entity.waybill.WaybillStatus;
 import com.ncm.electro.exception.ResourceNotFoundException;
 import com.ncm.electro.mapper.client.ClientOrderMapper;
 import com.ncm.electro.repository.authentication.UserRepository;
@@ -24,6 +28,8 @@ import com.ncm.electro.repository.cart.CartRepository;
 import com.ncm.electro.repository.cart.CartVariantRepository;
 import com.ncm.electro.repository.order.OrderRepository;
 import com.ncm.electro.repository.promotion.PromotionRepository;
+import com.ncm.electro.repository.waybill.WaybillLogRepository;
+import com.ncm.electro.repository.waybill.WaybillRepository;
 import com.ncm.electro.service.ghn.GhnService;
 import com.ncm.electro.service.paypal.PaypalService;
 import com.ncm.electro.specification.OrderSpecification;
@@ -47,14 +53,19 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ClientOrderServiceImpl implements ClientOrderService{
-    private final OrderRepository orderRepository;
+    private final PaypalService paypalService;
+    private final GhnService ghnService;
+
     private final ClientOrderMapper clientOrderMapper;
+
+    private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
     private final PromotionRepository promotionRepository;
     private final CartVariantRepository cartVariantRepository;
-    private final PaypalService paypalService;
-    private final GhnService ghnService;
+    private final WaybillRepository waybillRepository;
+    private final WaybillLogRepository waybillLogRepository;
+
     @Override
     public ListResponse<ClientSimpleOrderResponse> findAllByUsername(String username, int page, int size, String sort, String filter) {
         Page<Order> orders = orderRepository.findAll(
@@ -167,7 +178,33 @@ public class ClientOrderServiceImpl implements ClientOrderService{
 
     @Override
     public void cancelOrder(String code) {
+        Order order = orderRepository.findByCode(code)
+                .orElseThrow(() -> new ResourceNotFoundException(Order.class.getSimpleName(), FieldName.ORDER_CODE, code));
 
+        if(order.getStatus() != OrderStatus.NEW.getValue() && order.getStatus() != OrderStatus.PROCESSING.getValue()) {
+            throw new RuntimeException(String
+                    .format("Order with code %s is in delivery or has been cancelled. Please check again!", code));
+        }
+
+        Waybill waybill = waybillRepository.findByOrderId(order.getId())
+                .orElse(null);
+
+        order.setStatus(OrderStatus.CANCELLED.getValue());
+        orderRepository.save(order);
+
+        if(waybill != null && waybill.getStatus().equals(WaybillStatus.WAITING.getValue())) {
+            GhnCancelOrderResponse ghnCancelOrderResponse = ghnService.cancelOrder(waybill.getCode());
+            if(ghnCancelOrderResponse.getData() != null && ghnCancelOrderResponse.getData().isResult()) {
+                WaybillLog waybillLog = new WaybillLog();
+                waybillLog.setWaybill(waybill);
+                waybillLog.setPreviousStatus(waybill.getStatus());
+                waybillLog.setCurrentStatus(WaybillStatus.CANCELLED.getValue());
+                waybillLogRepository.save(waybillLog);
+
+                waybill.setStatus(WaybillStatus.CANCELLED.getValue());
+                waybillRepository.save(waybill);
+            }
+        }
     }
 
     @Override
