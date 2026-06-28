@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 import ResourceUrl from "~/constants/ResourceURL";
 import FetchUtils from "~/utils/FetchUtils";
+import NotifyUtils from "~/utils/NotifyUtils";
 
 export const useGetOrderByUser = () => {
   return useInfiniteQuery({
@@ -61,9 +62,13 @@ export const useGetShippingFee = () => {
 };
 
 export const useCancelOrderApi = (code) => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["client-api", "cancelOrder"],
-    mutationFn: (request) =>
-      FetchUtils.putById(ResourceUrl.CLIENT_ORDER + "/cancel", code, request),
+    mutationFn: () =>
+      FetchUtils.putById(ResourceUrl.CLIENT_ORDER + "/cancel", code),
+    onSuccess: () =>
+      queryClient.invalidateQueries(["client-api", "getOrderDetail"]),
+    onError: () => NotifyUtils.simpleFailed("Hủy đơn hàng không thành công!"),
   });
 };
