@@ -1,0 +1,596 @@
+package com.ncm.electro.controller;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.ncm.electro.constant.SearchFields;
+import com.ncm.electro.dto.address.*;
+import com.ncm.electro.dto.authentication.RoleRequest;
+import com.ncm.electro.dto.authentication.RoleResponse;
+import com.ncm.electro.dto.authentication.UserRequest;
+import com.ncm.electro.dto.authentication.UserResponse;
+import com.ncm.electro.dto.cashbook.PaymentMethodRequest;
+import com.ncm.electro.dto.cashbook.PaymentMethodResponse;
+import com.ncm.electro.dto.chat.RoomRequest;
+import com.ncm.electro.dto.chat.RoomResponse;
+import com.ncm.electro.dto.customer.*;
+import com.ncm.electro.dto.employee.*;
+import com.ncm.electro.dto.genaral.ImageRequest;
+import com.ncm.electro.dto.genaral.ImageResponse;
+import com.ncm.electro.dto.inventory.*;
+import com.ncm.electro.dto.order.*;
+import com.ncm.electro.dto.product.*;
+import com.ncm.electro.dto.promotion.PromotionRequest;
+import com.ncm.electro.dto.promotion.PromotionResponse;
+import com.ncm.electro.dto.review.ReviewRequest;
+import com.ncm.electro.dto.review.ReviewResponse;
+import com.ncm.electro.dto.reward.RewardStrategyRequest;
+import com.ncm.electro.dto.reward.RewardStrategyResponse;
+import com.ncm.electro.dto.waybill.WaybillRequest;
+import com.ncm.electro.dto.waybill.WaybillResponse;
+import com.ncm.electro.entity.address.Address;
+import com.ncm.electro.entity.address.District;
+import com.ncm.electro.entity.address.Province;
+import com.ncm.electro.entity.address.Ward;
+import com.ncm.electro.entity.authentication.Role;
+import com.ncm.electro.entity.authentication.User;
+import com.ncm.electro.entity.cashbook.PaymentMethod;
+import com.ncm.electro.entity.chat.Room;
+import com.ncm.electro.entity.customer.Customer;
+import com.ncm.electro.entity.customer.CustomerGroup;
+import com.ncm.electro.entity.customer.CustomerResource;
+import com.ncm.electro.entity.customer.CustomerStatus;
+import com.ncm.electro.entity.employee.*;
+import com.ncm.electro.entity.general.Image;
+import com.ncm.electro.entity.inventory.*;
+import com.ncm.electro.entity.order.Order;
+import com.ncm.electro.entity.order.OrderCancellationReason;
+import com.ncm.electro.entity.order.OrderResource;
+import com.ncm.electro.entity.product.*;
+import com.ncm.electro.entity.promotion.Promotion;
+import com.ncm.electro.entity.reward.RewardStrategy;
+import com.ncm.electro.mapper.address.AddressMapper;
+import com.ncm.electro.mapper.address.DistrictMapper;
+import com.ncm.electro.mapper.address.ProvinceMapper;
+import com.ncm.electro.mapper.address.WardMapper;
+import com.ncm.electro.mapper.authentication.RoleMapper;
+import com.ncm.electro.mapper.authentication.UserMapper;
+import com.ncm.electro.mapper.cashbook.PaymentMethodMapper;
+import com.ncm.electro.mapper.chat.RoomMapper;
+import com.ncm.electro.mapper.customer.CustomerGroupMapper;
+import com.ncm.electro.mapper.customer.CustomerMapper;
+import com.ncm.electro.mapper.customer.CustomerResourceMapper;
+import com.ncm.electro.mapper.customer.CustomerStatusMapper;
+import com.ncm.electro.mapper.employee.*;
+import com.ncm.electro.mapper.genaral.ImageMapper;
+import com.ncm.electro.mapper.inventory.*;
+import com.ncm.electro.mapper.order.OrderCancellationReasonMapper;
+import com.ncm.electro.mapper.order.OrderMapper;
+import com.ncm.electro.mapper.order.OrderResourceMapper;
+import com.ncm.electro.mapper.product.*;
+import com.ncm.electro.mapper.promotion.PromotionMapper;
+import com.ncm.electro.mapper.reward.RewardStrategyMapper;
+import com.ncm.electro.repository.address.AddressRepository;
+import com.ncm.electro.repository.address.DistrictRepository;
+import com.ncm.electro.repository.address.ProvinceRepository;
+import com.ncm.electro.repository.address.WardRepository;
+import com.ncm.electro.repository.authentication.RoleRepository;
+import com.ncm.electro.repository.authentication.UserRepository;
+import com.ncm.electro.repository.cashbook.PaymentMethodRepository;
+import com.ncm.electro.repository.chat.RoomRepository;
+import com.ncm.electro.repository.customer.CustomerGroupRepository;
+import com.ncm.electro.repository.customer.CustomerRepository;
+import com.ncm.electro.repository.customer.CustomerResourceRepository;
+import com.ncm.electro.repository.customer.CustomerStatusRepository;
+import com.ncm.electro.repository.employee.*;
+import com.ncm.electro.repository.general.ImageRepository;
+import com.ncm.electro.repository.inventory.*;
+import com.ncm.electro.repository.order.OrderCancellationReasonRepository;
+import com.ncm.electro.repository.order.OrderRepository;
+import com.ncm.electro.repository.order.OrderResourceRepository;
+import com.ncm.electro.repository.product.*;
+import com.ncm.electro.repository.promotion.PromotionRepository;
+import com.ncm.electro.repository.reward.RewardStrategyRepository;
+import com.ncm.electro.service.CrudService;
+import com.ncm.electro.service.GenericService;
+import com.ncm.electro.service.review.ReviewService;
+import com.ncm.electro.service.waybill.WaybillService;
+import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.util.pattern.PathPatternParser;
+
+import java.util.List;
+
+@Component
+@AllArgsConstructor
+public class GenericMappingRegister {
+
+    private ApplicationContext context;
+    private RequestMappingHandlerMapping handlerMapping;
+
+    //controller
+    private GenericController<ProvinceRequest, ProvinceResponse> provinceController;
+    private GenericController<DistrictRequest, DistrictResponse> districtController;
+    private GenericController<WardRequest, WardResponse> wardController;
+    private GenericController<AddressRequest, AddressResponse> addressController;
+    private GenericController<UserRequest, UserResponse> userController;
+    private GenericController<RoleRequest, RoleResponse> roleController;
+    private GenericController<DepartmentRequest, DepartmentResponse> departmentController;
+    private GenericController<JobLevelRequest, JobLevelResponse> jobLevelController;
+    private GenericController<JobTypeRequest, JobTypeResponse> jobTypeController;
+    private GenericController<JobTitleRequest, JobTitleResponse> jobTitleController;
+    private GenericController<OfficeRequest, OfficeResponse> officeController;
+    private GenericController<EmployeeRequest, EmployeeResponse> employeeController;
+    private GenericController<CustomerGroupRequest, CustomerGroupResponse> customerGroupController;
+    private GenericController<CustomerResourceRequest, CustomerResourceResponse> customerResourceController;
+    private GenericController<CustomerStatusRequest, CustomerStatusResponse> customerStatusController;
+    private GenericController<CustomerRequest, CustomerResponse> customerController;
+    private GenericController<PropertyRequest, PropertyResponse> propertyController;
+    private GenericController<CategoryRequest, CategoryResponse> categoryController;
+    private GenericController<TagRequest, TagResponse> tagController;
+    private GenericController<GuaranteeRequest, GuaranteeResponse> guaranteeController;
+    private GenericController<UnitRequest, UnitResponse> unitController;
+    private GenericController<SupplierRequest, SupplierResponse> supplierController;
+    private GenericController<BrandRequest, BrandResponse> brandController;
+    private GenericController<SpecificationRequest, SpecificationResponse> specificationController;
+    private GenericController<ImageRequest, ImageResponse> imageController;
+    private GenericController<VariantRequest, VariantResponse> variantController;
+    private GenericController<ProductRequest, ProductResponse> productController;
+    private GenericController<ProductInventoryLimitRequest, ProductInventoryLimitResponse> productInventoryLimitController;
+    private GenericController<VariantInventoryLimitRequest, VariantInventoryLimitResponse> variantInventoryLimitController;
+    private GenericController<WarehouseRequest, WarehouseResponse> warehouseController;
+    private GenericController<CountRequest, CountResponse> countController;
+    private GenericController<DestinationRequest, DestinationResponse> destinationController;
+    private GenericController<DocketReasonRequest, DocketReasonResponse> docketReasonController;
+    private GenericController<DocketRequest, DocketResponse> docketController;
+    private GenericController<TransferRequest, TransferResponse> transferController;
+    private GenericController<StorageLocationRequest, StorageLocationResponse> storageLocationController;
+    private GenericController<PurchaseOrderRequest, PurchaseOrderResponse> purchaseOrderController;
+    private GenericController<OrderResourceRequest, OrderResourceResponse> orderResourceController;
+    private GenericController<OrderCancellationReasonRequest, OrderCancellationReasonResponse> orderCancellationReasonController;
+    private GenericController<OrderRequest, OrderResponse> orderController;
+    private GenericController<WaybillRequest, WaybillResponse> waybillController;
+    private GenericController<ReviewRequest, ReviewResponse> reviewController;
+    private GenericController<PaymentMethodRequest, PaymentMethodResponse> paymentMethodController;
+    private GenericController<PromotionRequest, PromotionResponse> promotionController;
+    private GenericController<RoomRequest, RoomResponse> roomController;
+    private GenericController<RewardStrategyRequest, RewardStrategyResponse> rewardStrategyController;
+
+    //service
+    private GenericService<Province, ProvinceRequest, ProvinceResponse> provinceService;
+    private GenericService<District, DistrictRequest, DistrictResponse> districtService;
+    private GenericService<Ward, WardRequest, WardResponse> wardService;
+    private GenericService<Address, AddressRequest, AddressResponse> addressService;
+    private GenericService<User, UserRequest, UserResponse> userService;
+    private GenericService<Role, RoleRequest, RoleResponse> roleService;
+    private GenericService<Department, DepartmentRequest, DepartmentResponse> departmentService;
+    private GenericService<JobLevel, JobLevelRequest, JobLevelResponse> jobLevelService;
+    private GenericService<JobType, JobTypeRequest, JobTypeResponse> jobTypeService;
+    private GenericService<JobTitle, JobTitleRequest, JobTitleResponse> jobTitleService;
+    private GenericService<Office, OfficeRequest, OfficeResponse> officeService;
+    private GenericService<Employee, EmployeeRequest, EmployeeResponse> employeeService;
+    private GenericService<CustomerGroup, CustomerGroupRequest, CustomerGroupResponse> customerGroupService;
+    private GenericService<CustomerResource, CustomerResourceRequest, CustomerResourceResponse> customerResourceService;
+    private GenericService<CustomerStatus, CustomerStatusRequest, CustomerStatusResponse> customerStatusService;
+    private GenericService<Customer, CustomerRequest, CustomerResponse> customerService;
+    private GenericService<Property, PropertyRequest, PropertyResponse> propertyService;
+    private GenericService<Category, CategoryRequest, CategoryResponse> categoryService;
+    private GenericService<Tag, TagRequest, TagResponse> tagService;
+    private GenericService<Guarantee, GuaranteeRequest, GuaranteeResponse> guaranteeService;
+    private GenericService<Unit, UnitRequest, UnitResponse> unitService;
+    private GenericService<Supplier, SupplierRequest, SupplierResponse> supplierService;
+    private GenericService<Brand, BrandRequest, BrandResponse> brandService;
+    private GenericService<Specification, SpecificationRequest, SpecificationResponse> specificationService;
+    private GenericService<Image, ImageRequest, ImageResponse> imageService;
+    private GenericService<Variant, VariantRequest, VariantResponse> variantService;
+    private GenericService<Product, ProductRequest, ProductResponse> productService;
+    private GenericService<ProductInventoryLimit, ProductInventoryLimitRequest, ProductInventoryLimitResponse> productInventoryLimitService;
+    private GenericService<VariantInventoryLimit, VariantInventoryLimitRequest, VariantInventoryLimitResponse> variantInventoryLimitService;
+    private GenericService<Warehouse, WarehouseRequest, WarehouseResponse> warehouseService;
+    private GenericService<Count, CountRequest, CountResponse> countService;
+    private GenericService<Destination, DestinationRequest, DestinationResponse> destinationService;
+    private GenericService<DocketReason, DocketReasonRequest, DocketReasonResponse> docketReasonService;
+    private GenericService<Docket, DocketRequest, DocketResponse> docketService;
+    private GenericService<Transfer, TransferRequest, TransferResponse> transferService;
+    private GenericService<StorageLocation, StorageLocationRequest, StorageLocationResponse> storageLocationService;
+    private GenericService<PurchaseOrder, PurchaseOrderRequest, PurchaseOrderResponse> purchaseOrderService;
+    private GenericService<OrderResource, OrderResourceRequest, OrderResourceResponse> orderResourceService;
+    private GenericService<OrderCancellationReason, OrderCancellationReasonRequest, OrderCancellationReasonResponse> orderCancellationReasonService;
+    private GenericService<Order, OrderRequest, OrderResponse> orderService;
+    private GenericService<PaymentMethod, PaymentMethodRequest, PaymentMethodResponse> paymentMethodService;
+    private GenericService<Promotion, PromotionRequest, PromotionResponse> promotionService;
+    private GenericService<Room, RoomRequest, RoomResponse> roomService;
+    private GenericService<RewardStrategy, RewardStrategyRequest, RewardStrategyResponse> rewardStrategyService;
+
+    @PostConstruct
+    public void registerControllers() throws NoSuchMethodException {
+        register("provinces", provinceController, provinceService.init(
+                context.getBean(ProvinceRepository.class),
+                context.getBean(ProvinceMapper.class),
+                SearchFields.PROVINCE,
+                Province.class.getSimpleName()), ProvinceRequest.class);
+
+        register("districts", districtController, districtService.init(
+                context.getBean(DistrictRepository.class),
+                context.getBean(DistrictMapper.class),
+                SearchFields.DISTRICT,
+                District.class.getSimpleName()
+        ), DistrictRequest.class);
+
+        register("wards", wardController, wardService.init(
+                context.getBean(WardRepository.class),
+                context.getBean(WardMapper.class),
+                SearchFields.WARD,
+                Ward.class.getSimpleName()
+        ), WardRequest.class);
+
+        register("addresses", addressController, addressService.init(
+                context.getBean(AddressRepository.class),
+                context.getBean(AddressMapper.class),
+                SearchFields.ADDRESS,
+                Address.class.getSimpleName()
+        ), AddressRequest.class);
+
+        register("users", userController, userService.init(
+                context.getBean(UserRepository.class),
+                context.getBean(UserMapper.class),
+                SearchFields.USER,
+                User.class.getSimpleName()
+        ), UserRequest.class);
+
+        register("roles", roleController, roleService.init(
+                context.getBean(RoleRepository.class),
+                context.getBean(RoleMapper.class),
+                SearchFields.ROLE,
+                Role.class.getSimpleName()
+        ), RoleRequest.class);
+
+        register("departments", departmentController, departmentService.init(
+                context.getBean(DepartmentRepository.class),
+                context.getBean(DepartmentMapper.class),
+                SearchFields.DEPARTMENT,
+                Department.class.getSimpleName()
+        ), DepartmentRequest.class);
+
+        register("job-levels", jobLevelController, jobLevelService.init(
+                context.getBean(JobLevelRepository.class),
+                context.getBean(JobLevelMapper.class),
+                SearchFields.JOB_LEVEL,
+                JobLevel.class.getSimpleName()
+        ), JobLevelRequest.class);
+
+        register("job-types", jobTypeController, jobTypeService.init(
+                context.getBean(JobTypeRepository.class),
+                context.getBean(JobTypeMapper.class),
+                SearchFields.JOB_TYPE,
+                JobType.class.getSimpleName()
+        ), JobTypeRequest.class);
+
+        register("job-titles", jobTitleController, jobTitleService.init(
+                context.getBean(JobTitleRepository.class),
+                context.getBean(JobTitleMapper.class),
+                SearchFields.JOB_TITLE,
+                JobTitle.class.getSimpleName()
+        ), JobTitleRequest.class);
+
+        register("offices", officeController, officeService.init(
+                context.getBean(OfficeRepository.class),
+                context.getBean(OfficeMapper.class),
+                SearchFields.OFFICE,
+                Office.class.getSimpleName()
+        ), OfficeRequest.class);
+
+        register("employees", employeeController, employeeService.init(
+                context.getBean(EmployeeRepository.class),
+                context.getBean(EmployeeMapper.class),
+                SearchFields.EMPLOYEE,
+                Employee.class.getSimpleName()
+        ), EmployeeRequest.class);
+
+        register("customer-groups", customerGroupController, customerGroupService.init(
+                context.getBean(CustomerGroupRepository.class),
+                context.getBean(CustomerGroupMapper.class),
+                SearchFields.CUSTOMER_GROUP,
+                CustomerGroup.class.getSimpleName()
+        ), CustomerGroupRequest.class);
+
+        register("customer-resources", customerResourceController, customerResourceService.init(
+                context.getBean(CustomerResourceRepository.class),
+                context.getBean(CustomerResourceMapper.class),
+                SearchFields.CUSTOMER_RESOURCE,
+                CustomerResource.class.getSimpleName()
+        ), CustomerResourceRequest.class);
+
+        register("customer-status", customerStatusController, customerStatusService.init(
+                context.getBean(CustomerStatusRepository.class),
+                context.getBean(CustomerStatusMapper.class),
+                SearchFields.CUSTOMER_STATUS,
+                CustomerStatus.class.getSimpleName()
+        ), CustomerStatusRequest.class);
+
+        register("customers", customerController, customerService.init(
+                context.getBean(CustomerRepository.class),
+                context.getBean(CustomerMapper.class),
+                SearchFields.CUSTOMER,
+                Customer.class.getSimpleName()
+        ), CustomerRequest.class);
+
+        register("properties", propertyController, propertyService.init(
+                context.getBean(PropertyRepository.class),
+                context.getBean(PropertyMapper.class),
+                SearchFields.PROPERTY,
+                Property.class.getSimpleName()
+        ), PropertyRequest.class);
+
+        register("categories", categoryController, categoryService.init(
+                context.getBean(CategoryRepository.class),
+                context.getBean(CategoryMapper.class),
+                SearchFields.CATEGORY,
+                Category.class.getSimpleName()
+        ), CategoryRequest.class);
+
+        register("tags", tagController, tagService.init(
+                context.getBean(TagRepository.class),
+                context.getBean(TagMapper.class),
+                SearchFields.TAG,
+                Tag.class.getSimpleName()
+        ), TagRequest.class);
+
+        register("guarantees", guaranteeController, guaranteeService.init(
+                context.getBean(GuaranteeRepository.class),
+                context.getBean(GuaranteeMapper.class),
+                SearchFields.GUARANTEE,
+                Guarantee.class.getSimpleName()
+        ), GuaranteeRequest.class);
+
+        register("units", unitController, unitService.init(
+                context.getBean(UnitRepository.class),
+                context.getBean(UnitMapper.class),
+                SearchFields.UNIT,
+                Unit.class.getSimpleName()
+        ), UnitRequest.class);
+
+        register("suppliers", supplierController, supplierService.init(
+                context.getBean(SupplierRepository.class),
+                context.getBean(SupplierMapper.class),
+                SearchFields.SUPPLIER,
+                Supplier.class.getSimpleName()
+        ), SupplierRequest.class);
+
+        register("brands", brandController, brandService.init(
+                context.getBean(BrandRepository.class),
+                context.getBean(BrandMapper.class),
+                SearchFields.BRAND,
+                Brand.class.getSimpleName()
+        ), BrandRequest.class);
+
+        register("specifications", specificationController, specificationService.init(
+                context.getBean(SpecificationRepository.class),
+                context.getBean(SpecificationMapper.class),
+                SearchFields.SPECIFICATION,
+                Specification.class.getSimpleName()
+        ), SpecificationRequest.class);
+
+        register("images", imageController, imageService.init(
+                context.getBean(ImageRepository.class),
+                context.getBean(ImageMapper.class),
+                SearchFields.IMAGE,
+                Image.class.getSimpleName()
+        ), ImageRequest.class);
+
+        register("variants", variantController, variantService.init(
+                context.getBean(VariantRepository.class),
+                context.getBean(VariantMapper.class),
+                SearchFields.VARIANT,
+                Variant.class.getSimpleName()
+        ), VariantRequest.class);
+
+        register("products", productController, productService.init(
+                context.getBean(ProductRepository.class),
+                context.getBean(ProductMapper.class),
+                SearchFields.PRODUCT,
+                Product.class.getSimpleName()
+        ), ProductRequest.class);
+
+        register("product-inventory-limits", productInventoryLimitController, productInventoryLimitService.init(
+                context.getBean(ProductInventoryLimitRepository.class),
+                context.getBean(ProductInventoryLimitMapper.class),
+                SearchFields.PRODUCT_INVENTORY_LIMIT,
+                ProductInventoryLimit.class.getSimpleName()
+        ), ProductInventoryLimitRequest.class);
+
+        register("variant-inventory-limits", variantInventoryLimitController, variantInventoryLimitService.init(
+                context.getBean(VariantInventoryLimitRepository.class),
+                context.getBean(VariantInventoryLimitMapper.class),
+                SearchFields.VARIANT_INVENTORY_LIMIT,
+                VariantInventoryLimitMapper.class.getSimpleName()
+        ), VariantInventoryLimitRequest.class);
+
+        register("warehouses", warehouseController, warehouseService.init(
+                context.getBean(WarehouseRepository.class),
+                context.getBean(WarehouseMapper.class),
+                SearchFields.WAREHOUSE,
+                Warehouse.class.getSimpleName()
+        ), WarehouseRequest.class);
+
+        register("counts", countController, countService.init(
+                context.getBean(CountRepository.class),
+                context.getBean(CountMapper.class),
+                SearchFields.COUNT,
+                Count.class.getSimpleName()
+        ), CountRequest.class);
+
+        register("destinations", destinationController, destinationService.init(
+                context.getBean(DestinationRepository.class),
+                context.getBean(DestinationMapper.class),
+                SearchFields.DESTINATION,
+                Destination.class.getSimpleName()
+        ), DestinationRequest.class);
+
+        register("docket-reasons", docketReasonController, docketReasonService.init(
+                context.getBean(DocketReasonRepository.class),
+                context.getBean(DocketReasonMapper.class),
+                SearchFields.DOCKET_REASON,
+                DocketReason.class.getSimpleName()
+        ), DocketReasonRequest.class);
+
+        register("dockets", docketController, docketService.init(
+                context.getBean(DocketRepository.class),
+                context.getBean(DocketMapper.class),
+                SearchFields.DOCKET,
+                Docket.class.getSimpleName()
+        ), DocketRequest.class);
+
+        register("transfers", transferController, transferService.init(
+                context.getBean(TransferRepository.class),
+                context.getBean(TransferMapper.class),
+                SearchFields.TRANSFER,
+                Transfer.class.getSimpleName()
+        ), TransferRequest.class);
+
+        register("storage-locations", storageLocationController, storageLocationService.init(
+                context.getBean(StorageLocationRepository.class),
+                context.getBean(StorageLocationMapper.class),
+                SearchFields.STORAGE_LOCATION,
+                StorageLocation.class.getSimpleName()
+        ), StorageLocationRequest.class);
+
+        register("purchase-orders", purchaseOrderController, purchaseOrderService.init(
+                context.getBean(PurchaseOrderRepository.class),
+                context.getBean(PurchaseOrderMapper.class),
+                SearchFields.PURCHASE_ORDER,
+                PurchaseOrder.class.getSimpleName()
+        ), PurchaseOrderRequest.class);
+
+        register("order-resources", orderResourceController, orderResourceService.init(
+                context.getBean(OrderResourceRepository.class),
+                context.getBean(OrderResourceMapper.class),
+                SearchFields.ORDER_RESOURCE,
+                OrderResource.class.getSimpleName()
+        ), OrderResourceRequest.class);
+
+        register("order-cancellation-reasons", orderCancellationReasonController, orderCancellationReasonService.init(
+                context.getBean(OrderCancellationReasonRepository.class),
+                context.getBean(OrderCancellationReasonMapper.class),
+                SearchFields.ORDER_CANCELLATION_REASON,
+                OrderCancellationReason.class.getSimpleName()
+        ), OrderCancellationReasonRequest.class);
+
+        register("orders", orderController, orderService.init(
+                context.getBean(OrderRepository.class),
+                context.getBean(OrderMapper.class),
+                SearchFields.ORDER,
+                Order.class.getSimpleName()
+        ), OrderRequest.class);
+
+        register("waybills", waybillController, context.getBean(WaybillService.class), WaybillRequest.class);
+
+        register("reviews", reviewController, context.getBean(ReviewService.class), ReviewRequest.class);
+
+        register("payment-methods", paymentMethodController, paymentMethodService.init(
+                context.getBean(PaymentMethodRepository.class),
+                context.getBean(PaymentMethodMapper.class),
+                SearchFields.PAYMENT_METHOD,
+                PaymentMethod.class.getSimpleName()
+        ), PaymentMethodRequest.class);
+
+        register("promotions", promotionController, promotionService.init(
+                context.getBean(PromotionRepository.class),
+                context.getBean(PromotionMapper.class),
+                SearchFields.PROMOTION,
+                Promotion.class.getSimpleName()
+        ), PromotionRequest.class);
+
+        register("rooms", roomController, roomService.init(
+                context.getBean(RoomRepository.class),
+                context.getBean(RoomMapper.class),
+                SearchFields.ROOM,
+                Room.class.getSimpleName()
+        ), RoomRequest.class);
+
+        register("reward-strategies", rewardStrategyController, rewardStrategyService.init(
+                context.getBean(RewardStrategyRepository.class),
+                context.getBean(RewardStrategyMapper.class),
+                SearchFields.REWARD_STRATEGY,
+                RewardStrategy.class.getSimpleName()
+        ), RewardStrategyRequest.class);
+    }
+
+    private <I, O> void register(String resource,
+                                 GenericController<I, O> controller,
+                                 CrudService<Long, I, O> service,
+                                 Class<I> requestType)
+            throws NoSuchMethodException {
+        RequestMappingInfo.BuilderConfiguration options = new RequestMappingInfo.BuilderConfiguration();
+        options.setPatternParser(new PathPatternParser());
+
+        controller.setCrudService(service);
+        controller.setRequestType(requestType);
+
+        handlerMapping.registerMapping(
+                RequestMappingInfo.paths("/api/" + resource)
+                        .methods(RequestMethod.GET)
+                        .produces(MediaType.APPLICATION_JSON_VALUE)
+                        .options(options)
+                        .build(),
+                controller,
+                controller.getClass().getMethod("getAllResources",
+                        int.class, int.class, String.class, String.class, String.class, boolean.class)
+        );
+
+        handlerMapping.registerMapping(
+                RequestMappingInfo.paths("/api/" + resource + "/{id}")
+                        .methods(RequestMethod.GET)
+                        .produces(MediaType.APPLICATION_JSON_VALUE)
+                        .options(options)
+                        .build(),
+                controller,
+                controller.getClass().getMethod("getResource", Long.class)
+        );
+
+        handlerMapping.registerMapping(
+                RequestMappingInfo.paths("/api/" + resource)
+                        .methods(RequestMethod.POST)
+                        .consumes(MediaType.APPLICATION_JSON_VALUE)
+                        .produces(MediaType.APPLICATION_JSON_VALUE)
+                        .options(options)
+                        .build(),
+                controller,
+                controller.getClass().getMethod("createResource", JsonNode.class)
+        );
+
+        handlerMapping.registerMapping(
+                RequestMappingInfo.paths("/api/" + resource + "/{id}")
+                        .methods(RequestMethod.PUT)
+                        .consumes(MediaType.APPLICATION_JSON_VALUE)
+                        .produces(MediaType.APPLICATION_JSON_VALUE)
+                        .options(options)
+                        .build(),
+                controller,
+                controller.getClass().getMethod("updateResource", Long.class, JsonNode.class)
+        );
+
+        handlerMapping.registerMapping(
+                RequestMappingInfo.paths("/api/" + resource + "/{id}")
+                        .methods(RequestMethod.DELETE)
+                        .options(options)
+                        .build(),
+                controller,
+                controller.getClass().getMethod("deleteResource", Long.class)
+        );
+
+        handlerMapping.registerMapping(
+                RequestMappingInfo.paths("/api/" + resource)
+                        .methods(RequestMethod.DELETE)
+                        .consumes(MediaType.APPLICATION_JSON_VALUE)
+                        .options(options)
+                        .build(),
+                controller,
+                controller.getClass().getMethod("deleteResource", List.class)
+        );
+    }
+}

@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  jackson:
+    mapper:
+      sort-properties-alphabetically: false
+  application:
+    name: electro
+  datasource:
+    username: ${USERNAME_DB}
+    password: ${PASSWORD_DB}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: @spring.profiles.active@
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  devtools:
+    restart:
+      enabled: true
+      poll-interval: 1000
+      quiet-period: 400
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL}
+    password: ${PASSWORD_EMAIL}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+jwt:
+  access-key: ${JWT_ACCESS_KEY}
+  refresh-key: ${JWT_REFRESH_KEY}
+  expiration-hour: 1
+  expiration-day: 7
+
+paypal:
+  client-id: ${PAYPAL_CLIENT_ID}
+  secret: ${PAYPAL_SECRET}
+
+ghn:
+  token: ${GHN_TOKEN}
+  shop-id: 200380
+  url: https://dev-online-gateway.ghn.vn/shiip/public-api/v2

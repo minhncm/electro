@@ -1,0 +1,47 @@
+package com.ncm.electro.entity.customer;
+
+import com.ncm.electro.entity.BaseEntity;
+import com.ncm.electro.entity.order.OrderResource;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "customer_resource")
+@Accessors(chain = true)
+public class CustomerResource extends BaseEntity {
+    @Column(name = "code", nullable = false)
+    private String code;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "color", nullable = false)
+    private String color;
+
+    @Column(name = "status", nullable = false, columnDefinition = "TINYINT")
+    private Integer status;
+
+    @OneToMany(mappedBy = "customerResource")
+    private List<Customer> customers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customerResource")
+    private List<OrderResource> orderResources = new ArrayList<>();
+
+}
