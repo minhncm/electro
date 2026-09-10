@@ -1,0 +1,100 @@
+import ApplicationPath from "~/constants/ApplicationPath";
+
+const ResourceUrl = {
+  ADDRESS: ApplicationPath.API_PATH + "/addresses",
+  PROVINCE: ApplicationPath.API_PATH + "/provinces",
+  DISTRICT: ApplicationPath.API_PATH + "/districts",
+  WARD: ApplicationPath.API_PATH + "/wards",
+
+  USER: ApplicationPath.API_PATH + "/users",
+  ROLE: ApplicationPath.API_PATH + "/roles",
+
+  EMPLOYEE: ApplicationPath.API_PATH + "/employees",
+  OFFICE: ApplicationPath.API_PATH + "/offices",
+  DEPARTMENT: ApplicationPath.API_PATH + "/departments",
+  JOB_TYPE: ApplicationPath.API_PATH + "/job-types",
+  JOB_LEVEL: ApplicationPath.API_PATH + "/job-levels",
+  JOB_TITLE: ApplicationPath.API_PATH + "/job-titles",
+
+  CUSTOMER: ApplicationPath.API_PATH + "/customers",
+  CUSTOMER_GROUP: ApplicationPath.API_PATH + "/customer-groups",
+  CUSTOMER_STATUS: ApplicationPath.API_PATH + "/customer-status",
+  CUSTOMER_RESOURCE: ApplicationPath.API_PATH + "/customer-resources",
+
+  PRODUCT: ApplicationPath.API_PATH + "/products",
+  CATEGORY: ApplicationPath.API_PATH + "/categories",
+  BRAND: ApplicationPath.API_PATH + "/brands",
+  SUPPLIER: ApplicationPath.API_PATH + "/suppliers",
+  UNIT: ApplicationPath.API_PATH + "/units",
+  TAG: ApplicationPath.API_PATH + "/tags",
+  GUARANTEE: ApplicationPath.API_PATH + "/guarantees",
+  PROPERTY: ApplicationPath.API_PATH + "/properties",
+  SPECIFICATION: ApplicationPath.API_PATH + "/specifications",
+  VARIANT: ApplicationPath.API_PATH + "/variants",
+
+  PRODUCT_INVENTORY: ApplicationPath.API_PATH + "/product-inventories",
+  VARIANT_INVENTORY: ApplicationPath.API_PATH + "/variant-inventories",
+  WAREHOUSE: ApplicationPath.API_PATH + "/warehouses",
+  PURCHASE_ORDER: ApplicationPath.API_PATH + "/purchase-orders",
+  PURCHASE_ORDER_VARIANT: ApplicationPath.API_PATH + "/purchase-order-variants",
+  DESTINATION: ApplicationPath.API_PATH + "/destinations",
+  DOCKET: ApplicationPath.API_PATH + "/dockets",
+  DOCKET_VARIANT: ApplicationPath.API_PATH + "/docket-variants",
+  DOCKET_REASON: ApplicationPath.API_PATH + "/docket-reasons",
+  COUNT: ApplicationPath.API_PATH + "/counts",
+  COUNT_VARIANT: ApplicationPath.API_PATH + "/count-variants",
+  TRANSFER: ApplicationPath.API_PATH + "/transfers",
+  TRANSFER_VARIANT: ApplicationPath.API_PATH + "/transfer-variants",
+
+  ORDER: ApplicationPath.API_PATH + "/orders",
+  ORDER_VARIANT: ApplicationPath.API_PATH + "/order-variants",
+  ORDER_RESOURCE: ApplicationPath.API_PATH + "/order-resources",
+  ORDER_CANCELLATION_REASON:
+    ApplicationPath.API_PATH + "/order-cancellation-reasons",
+
+  WAYBILL: ApplicationPath.API_PATH + "/waybills",
+
+  REVIEW: ApplicationPath.API_PATH + "/reviews",
+
+  REWARD_STRATEGY: ApplicationPath.API_PATH + "/reward-strategies",
+
+  VOUCHER: ApplicationPath.API_PATH + "/vouchers",
+  PAYMENT_METHOD: ApplicationPath.API_PATH + "/payment-methods",
+  PROMOTION: ApplicationPath.API_PATH + "/promotions",
+
+  ROOM: ApplicationPath.API_PATH + "/rooms",
+  MESSAGE: ApplicationPath.API_PATH + "/messages",
+
+  //client
+  CLIENT_CATEGORY: ApplicationPath.CLIENT_API_PATH + "/categories",
+  CLIENT_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/products",
+  CLIENT_REVIEW: ApplicationPath.CLIENT_API_PATH + "/reviews",
+  CLIENT_REVIEW_PRODUCT: ApplicationPath.CLIENT_API_PATH + "/reviews/products",
+  CLIENT_USER_INFO: ApplicationPath.CLIENT_API_PATH + "/users/info",
+  CLIENT_USER_PERSONAL: ApplicationPath.CLIENT_API_PATH + "/users/personal",
+  CLIENT_USER_PHONE: ApplicationPath.CLIENT_API_PATH + "/users/phone",
+  CLIENT_USER_EMAIL: ApplicationPath.CLIENT_API_PATH + "/users/email",
+  CLIENT_USER_PASSWORD: ApplicationPath.CLIENT_API_PATH + "/users/password",
+  CLIENT_CART: ApplicationPath.CLIENT_API_PATH + "/carts",
+  CLIENT_WISH: ApplicationPath.CLIENT_API_PATH + "/wishes",
+  CLIENT_ORDER: ApplicationPath.CLIENT_API_PATH + "/orders",
+  CLIENT_NOTIFICATION: ApplicationPath.CLIENT_API_PATH + "/notifications",
+  CLIENT_NOTIFICATION_EVENTS:
+    ApplicationPath.CLIENT_API_PATH + "/notifications/events",
+  CLIENT_CHAT: ApplicationPath.CLIENT_API_PATH + "/chat",
+  CLIENT_REWARD: ApplicationPath.CLIENT_API_PATH + "/rewards",
+
+  // AUTHENTICATION
+  AUTH_ME: ApplicationPath.API_PATH + "/auth/me",
+  LOGIN: ApplicationPath.API_PATH + "/auth/login",
+  LOGOUT: ApplicationPath.API_PATH + "/auth/logout",
+  CLIENT_REGISTRATION: ApplicationPath.API_PATH + "/auth/registration",
+  CLIENT_CONFIRM_REGISTRATION:
+    ApplicationPath.API_PATH + "/auth/registration/confirm",
+  CLIENT_RESEND_TOKEN_REGISTRATION: (userId) =>
+    ApplicationPath.API_PATH + `/auth/registration/${userId}/resend-token`,
+  CLIENT_FORGOT_PASSWORD: ApplicationPath.API_PATH + "/auth/forgot-password",
+  CLIENT_RESET_PASSWORD: ApplicationPath.API_PATH + "/auth/reset-password",
+};
+
+export default ResourceUrl;

@@ -1,0 +1,2 @@
+import ProductInventoryTransactionsModal from "~/components/ProductInventoryTransactionsModal/ProductInventoryTransactionsModal";
+export default ProductInventoryTransactionsModal;

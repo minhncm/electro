@@ -1,0 +1,100 @@
+import { Highlight, Stack, Table } from "@mantine/core";
+import EnableStatusBadge from "~/components/EnableStatusBadge";
+import FilterPanel from "~/components/FilterPanel";
+import ManageHeader from "~/components/ManageHeader";
+import ManageMain from "~/components/ManageMain/ManageMain";
+import ManagePagination from "~/components/ManagePagination";
+import ManageTable from "~/components/ManageTable";
+import SearchPanel from "~/components/SearchPanel";
+import DateUtils from "~/utils/DateUtils";
+import GuaranteeConfigs from "~/pages/Admin-guarantee/GuaranteeConfigs";
+import useGetAllApi from "~/hooks/admin/use-get-all-api";
+import useResetManagePageState from "~/hooks/use-reset-manage-page-state";
+import * as PageConfigs from "~/pages/PageConfig";
+import ManageHeaderTitle from "~/components/ManageHeaderTitle/ManageHeaderTitle";
+import ManageHeaderButtons from "~/components/ManageHeaderButton/ManageHeaderButtons";
+
+function GuaranteeManage() {
+  useResetManagePageState();
+
+  const { data: listResponse = PageConfigs.initialListResponse, isLoading } =
+    useGetAllApi(GuaranteeConfigs.resourceUrl, GuaranteeConfigs.resourceKey);
+  const ShowedPropertiesFragment = ({ entity }) => (
+    <>
+      <Table.Td>{entity.id}</Table.Td>
+      <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
+      <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
+      <Table.Td>
+        <Highlight size="sm">{entity.name}</Highlight>
+      </Table.Td>
+      <Table.Td>
+        <EnableStatusBadge status={entity.status} />
+      </Table.Td>
+    </>
+  );
+
+  const EntityDetailTableRowsFragment = ({ entity }) => (
+    <>
+      <Table.Tr>
+        <Table.Td>{GuaranteeConfigs.properties.id.label}</Table.Td>
+        <Table.Td>{entity.id}</Table.Td>
+      </Table.Tr>
+      <Table.Tr>
+        <Table.Td>{GuaranteeConfigs.properties.createdAt.label}</Table.Td>
+        <Table.Td>{DateUtils.formatterDate(entity.createdAt)}</Table.Td>
+      </Table.Tr>
+      <Table.Tr>
+        <Table.Td>{GuaranteeConfigs.properties.updatedAt.label}</Table.Td>
+        <Table.Td>{DateUtils.formatterDate(entity.updatedAt)}</Table.Td>
+      </Table.Tr>
+      <Table.Tr>
+        <Table.Td>{GuaranteeConfigs.properties.name.label}</Table.Td>
+        <Table.Td>{entity.name}</Table.Td>
+      </Table.Tr>
+      <Table.Tr>
+        <Table.Td>{GuaranteeConfigs.properties.description.label}</Table.Td>
+        <Table.Td style={{ maxWidth: 300 }}>{entity.description}</Table.Td>
+      </Table.Tr>
+      <Table.Tr>
+        <Table.Td>{GuaranteeConfigs.properties.status.label}</Table.Td>
+        <Table.Td>
+          <EnableStatusBadge status={entity.status} />
+        </Table.Td>
+      </Table.Tr>
+    </>
+  );
+  return (
+    <Stack>
+      <ManageHeader>
+        <ManageHeaderTitle title={GuaranteeConfigs.manageTitle} />
+        <ManageHeaderButtons
+          listResponse={listResponse}
+          resourceUrl={GuaranteeConfigs.resourceUrl}
+          resourceKey={GuaranteeConfigs.resourceKey}
+        />
+      </ManageHeader>
+
+      <SearchPanel />
+      <FilterPanel />
+
+      <ManageMain listResponse={listResponse} isLoading={isLoading}>
+        <ManageTable
+          listResponse={listResponse}
+          resourceUrl={GuaranteeConfigs.resourceUrl}
+          resourceKey={GuaranteeConfigs.resourceKey}
+          properties={GuaranteeConfigs.properties}
+          showedPropertiesFragment={(entity) => (
+            <ShowedPropertiesFragment entity={entity} />
+          )}
+          entityDetailTableRowsFragment={(entity) => (
+            <EntityDetailTableRowsFragment entity={entity} />
+          )}
+        ></ManageTable>
+      </ManageMain>
+
+      <ManagePagination listResponse={listResponse} />
+    </Stack>
+  );
+}
+
+export default GuaranteeManage;
