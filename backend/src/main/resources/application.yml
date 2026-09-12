@@ -47,3 +47,6 @@ ghn:
   token: ${GHN_TOKEN}
   shop-id: 200380
   url: https://dev-online-gateway.ghn.vn/shiip/public-api/v2
+
+cors:
+  frontend-host: ${FRONTEND_HOST:http://localhost:3001}
