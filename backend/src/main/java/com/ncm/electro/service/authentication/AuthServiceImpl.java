@@ -16,6 +16,7 @@ import com.ncm.electro.repository.customer.CustomerRepository;
 import com.ncm.electro.service.email.EmailSenderService;
 import com.ncm.electro.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,9 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService{
+    @Value("${cors.frontend-host}")
+    private String frontendHost;
+
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
@@ -80,7 +84,7 @@ public class AuthServiceImpl implements AuthService{
 
         Map<String, Object> attributes = Map.of(
                 "token", token,
-                "link", MessageFormat.format("{0}/signup?userId={1}", AppConstants.FRONTEND_HOST, user.getId())
+                "link", MessageFormat.format("{0}/signup?userId={1}", frontendHost, user.getId())
         );
         emailSenderService.sendVerificationToken(user.getEmail(), attributes);
 
@@ -126,7 +130,7 @@ public class AuthServiceImpl implements AuthService{
 
         Map<String, Object> attributes = Map.of(
                 "token", token,
-                "link", MessageFormat.format("{0}/signup?userId={1}", AppConstants.FRONTEND_HOST, userId)
+                "link", MessageFormat.format("{0}/signup?userId={1}", frontendHost, userId)
         );
         emailSenderService.sendVerificationToken(verification.getUser().getEmail(), attributes);
     }
@@ -176,7 +180,7 @@ public class AuthServiceImpl implements AuthService{
         String token = UUID.randomUUID().toString();
         user.setResetPasswordToken(token);
         userRepository.save(user);
-        String link = MessageFormat.format("{0}/change-password?token={1}&email={2}", AppConstants.FRONTEND_HOST, token, email);
+        String link = MessageFormat.format("{0}/change-password?token={1}&email={2}", frontendHost, token, email);
         emailSenderService.sendForgetPasswordToken(user.getEmail(), Map.of("link", link));
     }
 

@@ -33,7 +33,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     @Value("${cors.frontend-host}")
-    private String allowOrigin;
+    private String frontendHost;
     private final JwtFilter jwtFilter;
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
@@ -70,7 +70,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(allowOrigin));
+        configuration.setAllowedOrigins(Arrays.asList(frontendHost));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

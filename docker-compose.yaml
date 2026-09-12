@@ -46,6 +46,7 @@ services:
       PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID}
       PAYPAL_SECRET: ${PAYPAL_SECRET}
       GHN_TOKEN: ${GHN_TOKEN}
+      FRONTEND_HOST: ${FRONTEND_HOST}
     networks:
       - frontend
       - backend
