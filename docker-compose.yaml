@@ -20,7 +20,7 @@ services:
     depends_on:
       - electro-be
     build:
-      context: electro-fe
+      context: ./frontend
       dockerfile: Dockerfile
     networks:
       - frontend
@@ -33,7 +33,7 @@ services:
       electro-db:
         condition: service_healthy
     build:
-      context: electro-be
+      context: ./backend
       dockerfile: Dockerfile
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://electro-db:3306/electro
