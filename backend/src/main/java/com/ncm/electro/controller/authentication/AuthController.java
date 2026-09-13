@@ -55,7 +55,7 @@ public class AuthController {
         String accessToken = jwtResponse.getAccessToken();
         ResponseCookie accessTokenCookie = ResponseCookie.from("accessToken", accessToken)
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/")
                 .maxAge(Duration.ofHours(expirationHour))
                 .sameSite("Strict")
@@ -65,7 +65,7 @@ public class AuthController {
         String refreshToken = jwtResponse.getRefreshToken();
         ResponseCookie refreshTokenCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/api/auth/refresh-token")
                 .maxAge( Duration.ofDays(expirationDay))
                 .sameSite("Strict")
@@ -79,7 +79,7 @@ public class AuthController {
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         ResponseCookie accessTokenCookie = ResponseCookie.from("accessToken", "")
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/")
                 .maxAge(0)
                 .sameSite("Strict")
@@ -88,7 +88,7 @@ public class AuthController {
 
         ResponseCookie refreshTokenCookie = ResponseCookie.from("refreshToken", "")
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/api/auth/refresh-token")
                 .maxAge(0)
                 .sameSite("Strict")
@@ -105,7 +105,7 @@ public class AuthController {
         String newAccessToken = jwtResponse.getAccessToken();
         ResponseCookie accessTokenCookie = ResponseCookie.from("accessToken", newAccessToken)
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/")
                 .maxAge(Duration.ofHours(expirationHour))
                 .sameSite("Strict")
